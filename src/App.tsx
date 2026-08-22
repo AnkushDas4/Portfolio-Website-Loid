@@ -10,6 +10,7 @@ import { TerminalConsole } from './components/TerminalConsole';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 export const App: React.FC = () => {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
@@ -23,36 +24,40 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#06080e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden font-sans">
-      {/* 3D Dynamic Interactive Particle Background */}
-      <CanvasBackground />
+    <ErrorBoundary>
+      <div className="relative min-h-screen bg-[#06080e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden font-sans">
+        {/* Dynamic Interactive Particle Background with Error Boundary */}
+        <ErrorBoundary fallback={<div className="fixed inset-0 bg-[#06080e] pointer-events-none" />}>
+          <CanvasBackground />
+        </ErrorBoundary>
 
-      {/* Cyber Grid Background Overlay */}
-      <div className="fixed inset-0 bg-grid-cyber pointer-events-none opacity-40 z-0" />
+        {/* Cyber Grid Background Overlay */}
+        <div className="fixed inset-0 bg-grid-cyber pointer-events-none opacity-40 z-0" />
 
-      {/* Global Navigation HUD */}
-      <Navbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
+        {/* Global Navigation HUD */}
+        <Navbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
 
-      {/* Main Content Sections */}
-      <main className="relative z-10">
-        <Hero />
-        <IdentityPhilosophy />
-        <ProjectsShowcase />
-        <TechRadar />
-        <TechJourneyTimeline />
-        <TerminalConsole />
-        <ContactSection />
-      </main>
+        {/* Main Content Sections */}
+        <main className="relative z-10">
+          <Hero />
+          <IdentityPhilosophy />
+          <ProjectsShowcase />
+          <TechRadar />
+          <TechJourneyTimeline />
+          <TerminalConsole />
+          <ContactSection />
+        </main>
 
-      {/* Executive Footer */}
-      <Footer />
+        {/* Executive Footer */}
+        <Footer />
 
-      {/* Quick Search Command Palette (Cmd+K) */}
-      <CommandPalette 
-        isOpen={isCommandPaletteOpen} 
-        onClose={() => setIsCommandPaletteOpen(false)} 
-      />
-    </div>
+        {/* Quick Search Command Palette (Cmd+K) */}
+        <CommandPalette 
+          isOpen={isCommandPaletteOpen} 
+          onClose={() => setIsCommandPaletteOpen(false)} 
+        />
+      </div>
+    </ErrorBoundary>
   );
 };
 
