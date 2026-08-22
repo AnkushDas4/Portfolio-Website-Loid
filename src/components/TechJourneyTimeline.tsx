@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { GitCommit, Calendar, CheckCircle2 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { SpotlightCard } from './SpotlightCard';
 
 export const TechJourneyTimeline: React.FC = () => {
   return (
@@ -44,61 +45,67 @@ export const TechJourneyTimeline: React.FC = () => {
                     isEven ? 'md:flex-row-reverse' : ''
                   }`}
                 >
-                  {/* Central Node Indicator */}
+                  {/* Central Node Indicator with pulse glow */}
                   <div className="absolute left-3.5 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-10">
-                    <div className="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-slate-950 border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.6)]">
+                    <motion.div
+                      whileHover={{ scale: 1.3 }}
+                      className="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-slate-950 border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.6)] cursor-pointer"
+                    >
                       <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-cyan-300 animate-pulse" />
-                    </div>
+                    </motion.div>
                   </div>
 
-                  {/* Content Card */}
-                  <div
-                    onMouseEnter={() => sound.playHoverBlip()}
-                    className={`ml-9 sm:ml-12 md:ml-0 md:w-[45%] p-5 sm:p-8 rounded-3xl glass-panel border border-slate-800 hover:border-cyan-500/40 transition-all hover:shadow-[0_0_30px_rgba(0,240,255,0.12)] group`}
-                  >
-                    {/* Header: Date & Badge */}
-                    <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                      <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-cyan-400 font-bold">
-                        <Calendar className="w-3.5 h-3.5 shrink-0" />
-                        <span>{item.date}</span>
-                      </div>
-                      <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono bg-cyan-950/60 border border-cyan-500/30 text-cyan-300">
-                        {item.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors font-mono mb-1">
-                      {item.title}
-                    </h3>
-                    <div className="text-[11px] sm:text-xs font-mono text-slate-400 mb-3 sm:mb-4">
-                      {item.role}
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light mb-4 sm:mb-5">
-                      {item.description}
-                    </p>
-
-                    {/* Key Achievements */}
-                    <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-5">
-                      {item.achievements.map((ach, aIdx) => (
-                        <div key={aIdx} className="flex items-start gap-2 text-[11px] sm:text-xs text-slate-300 font-mono">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                          <span>{ach}</span>
+                  {/* Content Card with Spotlight Physics */}
+                  <div className={`ml-9 sm:ml-12 md:ml-0 md:w-[45%]`}>
+                    <SpotlightCard
+                      enableTilt={true}
+                      spotlightColor="rgba(0, 240, 255, 0.16)"
+                      className="p-5 sm:p-8 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all hover:shadow-[0_0_35px_rgba(0,240,255,0.15)] group"
+                    >
+                      {/* Header: Date & Badge */}
+                      <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                        <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-cyan-400 font-bold">
+                          <Calendar className="w-3.5 h-3.5 shrink-0" />
+                          <span>{item.date}</span>
                         </div>
-                      ))}
-                    </div>
-
-                    {/* Tech Badges */}
-                    <div className="flex flex-wrap gap-1 sm:gap-1.5 pt-3 sm:pt-4 border-t border-slate-800">
-                      {item.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono text-slate-400 bg-slate-900 border border-slate-800"
-                        >
-                          {t}
+                        <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono bg-cyan-950/60 border border-cyan-500/30 text-cyan-300">
+                          {item.badge}
                         </span>
-                      ))}
-                    </div>
+                      </div>
+
+                      <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors font-mono mb-1">
+                        {item.title}
+                      </h3>
+                      <div className="text-[11px] sm:text-xs font-mono text-slate-400 mb-3 sm:mb-4">
+                        {item.role}
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light mb-4 sm:mb-5">
+                        {item.description}
+                      </p>
+
+                      {/* Key Achievements */}
+                      <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-5">
+                        {item.achievements.map((ach, aIdx) => (
+                          <div key={aIdx} className="flex items-start gap-2 text-[11px] sm:text-xs text-slate-300 font-mono">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                            <span>{ach}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Tech Badges */}
+                      <div className="flex flex-wrap gap-1 sm:gap-1.5 pt-3 sm:pt-4 border-t border-slate-800">
+                        {item.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono text-slate-400 bg-slate-900 border border-slate-800"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </SpotlightCard>
                   </div>
                 </motion.div>
               );

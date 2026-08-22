@@ -11,10 +11,13 @@ import {
   ArrowRight,
   Sparkles,
   MapPin,
-  Flame
+  Flame,
+  Zap
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { MagneticButton } from './MagneticButton';
+import { SpotlightCard } from './SpotlightCard';
 
 export const Hero: React.FC = () => {
   const [secondsOnline, setSecondsOnline] = useState<number>(142940);
@@ -53,12 +56,14 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="flex flex-col items-start"
         >
-          {/* Status Badge */}
+          {/* Status Badge with pulse glow */}
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-[11px] sm:text-xs font-mono mb-4 sm:mb-6 shadow-[0_0_12px_rgba(0,240,255,0.12)] max-w-full truncate"
+            whileHover={{ scale: 1.03, borderColor: 'rgba(0,240,255,0.6)' }}
+            onMouseEnter={() => sound.playHoverBlip()}
+            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-[11px] sm:text-xs font-mono mb-4 sm:mb-6 shadow-[0_0_12px_rgba(0,240,255,0.12)] max-w-full truncate cursor-default transition-all"
           >
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
@@ -72,7 +77,7 @@ export const Hero: React.FC = () => {
             <span className="block text-slate-400 font-mono text-base sm:text-xl font-normal mb-1 sm:mb-2 tracking-widest">
               &gt; IDENT: {PORTFOLIO_DATA.hero.handle}
             </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400 hover:brightness-125 transition-all">
               {PORTFOLIO_DATA.hero.name}
             </span>
           </h1>
@@ -83,15 +88,16 @@ export const Hero: React.FC = () => {
               {PORTFOLIO_DATA.hero.title}
             </span>
             <span className="text-slate-500 hidden sm:inline">•</span>
-            <a
+            <motion.a
               href={PORTFOLIO_DATA.company.url}
               target="_blank"
               rel="noopener noreferrer"
+              whileHover={{ scale: 1.03, color: '#00f0ff' }}
               onMouseEnter={() => sound.playHoverBlip()}
-              className="text-base sm:text-xl font-semibold text-slate-300 hover:text-white underline decoration-cyan-500/50 underline-offset-4 transition-colors"
+              className="text-base sm:text-xl font-semibold text-slate-300 underline decoration-cyan-500/50 underline-offset-4 transition-colors"
             >
               {PORTFOLIO_DATA.company.name}
-            </a>
+            </motion.a>
           </div>
 
           {/* Bio statement */}
@@ -102,44 +108,41 @@ export const Hero: React.FC = () => {
           {/* Roles Pill Tags */}
           <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8 sm:mb-10">
             {PORTFOLIO_DATA.hero.roles.map((role) => (
-              <span
+              <motion.span
                 key={role}
-                className="px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-mono text-slate-300 bg-slate-900/80 border border-slate-800"
+                whileHover={{ y: -3, scale: 1.04, borderColor: '#00f0ff', color: '#00f0ff' }}
+                onMouseEnter={() => sound.playHoverBlip()}
+                className="px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-mono text-slate-300 bg-slate-900/80 border border-slate-800 transition-colors cursor-default"
               >
                 {role}
-              </span>
+              </motion.span>
             ))}
           </div>
 
-          {/* CTAs */}
+          {/* Magnetic CTAs */}
           <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <button
-              onClick={() => scrollTo('projects')}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm hover:shadow-neon-cyan transition-all transform active:scale-98"
-            >
-              <Layers className="w-4 h-4" />
-              <span>Explore Architecture</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </button>
+            <MagneticButton strength={0.4} onClick={() => scrollTo('projects')}>
+              <button className="relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all overflow-hidden group">
+                <span className="absolute inset-0 w-full h-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                <Layers className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">Explore Architecture</span>
+                <ArrowRight className="w-4 h-4 ml-1 relative z-10 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </MagneticButton>
 
-            <button
-              onClick={() => scrollTo('terminal')}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-sm transition-all transform active:scale-98"
-            >
-              <Terminal className="w-4 h-4" />
-              <span>Launch CLI</span>
-            </button>
+            <MagneticButton strength={0.3} onClick={() => scrollTo('terminal')}>
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-sm transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+                <Terminal className="w-4 h-4 text-cyan-400" />
+                <span>Launch CLI</span>
+              </button>
+            </MagneticButton>
 
-            <button
-              onClick={() => scrollTo('contact')}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white text-sm transition-all active:scale-98"
-            >
-              <Mail className="w-4 h-4" />
-              <span>Contact</span>
-            </button>
+            <MagneticButton strength={0.25} onClick={() => scrollTo('contact')}>
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white text-sm transition-all">
+                <Mail className="w-4 h-4" />
+                <span>Contact</span>
+              </button>
+            </MagneticButton>
           </div>
         </motion.div>
 
@@ -150,9 +153,11 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="relative w-full"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 rounded-3xl blur-xl pointer-events-none" />
-
-          <div className="relative rounded-2xl glass-panel-glow p-4 sm:p-6 border border-cyan-500/30 overflow-hidden">
+          <SpotlightCard
+            enableTilt={true}
+            spotlightColor="rgba(0, 240, 255, 0.16)"
+            className="glass-panel-glow p-4 sm:p-6 border border-cyan-500/30"
+          >
             {/* Header Telemetry */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4 mb-4 sm:mb-5">
               <div className="flex items-center gap-2 sm:gap-2.5">
@@ -175,7 +180,10 @@ export const Hero: React.FC = () => {
 
             {/* Grid Metrics */}
             <div className="grid grid-cols-2 gap-2.5 sm:gap-4 mb-4 sm:mb-5">
-              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+              <motion.div 
+                whileHover={{ y: -2, borderColor: 'rgba(0,240,255,0.4)' }}
+                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
+              >
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>UPTIME</span>
                   <Radio className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-cyan-400" />
@@ -183,9 +191,12 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-cyan-300 truncate">
                   {formatUptime(secondsOnline)}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+              <motion.div 
+                whileHover={{ y: -2, borderColor: 'rgba(245,158,11,0.4)' }}
+                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
+              >
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>ROUTED</span>
                   <Flame className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-amber-400" />
@@ -193,9 +204,12 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-amber-300 truncate">
                   {packetCount.toLocaleString()} pkts
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+              <motion.div 
+                whileHover={{ y: -2, borderColor: 'rgba(16,185,129,0.4)' }}
+                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
+              >
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>LATENCY</span>
                   <Cpu className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-emerald-400" />
@@ -203,9 +217,12 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-emerald-400">
                   {PORTFOLIO_DATA.hero.telemetry.nodeLatency}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+              <motion.div 
+                whileHover={{ y: -2, borderColor: 'rgba(99,102,241,0.4)' }}
+                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
+              >
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>PIPELINE</span>
                   <ShieldCheck className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-indigo-400" />
@@ -213,7 +230,7 @@ export const Hero: React.FC = () => {
                 <div className="text-[10px] sm:text-xs font-bold font-mono text-indigo-300 truncate">
                   MOBILE NATIVE
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Geolocation & Coordinates */}
@@ -234,22 +251,19 @@ export const Hero: React.FC = () => {
               <div className="truncate text-slate-400">&gt; p2p_handshake: Onyx Triple-Lock verified.</div>
               <div className="truncate text-slate-500">&gt; eBPF XDP filter: 0 dropped packets.</div>
             </div>
-          </div>
+          </SpotlightCard>
         </motion.div>
       </div>
 
-      {/* Bottom Stats & Key Achievements Bar */}
+      {/* Bottom Stats & Key Achievements Bar with Spotlight Physics */}
       <div className="max-w-7xl mx-auto w-full mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-800/80">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {PORTFOLIO_DATA.stats.map((stat, idx) => (
-            <motion.div
+            <SpotlightCard
               key={stat.label}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className="p-3.5 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-500/40 transition-all group"
+              enableTilt={true}
+              spotlightColor="rgba(0, 240, 255, 0.2)"
+              className="p-3.5 sm:p-5 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all group"
             >
               <div className="text-xl sm:text-3xl font-extrabold text-white font-mono group-hover:text-cyan-300 transition-colors truncate">
                 {stat.value}
@@ -261,7 +275,7 @@ export const Hero: React.FC = () => {
                 <Sparkles className="w-3 h-3 shrink-0" />
                 <span className="truncate">{stat.change}</span>
               </div>
-            </motion.div>
+            </SpotlightCard>
           ))}
         </div>
       </div>

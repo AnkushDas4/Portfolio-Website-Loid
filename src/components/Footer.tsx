@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronUp, Radio, Cpu } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { MagneticButton } from './MagneticButton';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -15,12 +16,14 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 mb-8 sm:mb-12">
           {/* Brand & CTO Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
-              <span className="font-mono font-bold tracking-wider text-sm sm:text-base text-white">
-                {PORTFOLIO_DATA.hero.handle} // {PORTFOLIO_DATA.hero.name}
-              </span>
-            </div>
+            <MagneticButton strength={0.25} onClick={scrollToTop}>
+              <div className="flex items-center gap-2 mb-1.5 cursor-pointer">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
+                <span className="font-mono font-bold tracking-wider text-sm sm:text-base text-white hover:text-cyan-300 transition-colors">
+                  {PORTFOLIO_DATA.hero.handle} // {PORTFOLIO_DATA.hero.name}
+                </span>
+              </div>
+            </MagneticButton>
             <p className="text-xs font-mono text-slate-400 max-w-sm">
               {PORTFOLIO_DATA.hero.title} • {PORTFOLIO_DATA.company.name}
             </p>
@@ -42,15 +45,15 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Back to Top */}
-          <button
-            onClick={scrollToTop}
-            onMouseEnter={() => sound.playHoverBlip()}
-            className="p-2.5 sm:p-3 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 text-slate-400 hover:text-white transition-all shadow-md group active:scale-95"
-            title="Back to Top"
-          >
-            <ChevronUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
+          {/* Back to Top with Magnetic Physics */}
+          <MagneticButton strength={0.4} onClick={scrollToTop}>
+            <button
+              className="p-2.5 sm:p-3 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] text-slate-400 hover:text-white transition-all shadow-md group"
+              title="Back to Top"
+            >
+              <ChevronUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+            </button>
+          </MagneticButton>
         </div>
 
         {/* Copyright & Engine Details */}

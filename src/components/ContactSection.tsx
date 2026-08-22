@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { MagneticButton } from './MagneticButton';
+import { SpotlightCard } from './SpotlightCard';
 
 export const ContactSection: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState<boolean>(false);
@@ -85,14 +87,18 @@ export const ContactSection: React.FC = () => {
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 sm:gap-12 items-start">
           {/* Left Column: Direct Links & PGP */}
           <div className="space-y-4 sm:space-y-6">
-            <div className="p-5 sm:p-8 rounded-3xl glass-panel border border-slate-800 space-y-4 sm:space-y-6">
+            <SpotlightCard
+              enableTilt={true}
+              spotlightColor="rgba(0, 240, 255, 0.14)"
+              className="p-5 sm:p-8 glass-panel border border-slate-800 space-y-4 sm:space-y-6"
+            >
               <h3 className="text-base sm:text-lg font-bold text-white font-mono flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-cyan-400" />
                 <span>Encrypted Comms Directory</span>
               </h3>
 
               {/* Email Item */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/30 transition-colors">
                 <div className="flex items-center gap-2.5 sm:gap-3 truncate pr-2">
                   <div className="p-2 sm:p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 shrink-0">
                     <Mail className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -108,17 +114,19 @@ export const ContactSection: React.FC = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.email, 'email')}
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
-                  title="Copy email"
-                >
-                  {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                </button>
+                <MagneticButton strength={0.4}>
+                  <button
+                    onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.email, 'email')}
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
+                    title="Copy email"
+                  >
+                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </MagneticButton>
               </div>
 
               {/* Phone Item */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/30 transition-colors">
                 <div className="flex items-center gap-2.5 sm:gap-3 truncate pr-2">
                   <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 shrink-0">
                     <Phone className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -134,13 +142,15 @@ export const ContactSection: React.FC = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.phone, 'phone')}
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
-                  title="Copy phone number"
-                >
-                  {copiedPhone ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                </button>
+                <MagneticButton strength={0.4}>
+                  <button
+                    onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.phone, 'phone')}
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
+                    title="Copy phone number"
+                  >
+                    {copiedPhone ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </MagneticButton>
               </div>
 
               {/* Location & Timezone */}
@@ -165,7 +175,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <button
                     onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.pgpFingerprint, 'pgp')}
-                    className="text-[11px] sm:text-xs font-mono text-slate-400 hover:text-cyan-300 flex items-center gap-1 shrink-0"
+                    className="text-[11px] sm:text-xs font-mono text-slate-400 hover:text-cyan-300 flex items-center gap-1 shrink-0 active:scale-95"
                   >
                     {copiedPgp ? (
                       <span className="text-emerald-400">Copied!</span>
@@ -181,47 +191,49 @@ export const ContactSection: React.FC = () => {
                   {PORTFOLIO_DATA.contact.pgpFingerprint}
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
 
             {/* GitHub & Organization Profiles */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <a
-                href={PORTFOLIO_DATA.contact.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => sound.playHoverBlip()}
-                className="p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 transition-all flex items-center justify-between group"
-              >
-                <div className="flex items-center gap-3">
-                  <Github className="w-5 h-5 text-white" />
-                  <div>
-                    <div className="text-[10px] sm:text-xs font-mono text-slate-400">PERSONAL</div>
-                    <div className="text-xs sm:text-sm font-bold text-white font-mono">@AnkushDas4</div>
+              <MagneticButton strength={0.3} className="w-full">
+                <a
+                  href={PORTFOLIO_DATA.contact.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Github className="w-5 h-5 text-white" />
+                    <div>
+                      <div className="text-[10px] sm:text-xs font-mono text-slate-400">PERSONAL</div>
+                      <div className="text-xs sm:text-sm font-bold text-white font-mono">@AnkushDas4</div>
+                    </div>
                   </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                </a>
+              </MagneticButton>
 
-              <a
-                href={PORTFOLIO_DATA.contact.sedniumGithub}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => sound.playHoverBlip()}
-                className="p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 transition-all flex items-center justify-between group"
-              >
-                <div className="flex items-center gap-3">
-                  <Github className="w-5 h-5 text-cyan-400" />
-                  <div>
-                    <div className="text-[10px] sm:text-xs font-mono text-slate-400">SEDNIUM ORG</div>
-                    <div className="text-xs sm:text-sm font-bold text-white font-mono">Sednium-Tech</div>
+              <MagneticButton strength={0.3} className="w-full">
+                <a
+                  href={PORTFOLIO_DATA.contact.sedniumGithub}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Github className="w-5 h-5 text-cyan-400" />
+                    <div>
+                      <div className="text-[10px] sm:text-xs font-mono text-slate-400">SEDNIUM ORG</div>
+                      <div className="text-xs sm:text-sm font-bold text-white font-mono">Sednium-Tech</div>
+                    </div>
                   </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                </a>
+              </MagneticButton>
             </div>
           </div>
 
-          {/* Right Column: Encrypted Transmission Form */}
+          {/* Right Column: Encrypted Transmission Form with Spotlight */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -297,26 +309,27 @@ export const ContactSection: React.FC = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={isSending}
-                onMouseEnter={() => sound.playHoverBlip()}
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold font-mono text-xs sm:text-sm hover:shadow-neon-cyan transition-all disabled:opacity-50 active:scale-98"
-              >
-                {isSending ? (
-                  <span>TRANSMITTING PACKETS...</span>
-                ) : sentSuccess ? (
-                  <span className="flex items-center gap-2">
-                    <Check className="w-4 h-4" />
-                    <span>TRANSMISSION DISPATCHED</span>
-                  </span>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span>DISPATCH SECURE TRANSMISSION</span>
-                  </>
-                )}
-              </button>
+              <MagneticButton strength={0.3} className="w-full">
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold font-mono text-xs sm:text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all disabled:opacity-50"
+                >
+                  {isSending ? (
+                    <span>TRANSMITTING PACKETS...</span>
+                  ) : sentSuccess ? (
+                    <span className="flex items-center gap-2">
+                      <Check className="w-4 h-4" />
+                      <span>TRANSMISSION DISPATCHED</span>
+                    </span>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>DISPATCH SECURE TRANSMISSION</span>
+                    </>
+                  )}
+                </button>
+              </MagneticButton>
             </form>
           </motion.div>
         </div>

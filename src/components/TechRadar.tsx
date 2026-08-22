@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Network, 
-  X
-} from 'lucide-react';
+import { Network, X } from 'lucide-react';
 import { PORTFOLIO_DATA, SkillItem } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { SpotlightCard } from './SpotlightCard';
+import { MagneticButton } from './MagneticButton';
 
 export const TechRadar: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -39,39 +38,37 @@ export const TechRadar: React.FC = () => {
           </p>
         </div>
 
-        {/* Filter Tabs (Scrollable on Mobile) */}
+        {/* Filter Tabs (Scrollable on Mobile) with Magnetic Buttons */}
         <div className="flex items-center sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-2 mb-8 sm:mb-12 max-w-full">
           {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                sound.playClickSound();
-                setSelectedCategory(cat);
-              }}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all shrink-0 whitespace-nowrap ${
-                selectedCategory === cat
-                  ? 'bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-semibold shadow-[0_0_15px_rgba(0,240,255,0.2)]'
-                  : 'glass-panel border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
-              }`}
-            >
-              {cat}
-            </button>
+            <MagneticButton key={cat} strength={0.2}>
+              <button
+                onClick={() => {
+                  sound.playClickSound();
+                  setSelectedCategory(cat);
+                }}
+                onMouseEnter={() => sound.playHoverBlip()}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all shrink-0 whitespace-nowrap ${
+                  selectedCategory === cat
+                    ? 'bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-semibold shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+                    : 'glass-panel border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                }`}
+              >
+                {cat}
+              </button>
+            </MagneticButton>
           ))}
         </div>
 
-        {/* Skills Radar Cards Grid */}
+        {/* Skills Radar Cards Grid with Spotlight Physics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredSkills.map((skill, idx) => (
-            <motion.div
+            <SpotlightCard
               key={skill.name}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.06 }}
+              enableTilt={true}
+              spotlightColor="rgba(0, 240, 255, 0.2)"
               onClick={() => handleSelectSkill(skill)}
-              onMouseEnter={() => sound.playHoverBlip()}
-              className="p-5 sm:p-6 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_25px_rgba(0,240,255,0.15)] transition-all cursor-pointer group flex flex-col justify-between"
+              className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.18)] transition-all cursor-pointer group"
             >
               <div>
                 <div className="flex items-center justify-between mb-2.5 sm:mb-3">
@@ -109,7 +106,7 @@ export const TechRadar: React.FC = () => {
                   />
                 </div>
               </div>
-            </motion.div>
+            </SpotlightCard>
           ))}
         </div>
 
@@ -131,12 +128,14 @@ export const TechRadar: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.92, y: 20 }}
                 className="relative w-full max-w-lg glass-panel-glow border border-cyan-500/40 rounded-3xl p-5 sm:p-8 shadow-2xl z-10"
               >
-                <button
-                  onClick={() => setActiveSkill(null)}
-                  className="absolute top-4 sm:top-5 right-4 sm:top-5 p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <MagneticButton strength={0.4} className="absolute top-4 sm:top-5 right-4 sm:top-5">
+                  <button
+                    onClick={() => setActiveSkill(null)}
+                    className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </MagneticButton>
 
                 <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-2">
                   {activeSkill.category} • {activeSkill.years}

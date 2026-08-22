@@ -7,13 +7,14 @@ import {
   Terminal, 
   Smartphone, 
   CheckCircle2, 
-  XCircle,
-  Zap,
-  Flame,
-  Award
+  XCircle, 
+  Zap, 
+  Flame, 
+  Award 
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
+import { SpotlightCard } from './SpotlightCard';
 
 const iconMap = {
   Cpu: Cpu,
@@ -32,7 +33,9 @@ export const IdentityPhilosophy: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4"
+            whileHover={{ scale: 1.05 }}
+            onMouseEnter={() => sound.playHoverBlip()}
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4 cursor-default"
           >
             <Smartphone className="w-3.5 h-3.5" />
             <span>CORE ARCHITECTURAL DOCTRINE</span>
@@ -60,13 +63,11 @@ export const IdentityPhilosophy: React.FC = () => {
         </div>
 
         {/* Engineering Philosophy Quote / Highlight Box */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative rounded-3xl glass-panel-glow p-5 sm:p-8 md:p-10 border border-cyan-500/30 mb-12 sm:mb-16 overflow-hidden"
+        <SpotlightCard
+          enableTilt={true}
+          spotlightColor="rgba(0, 240, 255, 0.15)"
+          className="glass-panel-glow p-5 sm:p-8 md:p-10 border border-cyan-500/30 mb-12 sm:mb-16"
         >
-          <div className="absolute top-0 right-0 w-60 sm:w-80 h-60 sm:h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-center">
             <div>
               <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
@@ -83,7 +84,7 @@ export const IdentityPhilosophy: React.FC = () => {
               <span className="text-sm font-bold text-white font-mono">Zero Bloat</span>
             </div>
           </div>
-        </motion.div>
+        </SpotlightCard>
 
         {/* Mobile-Native vs Conventional Comparison Matrix */}
         <div className="mb-14 sm:mb-20">
@@ -98,14 +99,11 @@ export const IdentityPhilosophy: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
             {PORTFOLIO_DATA.identityPhilosophy.comparison.map((item, idx) => (
-              <motion.div
+              <SpotlightCard
                 key={item.aspect}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                onMouseEnter={() => sound.playHoverBlip()}
-                className="p-5 sm:p-6 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
+                enableTilt={true}
+                spotlightColor="rgba(0, 240, 255, 0.18)"
+                className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all"
               >
                 <div>
                   <div className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider mb-3 sm:mb-4 pb-2 border-b border-slate-800">
@@ -139,7 +137,7 @@ export const IdentityPhilosophy: React.FC = () => {
                   <span>SEDNIUM STANDARD</span>
                   <Zap className="w-3.5 h-3.5 text-cyan-400" />
                 </div>
-              </motion.div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
@@ -157,17 +155,13 @@ export const IdentityPhilosophy: React.FC = () => {
               const Icon = iconMap[pillar.icon as keyof typeof iconMap] || Cpu;
 
               return (
-                <motion.div
+                <SpotlightCard
                   key={pillar.id}
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.08 }}
-                  whileHover={{ y: -4 }}
-                  onMouseEnter={() => sound.playHoverBlip()}
-                  className="p-5 sm:p-6 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_25px_rgba(0,240,255,0.12)] transition-all flex flex-col group cursor-default"
+                  enableTilt={true}
+                  spotlightColor="rgba(0, 240, 255, 0.22)"
+                  className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all cursor-default group"
                 >
-                  <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 sm:mb-5 group-hover:scale-105 group-hover:bg-cyan-500/20 transition-all">
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all">
                     <Icon className="w-5 sm:w-6 h-5 sm:h-6" />
                   </div>
 
@@ -181,9 +175,9 @@ export const IdentityPhilosophy: React.FC = () => {
 
                   <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-cyan-400/60">
                     <span>PILLAR 0{idx + 1}</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 group-hover:shadow-[0_0_8px_#00f0ff]" />
                   </div>
-                </motion.div>
+                </SpotlightCard>
               );
             })}
           </div>
