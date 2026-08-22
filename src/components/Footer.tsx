@@ -11,9 +11,9 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="pt-12 sm:pt-16 pb-24 md:pb-16 px-4 sm:px-6 border-t border-slate-900 bg-black/80 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 mb-8 sm:mb-12">
+    <footer className="pt-12 sm:pt-16 pb-28 sm:pb-24 px-4 sm:px-6 md:px-8 border-t border-slate-900 bg-black/80 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 mb-8 sm:mb-12 w-full">
           {/* Brand & CTO Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <MagneticButton strength={0.25} onClick={scrollToTop}>
@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Copyright & Engine Details */}
-        <div className="pt-6 sm:pt-8 border-t border-slate-900/90 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-[10px] sm:text-[11px] font-mono text-slate-500 text-center sm:text-left">
+        <div className="pt-6 sm:pt-8 border-t border-slate-900/90 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-[10px] sm:text-[11px] font-mono text-slate-500 text-center sm:text-left w-full">
           <div>
             © {new Date().getFullYear()} Ankush Das ({PORTFOLIO_DATA.hero.handle}) & Sednium Technologies. All rights reserved.
           </div>

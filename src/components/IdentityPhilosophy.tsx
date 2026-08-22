@@ -25,8 +25,8 @@ const iconMap = {
 
 export const IdentityPhilosophy: React.FC = () => {
   return (
-    <section id="philosophy" className="py-16 sm:py-24 px-4 sm:px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="philosophy" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <motion.div
@@ -56,7 +56,7 @@ export const IdentityPhilosophy: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-light"
+            className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed font-light px-2"
           >
             {PORTFOLIO_DATA.identityPhilosophy.intro}
           </motion.p>
@@ -64,11 +64,10 @@ export const IdentityPhilosophy: React.FC = () => {
 
         {/* Engineering Philosophy Quote / Highlight Box */}
         <SpotlightCard
-          enableTilt={true}
           spotlightColor="rgba(0, 240, 255, 0.15)"
-          className="glass-panel-glow p-5 sm:p-8 md:p-10 border border-cyan-500/30 mb-12 sm:mb-16"
+          className="glass-panel-glow p-5 sm:p-8 md:p-10 border border-cyan-500/30 mb-12 sm:mb-16 w-full"
         >
-          <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-center">
+          <div className="relative z-10 grid md:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-center w-full">
             <div>
               <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                 <Flame className="w-4 h-4" />
@@ -87,7 +86,7 @@ export const IdentityPhilosophy: React.FC = () => {
         </SpotlightCard>
 
         {/* Mobile-Native vs Conventional Comparison Matrix */}
-        <div className="mb-14 sm:mb-20">
+        <div className="mb-14 sm:mb-20 w-full">
           <div className="text-center mb-8">
             <h3 className="text-lg sm:text-2xl font-bold text-white font-mono">
               &gt; THE ARCHITECTURAL ADVANTAGE MATRIX
@@ -97,13 +96,12 @@ export const IdentityPhilosophy: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
-            {PORTFOLIO_DATA.identityPhilosophy.comparison.map((item, idx) => (
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 w-full">
+            {PORTFOLIO_DATA.identityPhilosophy.comparison.map((item) => (
               <SpotlightCard
                 key={item.aspect}
-                enableTilt={true}
                 spotlightColor="rgba(0, 240, 255, 0.18)"
-                className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all"
+                className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all w-full"
               >
                 <div>
                   <div className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider mb-3 sm:mb-4 pb-2 border-b border-slate-800">
@@ -143,23 +141,22 @@ export const IdentityPhilosophy: React.FC = () => {
         </div>
 
         {/* 4 Core Architectural Pillars */}
-        <div>
+        <div className="w-full">
           <div className="text-center mb-8 sm:mb-10">
             <h3 className="text-xl sm:text-3xl font-extrabold text-white">
               The 4 Pillars of Sednium Engineering
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
             {PORTFOLIO_DATA.identityPhilosophy.pillars.map((pillar, idx) => {
               const Icon = iconMap[pillar.icon as keyof typeof iconMap] || Cpu;
 
               return (
                 <SpotlightCard
                   key={pillar.id}
-                  enableTilt={true}
                   spotlightColor="rgba(0, 240, 255, 0.22)"
-                  className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all cursor-default group"
+                  className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all cursor-default group w-full"
                 >
                   <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4 sm:mb-5 group-hover:scale-110 group-hover:bg-cyan-500/25 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all">
                     <Icon className="w-5 sm:w-6 h-5 sm:h-6" />

@@ -7,8 +7,8 @@ import { SpotlightCard } from './SpotlightCard';
 
 export const TechJourneyTimeline: React.FC = () => {
   return (
-    <section id="timeline" className="py-16 sm:py-24 px-4 sm:px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="timeline" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
@@ -18,19 +18,19 @@ export const TechJourneyTimeline: React.FC = () => {
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3 sm:mb-4">
             Engineering & Career Timeline
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base font-light">
+          <p className="text-slate-400 text-sm sm:text-base font-light px-2">
             The path from writing code on a mobile device to architecting scalable, secure decentralized infrastructure.
           </p>
         </div>
 
         {/* Timeline Circuit Container */}
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto w-full">
           {/* Vertical Glowing Circuit Line */}
           <div className="absolute left-3.5 md:left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-slate-800" />
           <div className="absolute left-3.5 md:left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-gradient-to-b from-cyan-400 via-indigo-500 to-cyan-400 shadow-[0_0_10px_#00f0ff] opacity-60" />
 
           {/* Timeline Nodes */}
-          <div className="space-y-8 sm:space-y-16">
+          <div className="space-y-8 sm:space-y-16 w-full">
             {PORTFOLIO_DATA.timeline.map((item, idx) => {
               const isEven = idx % 2 === 0;
 
@@ -41,7 +41,7 @@ export const TechJourneyTimeline: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className={`relative flex flex-col md:flex-row items-start ${
+                  className={`relative flex flex-col md:flex-row items-start w-full ${
                     isEven ? 'md:flex-row-reverse' : ''
                   }`}
                 >
@@ -56,11 +56,10 @@ export const TechJourneyTimeline: React.FC = () => {
                   </div>
 
                   {/* Content Card with Spotlight Physics */}
-                  <div className={`ml-9 sm:ml-12 md:ml-0 md:w-[45%]`}>
+                  <div className={`ml-8 sm:ml-12 md:ml-0 md:w-[45%] w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)]`}>
                     <SpotlightCard
-                      enableTilt={true}
                       spotlightColor="rgba(0, 240, 255, 0.16)"
-                      className="p-5 sm:p-8 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all hover:shadow-[0_0_35px_rgba(0,240,255,0.15)] group"
+                      className="p-4 sm:p-6 md:p-8 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all hover:shadow-[0_0_35px_rgba(0,240,255,0.15)] group w-full"
                     >
                       {/* Header: Date & Badge */}
                       <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">

@@ -16,8 +16,8 @@ export const TechRadar: React.FC = () => {
     : PORTFOLIO_DATA.techStack.filter(s => s.category === selectedCategory);
 
   return (
-    <section id="radar" className="py-16 sm:py-24 px-4 sm:px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="radar" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
@@ -27,7 +27,7 @@ export const TechRadar: React.FC = () => {
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3 sm:mb-4">
             Core Technical Proficiencies
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base font-light">
+          <p className="text-slate-400 text-sm sm:text-base font-light px-2">
             Engineered under extreme hardware constraints for maximum efficiency and execution speed.
           </p>
         </div>
@@ -54,12 +54,12 @@ export const TechRadar: React.FC = () => {
         </div>
 
         {/* Skills Radar Cards Grid with Spotlight Physics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
           {filteredSkills.map((skill, idx) => (
             <SpotlightCard
               key={skill.name}
               spotlightColor="rgba(0, 240, 255, 0.2)"
-              className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.18)] transition-all group"
+              className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.18)] transition-all group w-full"
             >
               <div>
                 <div className="flex items-center justify-between mb-2.5 sm:mb-3">

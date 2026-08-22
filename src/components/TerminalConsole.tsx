@@ -223,8 +223,8 @@ export const TerminalConsole: React.FC = () => {
   };
 
   return (
-    <section id="terminal" className="py-16 sm:py-24 px-4 sm:px-6 relative">
-      <div className="max-w-5xl mx-auto">
+    <section id="terminal" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
@@ -234,13 +234,13 @@ export const TerminalConsole: React.FC = () => {
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3 sm:mb-4">
             Direct Terminal Access
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base font-light">
+          <p className="text-slate-400 text-sm sm:text-base font-light px-2">
             Query architecture telemetry, cryptographic specs, and developer identity via live terminal emulator.
           </p>
         </div>
 
         {/* Quick Command Chips on Mobile */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-3 mb-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-3 mb-2 w-full">
           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider shrink-0 mr-1">Quick:</span>
           {quickCommands.map(cmd => (
             <button
@@ -259,7 +259,7 @@ export const TerminalConsole: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="rounded-3xl glass-panel-glow border border-cyan-500/40 shadow-2xl overflow-hidden"
+          className="rounded-3xl glass-panel-glow border border-cyan-500/40 shadow-2xl overflow-hidden w-full"
         >
           {/* Top Bar */}
           <div className="px-4 sm:px-5 py-3 sm:py-3.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">

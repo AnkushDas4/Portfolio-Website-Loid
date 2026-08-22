@@ -44,15 +44,15 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex flex-col justify-center pt-20 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-8 sm:gap-12 lg:gap-8 items-center">
+    <section id="hero" className="relative min-h-[90vh] flex flex-col justify-center pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 px-4 sm:px-6 md:px-8 w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-8 sm:gap-10 lg:gap-12 items-center">
         
         {/* Left Column: Headline, Identity & CTAs */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col items-start"
+          className="flex flex-col items-start w-full"
         >
           {/* Status Badge with pulse glow */}
           <motion.div 
@@ -104,7 +104,7 @@ export const Hero: React.FC = () => {
           </p>
 
           {/* Roles Pill Tags */}
-          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8 sm:mb-10">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8 sm:mb-10 w-full">
             {PORTFOLIO_DATA.hero.roles.map((role) => (
               <motion.span
                 key={role}
@@ -119,7 +119,7 @@ export const Hero: React.FC = () => {
 
           {/* Magnetic CTAs */}
           <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <MagneticButton strength={0.4}>
+            <MagneticButton strength={0.4} className="w-full sm:w-auto">
               <button 
                 onClick={() => scrollTo('projects')}
                 className="relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all overflow-hidden group"
@@ -131,7 +131,7 @@ export const Hero: React.FC = () => {
               </button>
             </MagneticButton>
 
-            <MagneticButton strength={0.3}>
+            <MagneticButton strength={0.3} className="w-full sm:w-auto">
               <button 
                 onClick={() => scrollTo('terminal')}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-sm transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.2)]"
@@ -141,7 +141,7 @@ export const Hero: React.FC = () => {
               </button>
             </MagneticButton>
 
-            <MagneticButton strength={0.25}>
+            <MagneticButton strength={0.25} className="w-full sm:w-auto">
               <button 
                 onClick={() => scrollTo('contact')}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white text-sm transition-all"
@@ -153,7 +153,7 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Right Column: Interactive Live Telemetry HUD Widget */}
+        {/* Right Column: Live Telemetry HUD Widget */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
         >
           <SpotlightCard
             spotlightColor="rgba(0, 240, 255, 0.16)"
-            className="glass-panel-glow p-4 sm:p-6 border border-cyan-500/30"
+            className="glass-panel-glow p-4 sm:p-6 border border-cyan-500/30 w-full"
           >
             {/* Header Telemetry */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4 mb-4 sm:mb-5">
@@ -250,13 +250,13 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Bottom Stats & Key Achievements Bar */}
-      <div className="max-w-7xl mx-auto w-full mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-800/80">
+      <div className="max-w-6xl mx-auto w-full mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-800/80">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-          {PORTFOLIO_DATA.stats.map((stat, idx) => (
+          {PORTFOLIO_DATA.stats.map((stat) => (
             <SpotlightCard
               key={stat.label}
               spotlightColor="rgba(0, 240, 255, 0.2)"
-              className="p-3.5 sm:p-5 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all group"
+              className="p-3.5 sm:p-5 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all group w-full"
             >
               <div className="text-xl sm:text-3xl font-extrabold text-white font-mono group-hover:text-cyan-300 transition-colors truncate">
                 {stat.value}

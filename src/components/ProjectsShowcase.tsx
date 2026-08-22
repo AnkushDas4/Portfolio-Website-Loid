@@ -29,10 +29,10 @@ export const ProjectsShowcase: React.FC = () => {
   };
 
   return (
-    <section id="projects" className="py-16 sm:py-24 px-4 sm:px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="projects" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4 sm:gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4 sm:gap-6 w-full">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-3 sm:mb-4">
               <Layers className="w-3.5 h-3.5" />
@@ -69,12 +69,12 @@ export const ProjectsShowcase: React.FC = () => {
         </div>
 
         {/* Project Cards Grid with Spotlight Physics */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 w-full">
           {filteredProjects.map((project) => (
             <SpotlightCard
               key={project.id}
               spotlightColor="rgba(0, 240, 255, 0.18)"
-              className="glass-panel border border-slate-800 hover:border-cyan-500/60 transition-all duration-300 p-5 sm:p-8 hover:shadow-[0_0_40px_rgba(0,240,255,0.18)]"
+              className="glass-panel border border-slate-800 hover:border-cyan-500/60 transition-all duration-300 p-5 sm:p-8 hover:shadow-[0_0_40px_rgba(0,240,255,0.18)] w-full"
             >
               <div className="absolute top-0 right-0 w-40 sm:w-48 h-40 sm:h-48 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/25 transition-all pointer-events-none" />
 

@@ -38,7 +38,7 @@ export const App: React.FC = () => {
         <Navbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
 
         {/* Main Content Sections */}
-        <main className="relative z-10">
+        <main className="relative z-10 pb-8 sm:pb-12">
           <Hero />
           <IdentityPhilosophy />
           <ProjectsShowcase />
