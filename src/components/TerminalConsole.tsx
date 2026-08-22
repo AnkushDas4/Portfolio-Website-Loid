@@ -31,11 +31,14 @@ export const TerminalConsole: React.FC = () => {
 
   const quickCommands = ['help', 'about', 'projects', 'skills', 'telemetry', 'matrix', 'contact', 'clear'];
 
-  const terminalEndRef = useRef<HTMLDivElement | null>(null);
+  const terminalBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Only scroll the internal terminal container, never the window
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (cmd: string) => {
@@ -278,6 +281,7 @@ export const TerminalConsole: React.FC = () => {
 
           {/* Terminal Body */}
           <div 
+            ref={terminalBodyRef}
             onClick={() => inputRef.current?.focus()}
             className="p-4 sm:p-6 font-mono text-xs sm:text-sm bg-black/75 min-h-[260px] sm:min-h-[340px] max-h-[440px] overflow-y-auto cursor-text space-y-3.5 no-scrollbar"
           >
@@ -309,8 +313,6 @@ export const TerminalConsole: React.FC = () => {
               />
               <CornerDownLeft className="w-4 h-4 text-slate-600 shrink-0" />
             </div>
-
-            <div ref={terminalEndRef} />
           </div>
         </motion.div>
       </div>
