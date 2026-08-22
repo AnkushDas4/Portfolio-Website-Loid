@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, 
   Phone, 
@@ -12,7 +12,9 @@ import {
   Radio, 
   MessageSquare, 
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
@@ -28,8 +30,10 @@ export const ContactSection: React.FC = () => {
     subject: '',
     message: ''
   });
+
   const [isSending, setIsSending] = useState<boolean>(false);
-  const [sentSuccess, setSentSuccess] = useState<boolean>(false);
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   const copyToClipboard = (text: string, type: 'email' | 'phone' | 'pgp') => {
     sound.playClickSound();
@@ -46,23 +50,46 @@ export const ContactSection: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    if (!formData.name || !formData.email || !formData.message || isSending) return;
 
     sound.playActivateHum();
     setIsSending(true);
+    setSubmissionStatus('idle');
+    setStatusMessage('');
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          payload: formData.message,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.status === 'success') {
+        sound.playHoverBlip();
+        setSubmissionStatus('success');
+        setStatusMessage(data.message || 'Transmission dispatched successfully to Sednium Core Node.');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(data.message || `Server returned status ${response.status}`);
+      }
+    } catch (err: any) {
+      console.error('Contact transmission failure:', err);
+      setSubmissionStatus('error');
+      setStatusMessage(err?.message || 'Transmission packets dropped. Fallback mail client available.');
+    } finally {
       setIsSending(false);
-      setSentSuccess(true);
-      const mailtoLink = `mailto:${PORTFOLIO_DATA.contact.email}?subject=${encodeURIComponent(
-        `[Transmission] ${formData.subject || 'CTO Inquiry'} from ${formData.name}`
-      )}&body=${encodeURIComponent(
-        `From: ${formData.name} (${formData.email})\n\nMessage:\n${formData.message}`
-      )}`;
-      window.location.href = mailtoLink;
-    }, 800);
+    }
   };
 
   return (
@@ -113,7 +140,7 @@ export const ContactSection: React.FC = () => {
 
             <button
               onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.email, 'email')}
-              className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
+              className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95 cursor-pointer"
               title="Copy email"
             >
               {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -139,7 +166,7 @@ export const ContactSection: React.FC = () => {
 
             <button
               onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.phone, 'phone')}
-              className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95"
+              className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all shrink-0 active:scale-95 cursor-pointer"
               title="Copy phone number"
             >
               {copiedPhone ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -168,7 +195,7 @@ export const ContactSection: React.FC = () => {
               </div>
               <button
                 onClick={() => copyToClipboard(PORTFOLIO_DATA.contact.pgpFingerprint, 'pgp')}
-                className="text-[10px] sm:text-xs font-mono text-slate-400 hover:text-cyan-300 flex items-center gap-1 shrink-0 active:scale-95"
+                className="text-[10px] sm:text-xs font-mono text-slate-400 hover:text-cyan-300 flex items-center gap-1 shrink-0 active:scale-95 cursor-pointer"
               >
                 {copiedPgp ? (
                   <span className="text-emerald-400">Copied!</span>
@@ -248,10 +275,11 @@ export const ContactSection: React.FC = () => {
                 <input
                   type="text"
                   required
+                  disabled={isSending}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Satoshi Nakamoto"
-                  className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors"
+                  className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors disabled:opacity-50"
                 />
               </div>
 
@@ -262,10 +290,11 @@ export const ContactSection: React.FC = () => {
                 <input
                   type="email"
                   required
+                  disabled={isSending}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="satoshi@domain.com"
-                  className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors"
+                  className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors disabled:opacity-50"
                 />
               </div>
             </div>
@@ -276,10 +305,11 @@ export const ContactSection: React.FC = () => {
               </label>
               <input
                 type="text"
+                disabled={isSending}
                 value={formData.subject}
                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                 placeholder="e.g. Decentralized Architecture Collaboration"
-                className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors"
+                className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors disabled:opacity-50"
               />
             </div>
 
@@ -290,26 +320,72 @@ export const ContactSection: React.FC = () => {
               <textarea
                 required
                 rows={4}
+                disabled={isSending}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Describe your architecture requirements, project vision, or technical inquiries..."
-                className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors resize-none"
+                className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900/80 border border-slate-800 focus:border-cyan-400 text-white font-mono text-base sm:text-sm outline-none transition-colors resize-none disabled:opacity-50"
               />
             </div>
+
+            {/* Terminal Status Alert Toast */}
+            <AnimatePresence>
+              {submissionStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-mono text-xs flex items-center gap-2.5 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+                >
+                  <Check className="w-4 h-4 shrink-0 text-emerald-400" />
+                  <div>
+                    <span className="font-bold">&gt; TRANSMISSION DISPATCHED [200 OK]:</span> {statusMessage}
+                  </div>
+                </motion.div>
+              )}
+
+              {submissionStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 font-mono text-xs space-y-1 shadow-[0_0_15px_rgba(244,63,94,0.15)]"
+                >
+                  <div className="flex items-center gap-2 font-bold text-rose-400">
+                    <AlertTriangle className="w-4 h-4 shrink-0" />
+                    <span>&gt; TRANSMISSION ERROR:</span>
+                  </div>
+                  <div className="pl-6 text-[11px] text-rose-200">
+                    {statusMessage}
+                  </div>
+                  <div className="pl-6 pt-1">
+                    <a
+                      href={`mailto:${PORTFOLIO_DATA.contact.email}?subject=${encodeURIComponent(formData.subject || 'CTO Inquiry')}&body=${encodeURIComponent(formData.message)}`}
+                      className="text-cyan-300 underline font-semibold hover:text-cyan-200"
+                    >
+                      Click here to dispatch via native email client &rarr;
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <div className="pt-2 w-full">
               <button
                 type="submit"
                 disabled={isSending}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold font-mono text-xs sm:text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all disabled:opacity-50 active:scale-98 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold font-mono text-xs sm:text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all disabled:opacity-60 active:scale-98 cursor-pointer"
               >
                 {isSending ? (
-                  <span>TRANSMITTING PACKETS...</span>
-                ) : sentSuccess ? (
-                  <span className="flex items-center gap-2">
-                    <Check className="w-4 h-4" />
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+                    <span>TRANSMITTING PACKETS TO CORE NODE...</span>
+                  </>
+                ) : submissionStatus === 'success' ? (
+                  <>
+                    <Check className="w-4 h-4 text-slate-950" />
                     <span>TRANSMISSION DISPATCHED</span>
-                  </span>
+                  </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
