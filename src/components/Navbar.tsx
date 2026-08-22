@@ -23,13 +23,12 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isSoundOn, setIsSoundOn] = useState<boolean>(sound.getSoundState());
-  const [scrolled, setScrolled] = useState<boolean>(false);
 
   const navItems = [
     { id: 'hero', label: 'Home', icon: Terminal },
     { id: 'philosophy', label: 'Philosophy', icon: Cpu },
     { id: 'projects', label: 'Projects', icon: Layers },
-    { id: 'radar', label: 'Tech Radar', icon: Network },
+    { id: 'radar', label: 'Radar', icon: Network },
     { id: 'timeline', label: 'Timeline', icon: GitCommit },
     { id: 'terminal', label: 'Console', icon: Terminal },
     { id: 'contact', label: 'Contact', icon: Mail },
@@ -37,10 +36,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-
       const sectionElements = navItems.map((item) => document.getElementById(item.id));
-      const scrollPos = window.scrollY + 200;
+      const scrollPos = window.scrollY + 220;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
         const el = sectionElements[i];
@@ -71,25 +68,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   return (
     <>
       {/* Top HUD Status Bar */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-4 py-3 pointer-events-none transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 py-2.5 sm:py-3.5 pointer-events-none transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
           {/* Logo & Node Status */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => scrollToSection('hero')}
               onMouseEnter={() => sound.playHoverBlip()}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-panel border border-cyan-500/30 hover:border-cyan-400 text-slate-100 transition-all group"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel border border-cyan-500/30 hover:border-cyan-400 text-slate-100 transition-all group active:scale-95"
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] animate-pulse" />
-              <span className="font-mono font-bold tracking-wider text-sm group-hover:text-cyan-400 transition-colors">
-                LØID<span className="text-cyan-400">.SYSTEMS</span>
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] animate-pulse" />
+              <span className="font-mono font-bold tracking-wider text-xs sm:text-sm group-hover:text-cyan-400 transition-colors">
+                LØID<span className="text-cyan-400">.SYS</span>
               </span>
             </button>
 
-            {/* Quick Live Node Badge (Desktop) */}
+            {/* Quick Live Node Badge (Desktop & Tablet) */}
             <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel text-xs font-mono text-slate-400 border border-slate-800">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>P2P SECURE NODE:</span>
+              <span>NODE:</span>
               <span className="text-emerald-400 font-semibold">{PORTFOLIO_DATA.hero.location}</span>
             </div>
           </div>
@@ -103,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 onOpenCommandPalette();
               }}
               onMouseEnter={() => sound.playHoverBlip()}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs font-mono transition-all shadow-sm"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs font-mono transition-all shadow-sm active:scale-95"
               title="Command Palette (Cmd+K)"
             >
               <Search className="w-3.5 h-3.5" />
@@ -117,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             <button
               onClick={handleToggleSound}
               onMouseEnter={() => sound.playHoverBlip()}
-              className={`p-2 rounded-xl glass-panel border transition-all text-xs ${
+              className={`p-2 rounded-xl glass-panel border transition-all text-xs active:scale-95 ${
                 isSoundOn 
                   ? 'border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
                   : 'border-slate-800 text-slate-500 hover:text-slate-300'
@@ -143,12 +140,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         </div>
       </header>
 
-      {/* Floating Bottom Navigation Dock */}
+      {/* Floating Bottom Navigation Dock (Responsive Mobile + Desktop) */}
       <motion.nav 
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 25 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 px-3 py-2 rounded-2xl glass-panel-glow shadow-2xl flex items-center gap-1 sm:gap-2 max-w-[95vw] overflow-x-auto"
+        className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 px-2 sm:px-3 py-1.5 sm:py-2 rounded-2xl glass-panel-glow shadow-2xl flex items-center justify-center gap-1 sm:gap-2 max-w-[96vw] overflow-x-auto no-scrollbar"
       >
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -159,7 +156,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               onMouseEnter={() => sound.playHoverBlip()}
-              className={`relative px-3 py-2 rounded-xl flex items-center gap-2 text-xs font-mono transition-all group outline-none whitespace-nowrap ${
+              aria-label={item.label}
+              className={`relative px-2.5 sm:px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-mono transition-all group outline-none shrink-0 ${
                 isActive
                   ? 'text-cyan-300 font-semibold'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -168,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               {isActive && (
                 <motion.div
                   layoutId="activeNavTab"
-                  className="absolute inset-0 rounded-xl bg-cyan-500/15 border border-cyan-400/40 shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                  className="absolute inset-0 rounded-xl bg-cyan-500/20 border border-cyan-400/50 shadow-[0_0_12px_rgba(0,240,255,0.25)]"
                   transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 />
               )}

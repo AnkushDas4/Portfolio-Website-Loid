@@ -6,10 +6,17 @@
   color-scheme: dark;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Custom Cyber Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -27,33 +34,43 @@
   box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
+/* Hide scrollbar for horizontal chip bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Base utility layers */
 @layer utilities {
   .bg-grid-cyber {
-    background-size: 32px 32px;
+    background-size: 28px 28px;
     background-image: 
       linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   }
 
-  .bg-grid-dots {
-    background-size: 24px 24px;
-    background-image: radial-gradient(rgba(0, 240, 255, 0.12) 1px, transparent 1px);
+  @media (min-width: 768px) {
+    .bg-grid-cyber {
+      background-size: 36px 36px;
+    }
   }
 
   .glass-panel {
-    background: rgba(12, 16, 27, 0.75);
+    background: rgba(12, 16, 27, 0.82);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-panel-glow {
-    background: rgba(12, 16, 27, 0.85);
+    background: rgba(12, 16, 27, 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.28);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.08);
   }
 
   .text-glow-cyan {
@@ -77,6 +94,6 @@
 
 /* Smooth selection */
 ::selection {
-  background: rgba(6, 182, 212, 0.25);
+  background: rgba(6, 182, 212, 0.3);
   color: #00f0ff;
 }
