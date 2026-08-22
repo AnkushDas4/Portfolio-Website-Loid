@@ -11,8 +11,7 @@ import {
   ArrowRight,
   Sparkles,
   MapPin,
-  Flame,
-  Zap
+  Flame
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
@@ -40,7 +39,6 @@ export const Hero: React.FC = () => {
   };
 
   const scrollTo = (id: string) => {
-    sound.playClickSound();
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
@@ -121,8 +119,11 @@ export const Hero: React.FC = () => {
 
           {/* Magnetic CTAs */}
           <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <MagneticButton strength={0.4} onClick={() => scrollTo('projects')}>
-              <button className="relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all overflow-hidden group">
+            <MagneticButton strength={0.4}>
+              <button 
+                onClick={() => scrollTo('projects')}
+                className="relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 text-slate-950 font-bold text-sm shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all overflow-hidden group"
+              >
                 <span className="absolute inset-0 w-full h-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
                 <Layers className="w-4 h-4 relative z-10" />
                 <span className="relative z-10">Explore Architecture</span>
@@ -130,15 +131,21 @@ export const Hero: React.FC = () => {
               </button>
             </MagneticButton>
 
-            <MagneticButton strength={0.3} onClick={() => scrollTo('terminal')}>
-              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-sm transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+            <MagneticButton strength={0.3}>
+              <button 
+                onClick={() => scrollTo('terminal')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-cyan-300 font-mono text-sm transition-all hover:shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+              >
                 <Terminal className="w-4 h-4 text-cyan-400" />
                 <span>Launch CLI</span>
               </button>
             </MagneticButton>
 
-            <MagneticButton strength={0.25} onClick={() => scrollTo('contact')}>
-              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white text-sm transition-all">
+            <MagneticButton strength={0.25}>
+              <button 
+                onClick={() => scrollTo('contact')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl glass-panel border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white text-sm transition-all"
+              >
                 <Mail className="w-4 h-4" />
                 <span>Contact</span>
               </button>
@@ -154,7 +161,6 @@ export const Hero: React.FC = () => {
           className="relative w-full"
         >
           <SpotlightCard
-            enableTilt={true}
             spotlightColor="rgba(0, 240, 255, 0.16)"
             className="glass-panel-glow p-4 sm:p-6 border border-cyan-500/30"
           >
@@ -180,10 +186,7 @@ export const Hero: React.FC = () => {
 
             {/* Grid Metrics */}
             <div className="grid grid-cols-2 gap-2.5 sm:gap-4 mb-4 sm:mb-5">
-              <motion.div 
-                whileHover={{ y: -2, borderColor: 'rgba(0,240,255,0.4)' }}
-                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
-              >
+              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>UPTIME</span>
                   <Radio className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-cyan-400" />
@@ -191,12 +194,9 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-cyan-300 truncate">
                   {formatUptime(secondsOnline)}
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                whileHover={{ y: -2, borderColor: 'rgba(245,158,11,0.4)' }}
-                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
-              >
+              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>ROUTED</span>
                   <Flame className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-amber-400" />
@@ -204,12 +204,9 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-amber-300 truncate">
                   {packetCount.toLocaleString()} pkts
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                whileHover={{ y: -2, borderColor: 'rgba(16,185,129,0.4)' }}
-                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
-              >
+              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>LATENCY</span>
                   <Cpu className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-emerald-400" />
@@ -217,12 +214,9 @@ export const Hero: React.FC = () => {
                 <div className="text-xs sm:text-sm md:text-base font-bold font-mono text-emerald-400">
                   {PORTFOLIO_DATA.hero.telemetry.nodeLatency}
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                whileHover={{ y: -2, borderColor: 'rgba(99,102,241,0.4)' }}
-                className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 transition-colors"
-              >
+              <div className="p-2.5 sm:p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
                 <div className="flex items-center justify-between text-slate-400 text-[10px] sm:text-xs font-mono mb-1">
                   <span>PIPELINE</span>
                   <ShieldCheck className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-indigo-400" />
@@ -230,7 +224,7 @@ export const Hero: React.FC = () => {
                 <div className="text-[10px] sm:text-xs font-bold font-mono text-indigo-300 truncate">
                   MOBILE NATIVE
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Geolocation & Coordinates */}
@@ -255,13 +249,12 @@ export const Hero: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Bottom Stats & Key Achievements Bar with Spotlight Physics */}
+      {/* Bottom Stats & Key Achievements Bar */}
       <div className="max-w-7xl mx-auto w-full mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-800/80">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {PORTFOLIO_DATA.stats.map((stat, idx) => (
             <SpotlightCard
               key={stat.label}
-              enableTilt={true}
               spotlightColor="rgba(0, 240, 255, 0.2)"
               className="p-3.5 sm:p-5 glass-panel border border-slate-800 hover:border-cyan-500/50 transition-all group"
             >

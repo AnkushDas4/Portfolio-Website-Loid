@@ -98,8 +98,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         sound.playClickSound();
-        if (isOpen) onClose();
-        else onClose(); // parent handles toggle
+        onClose();
       }
       if (!isOpen) return;
 
@@ -124,104 +123,104 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, filteredItems, selectedIndex]);
-
-  if (!isOpen) return null;
+  }, [isOpen, filteredItems, selectedIndex, onClose]);
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => {
-            sound.playClickSound();
-            onClose();
-          }}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
-        />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-24 px-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => {
+              sound.playClickSound();
+              onClose();
+            }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          />
 
-        {/* Palette Box */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: -20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -20 }}
-          className="relative w-full max-w-xl glass-panel-glow border border-cyan-500/40 rounded-3xl p-4 shadow-2xl z-10 overflow-hidden"
-        >
-          {/* Input Header */}
-          <div className="flex items-center gap-3 px-3 py-2 border-b border-slate-800">
-            <Search className="w-5 h-5 text-cyan-400 shrink-0" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setSelectedIndex(0);
-              }}
-              placeholder="Search sections, systems, skills, or links..."
-              className="w-full bg-transparent text-white font-mono text-sm outline-none placeholder:text-slate-500 caret-cyan-400"
-            />
-            <button
-              onClick={() => {
-                sound.playClickSound();
-                onClose();
-              }}
-              className="p-1 rounded-lg text-slate-400 hover:text-white"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          {/* Palette Box */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            className="relative w-full max-w-xl glass-panel-glow border border-cyan-500/40 rounded-3xl p-4 shadow-2xl z-10 overflow-hidden"
+          >
+            {/* Input Header */}
+            <div className="flex items-center gap-3 px-3 py-2 border-b border-slate-800">
+              <Search className="w-5 h-5 text-cyan-400 shrink-0" />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelectedIndex(0);
+                }}
+                placeholder="Search sections, systems, skills, or links..."
+                className="w-full bg-transparent text-white font-mono text-sm outline-none placeholder:text-slate-500 caret-cyan-400"
+              />
+              <button
+                onClick={() => {
+                  sound.playClickSound();
+                  onClose();
+                }}
+                className="p-1 rounded-lg text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
 
-          {/* Results List */}
-          <div className="mt-3 max-h-80 overflow-y-auto space-y-1 pr-1">
-            {filteredItems.length === 0 ? (
-              <div className="text-center py-8 text-xs font-mono text-slate-500">
-                No matching systems or routes found.
-              </div>
-            ) : (
-              filteredItems.map((item, idx) => {
-                const Icon = item.icon;
-                const isSelected = selectedIndex === idx;
+            {/* Results List */}
+            <div className="mt-3 max-h-80 overflow-y-auto space-y-1 pr-1 no-scrollbar">
+              {filteredItems.length === 0 ? (
+                <div className="text-center py-8 text-xs font-mono text-slate-500">
+                  No matching systems or routes found.
+                </div>
+              ) : (
+                filteredItems.map((item, idx) => {
+                  const Icon = item.icon;
+                  const isSelected = selectedIndex === idx;
 
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => item.action()}
-                    onMouseEnter={() => {
-                      sound.playHoverBlip();
-                      setSelectedIndex(idx);
-                    }}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all ${
-                      isSelected
-                        ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-200 shadow-sm'
-                        : 'hover:bg-slate-900/60 border border-transparent text-slate-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-cyan-400' : 'text-slate-500'}`} />
-                      <div>
-                        <div className="text-xs sm:text-sm font-medium font-mono truncate">{item.title}</div>
-                        <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">{item.category}</div>
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => item.action()}
+                      onMouseEnter={() => {
+                        sound.playHoverBlip();
+                        setSelectedIndex(idx);
+                      }}
+                      className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all ${
+                        isSelected
+                          ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-200 shadow-sm'
+                          : 'hover:bg-slate-900/60 border border-transparent text-slate-300'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-cyan-400' : 'text-slate-500'}`} />
+                        <div>
+                          <div className="text-xs sm:text-sm font-medium font-mono truncate">{item.title}</div>
+                          <div className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">{item.category}</div>
+                        </div>
                       </div>
-                    </div>
 
-                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? 'translate-x-1 text-cyan-400' : 'text-slate-600'}`} />
-                  </button>
-                );
-              })
-            )}
-          </div>
+                      <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? 'translate-x-1 text-cyan-400' : 'text-slate-600'}`} />
+                    </button>
+                  );
+                })
+              )}
+            </div>
 
-          {/* Footer Guide */}
-          <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 px-2">
-            <span>Navigation: ↑ ↓ Enter</span>
-            <span>Esc to close</span>
-          </div>
-        </motion.div>
-      </div>
+            {/* Footer Guide */}
+            <div className="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 px-2">
+              <span>Navigation: ↑ ↓ Enter</span>
+              <span>Esc to close</span>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   );
 };

@@ -54,7 +54,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   }, []);
 
   const scrollToSection = (id: string) => {
-    sound.playClickSound();
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -73,8 +72,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
           {/* Logo & Node Status */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <MagneticButton strength={0.3} onClick={() => scrollToSection('hero')}>
-              <button className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel border border-cyan-500/30 hover:border-cyan-400 text-slate-100 transition-all group">
+            <MagneticButton strength={0.3}>
+              <button 
+                onClick={() => scrollToSection('hero')}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel border border-cyan-500/30 hover:border-cyan-400 text-slate-100 transition-all group"
+              >
                 <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] animate-pulse" />
                 <span className="font-mono font-bold tracking-wider text-xs sm:text-sm group-hover:text-cyan-400 transition-colors">
                   LØID<span className="text-cyan-400">.SYS</span>
@@ -93,8 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           {/* Quick Action Dock */}
           <div className="flex items-center gap-2">
             {/* Command Palette Trigger */}
-            <MagneticButton strength={0.3} onClick={onOpenCommandPalette}>
+            <MagneticButton strength={0.3}>
               <button
+                onClick={onOpenCommandPalette}
                 className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs font-mono transition-all shadow-sm"
                 title="Command Palette (Cmd+K)"
               >
@@ -107,8 +110,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             </MagneticButton>
 
             {/* Sound Toggle */}
-            <MagneticButton strength={0.3} onClick={handleToggleSound}>
+            <MagneticButton strength={0.3}>
               <button
+                onClick={handleToggleSound}
                 className={`p-2 rounded-xl glass-panel border transition-all text-xs ${
                   isSoundOn 
                     ? 'border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
@@ -149,8 +153,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           const isActive = activeSection === item.id;
 
           return (
-            <MagneticButton key={item.id} strength={0.25} onClick={() => scrollToSection(item.id)}>
+            <MagneticButton key={item.id} strength={0.25}>
               <button
+                onClick={() => scrollToSection(item.id)}
                 aria-label={item.label}
                 className={`relative px-2.5 sm:px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-mono transition-all group outline-none shrink-0 ${
                   isActive

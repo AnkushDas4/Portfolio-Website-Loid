@@ -6,7 +6,7 @@ interface MagneticButtonProps {
   children: React.ReactNode;
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-  strength?: number; // 0 to 1, default 0.35
+  strength?: number;
   enableSound?: boolean;
 }
 
@@ -26,12 +26,14 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  // Parallax shift for text/icon inside
-  const innerX = useTransform(springX, (val) => val * 0.4);
-  const innerY = useTransform(springY, (val) => val * 0.4);
+  const innerX = useTransform(springX, (val) => val * 0.35);
+  const innerY = useTransform(springY, (val) => val * 0.35);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only enable magnetic pull on desktop devices with mouse pointers
+    if (typeof window !== 'undefined' && !window.matchMedia('(pointer: fine)').matches) return;
     if (!ref.current) return;
+
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -54,7 +56,9 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (enableSound) sound.playClickSound();
-    if (onClick) onClick(e);
+    if (onClick) {
+      onClick(e);
+    }
   };
 
   return (
@@ -65,8 +69,8 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      whileTap={{ scale: 0.95 }}
-      className={`inline-block cursor-pointer ${className}`}
+      whileTap={{ scale: 0.96 }}
+      className={`inline-block ${className}`}
     >
       <motion.div style={{ x: innerX, y: innerY }}>
         {children}

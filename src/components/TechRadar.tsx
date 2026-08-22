@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Network, X } from 'lucide-react';
-import { PORTFOLIO_DATA, SkillItem } from '../data/portfolioData';
+import { motion } from 'framer-motion';
+import { Network } from 'lucide-react';
+import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { sound } from '../utils/audio';
 import { SpotlightCard } from './SpotlightCard';
 import { MagneticButton } from './MagneticButton';
 
 export const TechRadar: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [activeSkill, setActiveSkill] = useState<SkillItem | null>(null);
 
   const categories = ['All', 'Mobile Native', 'Decentralized & Security', 'Languages & Core', 'DevOps & Cloud'];
 
   const filteredSkills = selectedCategory === 'All'
     ? PORTFOLIO_DATA.techStack
     : PORTFOLIO_DATA.techStack.filter(s => s.category === selectedCategory);
-
-  const handleSelectSkill = (skill: SkillItem) => {
-    sound.playClickSound();
-    setActiveSkill(skill);
-  };
 
   return (
     <section id="radar" className="py-16 sm:py-24 px-4 sm:px-6 relative">
@@ -47,7 +41,6 @@ export const TechRadar: React.FC = () => {
                   sound.playClickSound();
                   setSelectedCategory(cat);
                 }}
-                onMouseEnter={() => sound.playHoverBlip()}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all shrink-0 whitespace-nowrap ${
                   selectedCategory === cat
                     ? 'bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-semibold shadow-[0_0_15px_rgba(0,240,255,0.25)]'
@@ -65,10 +58,8 @@ export const TechRadar: React.FC = () => {
           {filteredSkills.map((skill, idx) => (
             <SpotlightCard
               key={skill.name}
-              enableTilt={true}
               spotlightColor="rgba(0, 240, 255, 0.2)"
-              onClick={() => handleSelectSkill(skill)}
-              className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.18)] transition-all cursor-pointer group"
+              className="p-5 sm:p-6 glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,240,255,0.18)] transition-all group"
             >
               <div>
                 <div className="flex items-center justify-between mb-2.5 sm:mb-3">
@@ -109,55 +100,6 @@ export const TechRadar: React.FC = () => {
             </SpotlightCard>
           ))}
         </div>
-
-        {/* Skill Detail Modal */}
-        <AnimatePresence>
-          {activeSkill && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setActiveSkill(null)}
-                className="fixed inset-0 bg-black/80 backdrop-blur-sm"
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.92, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.92, y: 20 }}
-                className="relative w-full max-w-lg glass-panel-glow border border-cyan-500/40 rounded-3xl p-5 sm:p-8 shadow-2xl z-10"
-              >
-                <MagneticButton strength={0.4} className="absolute top-4 sm:top-5 right-4 sm:top-5">
-                  <button
-                    onClick={() => setActiveSkill(null)}
-                    className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </MagneticButton>
-
-                <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-2">
-                  {activeSkill.category} • {activeSkill.years}
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-bold text-white font-mono mb-4 pr-8">
-                  {activeSkill.name}
-                </h3>
-
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 mb-6">
-                  <div className="text-[10px] sm:text-xs font-mono text-slate-400 mb-1">ARCHITECTURAL ROLE</div>
-                  <div className="text-xs sm:text-sm text-slate-200">{activeSkill.highlight}</div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-4 border-t border-slate-800">
-                  <span>SEDNIUM PRODUCTION ENGINE</span>
-                  <span className="text-cyan-300 font-bold">{activeSkill.level} ({activeSkill.percentage}%)</span>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
       </div>
     </section>
   );

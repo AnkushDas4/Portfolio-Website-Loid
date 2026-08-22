@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowUpRight, 
   Github, 
@@ -55,7 +55,6 @@ export const ProjectsShowcase: React.FC = () => {
                     sound.playClickSound();
                     setSelectedCategory(cat);
                   }}
-                  onMouseEnter={() => sound.playHoverBlip()}
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all shrink-0 whitespace-nowrap ${
                     selectedCategory === cat
                       ? 'bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-semibold shadow-[0_0_12px_rgba(0,240,255,0.25)]'
@@ -71,10 +70,9 @@ export const ProjectsShowcase: React.FC = () => {
 
         {/* Project Cards Grid with Spotlight Physics */}
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-          {filteredProjects.map((project, idx) => (
+          {filteredProjects.map((project) => (
             <SpotlightCard
               key={project.id}
-              enableTilt={true}
               spotlightColor="rgba(0, 240, 255, 0.18)"
               className="glass-panel border border-slate-800 hover:border-cyan-500/60 transition-all duration-300 p-5 sm:p-8 hover:shadow-[0_0_40px_rgba(0,240,255,0.18)]"
             >
@@ -140,8 +138,11 @@ export const ProjectsShowcase: React.FC = () => {
 
               {/* Bottom Actions */}
               <div className="pt-3 sm:pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
-                <MagneticButton strength={0.3} onClick={() => handleOpenModal(project)}>
-                  <button className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-cyan-400 hover:text-cyan-300 transition-colors py-1">
+                <MagneticButton strength={0.3}>
+                  <button 
+                    onClick={() => handleOpenModal(project)}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-cyan-400 hover:text-cyan-300 transition-colors py-1"
+                  >
                     <Cpu className="w-4 h-4" />
                     <span>Inspect Blueprint</span>
                   </button>
@@ -177,11 +178,15 @@ export const ProjectsShowcase: React.FC = () => {
           ))}
         </div>
 
-        {/* Modal Drawer */}
-        <ArchitectureModal
-          project={activeProject}
-          onClose={() => setActiveProject(null)}
-        />
+        {/* Modal Drawer with AnimatePresence */}
+        <AnimatePresence>
+          {activeProject && (
+            <ArchitectureModal
+              project={activeProject}
+              onClose={() => setActiveProject(null)}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
