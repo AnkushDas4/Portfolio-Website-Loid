@@ -203,12 +203,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         </AnimatePresence>
       </header>
 
-      {/* Centered Floating Bottom Navigation Dock (Mobile & Desktop) */}
+      {/* Floating Bottom Navigation Dock (Desktop Only - Hidden on Mobile) */}
       <motion.nav 
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 25 }}
-        className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 px-2 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#080c16]/90 backdrop-blur-xl border border-cyan-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.6)] flex items-center justify-center gap-1 sm:gap-2 max-w-[94vw] w-auto"
+        className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-[#080c16]/90 backdrop-blur-xl border border-cyan-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.6)] items-center justify-center gap-2 w-auto"
       >
         {navItems.map((item) => {
           const Icon = item.icon;

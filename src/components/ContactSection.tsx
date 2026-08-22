@@ -69,7 +69,7 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section id="contact" className="py-14 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto w-full">
+      <div className="max-w-5xl mx-auto w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4">
@@ -84,12 +84,12 @@ export const ContactSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 sm:gap-10 md:gap-12 items-start w-full">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 sm:gap-8 items-start w-full">
           {/* Left Column: Direct Links & PGP */}
           <div className="space-y-4 sm:space-y-6 w-full">
             <SpotlightCard
               spotlightColor="rgba(0, 240, 255, 0.14)"
-              className="p-4 sm:p-6 md:p-8 glass-panel border border-slate-800 space-y-4 sm:space-y-6 w-full"
+              className="p-4 sm:p-6 md:p-8 glass-panel border border-cyan-500/20 space-y-4 sm:space-y-6 w-full rounded-2xl sm:rounded-3xl overflow-hidden"
             >
               <h3 className="text-base sm:text-lg font-bold text-white font-mono flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-cyan-400" />
@@ -97,7 +97,7 @@ export const ContactSection: React.FC = () => {
               </h3>
 
               {/* Email Item */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/30 transition-colors w-full">
+              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/30 transition-colors w-full">
                 <div className="flex items-center gap-2.5 sm:gap-3 truncate pr-2">
                   <div className="p-2 sm:p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 shrink-0">
                     <Mail className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -125,7 +125,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Phone Item */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/30 transition-colors w-full">
+              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/30 transition-colors w-full">
                 <div className="flex items-center gap-2.5 sm:gap-3 truncate pr-2">
                   <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 shrink-0">
                     <Phone className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -153,7 +153,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Location & Timezone */}
-              <div className="flex items-center gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-900/80 border border-slate-800 w-full">
+              <div className="flex items-center gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-slate-800 w-full">
                 <div className="p-2 sm:p-2.5 rounded-xl bg-indigo-500/10 text-indigo-400 shrink-0">
                   <MapPin className="w-4 sm:w-5 h-4 sm:h-5" />
                 </div>
@@ -166,7 +166,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* PGP Fingerprint Box */}
-              <div className="p-3.5 sm:p-4 rounded-2xl bg-black/60 border border-cyan-500/20 w-full">
+              <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-black/60 border border-cyan-500/20 w-full">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-cyan-400">
                     <Key className="w-3.5 sm:w-4 h-3.5 sm:h-4 shrink-0" />
@@ -199,7 +199,7 @@ export const ContactSection: React.FC = () => {
                   href={PORTFOLIO_DATA.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
+                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-3">
                     <Github className="w-5 h-5 text-white" />
@@ -217,7 +217,7 @@ export const ContactSection: React.FC = () => {
                   href={PORTFOLIO_DATA.contact.sedniumGithub}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-slate-800 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
+                  className="w-full p-4 sm:p-5 rounded-2xl glass-panel border border-cyan-500/20 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] transition-all flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-3">
                     <Github className="w-5 h-5 text-cyan-400" />
@@ -237,7 +237,7 @@ export const ContactSection: React.FC = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-4 sm:p-6 md:p-8 rounded-3xl glass-panel-glow border border-cyan-500/30 w-full"
+            className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl glass-panel-glow border border-cyan-500/30 w-full overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-slate-800">
               <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white font-mono">
