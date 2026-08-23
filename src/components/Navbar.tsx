@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Menu, X, Github, ArrowUpRight } from 'lucide-react';
+import { Moon, Sun, Menu, X, Github, ArrowUpRight, Sparkles } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 interface NavbarProps {
@@ -26,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
     { label: 'Skills', href: '#skills' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Demos', href: '#demo' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

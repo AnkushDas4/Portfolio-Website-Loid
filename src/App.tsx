@@ -6,6 +6,7 @@ import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { SkillsSection } from './components/SkillsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
+import { CardAnimationDemo } from './components/demos/CardAnimationDemo';
 import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
@@ -48,6 +49,7 @@ export const App: React.FC = () => {
         <SkillsSection />
         <AboutSection />
         <ContactSection />
+        <CardAnimationDemo />
       </main>
 
       {/* Footer */}
