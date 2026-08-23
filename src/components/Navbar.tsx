@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Menu, X, Github, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Moon, Sun, Menu, X, Github, ArrowUpRight } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 interface NavbarProps {
@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/80 dark:bg-[#0b0d13]/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm'
+          ? 'bg-white/95 dark:bg-[#0b0d13]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
         </div>
       </div>
 
-      {/* Mobile Slide-down Navigation Drawer */}
+      {/* Solid Opaque Mobile Slide-down Navigation Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0b0d13]/95 backdrop-blur-lg px-4 pt-2 pb-4 space-y-1 shadow-lg"
+            className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-3 pb-5 space-y-1 shadow-xl relative z-50"
           >
             {navLinks.map((link) => (
               <a
@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
                 {link.label}
               </a>
             ))}
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between px-3 text-xs text-slate-500">
+            <div className="pt-3 mt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between px-3 text-xs text-slate-500">
               <span>{PORTFOLIO_DATA.personal.location}</span>
               <a
                 href={PORTFOLIO_DATA.personal.github}

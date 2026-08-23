@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
+import { ArrowRight, Github, Mail, MapPin, Send } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 export const Hero: React.FC = () => {
@@ -12,7 +12,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="pt-32 sm:pt-36 md:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 md:px-8 relative w-full">
+    <section className="pt-28 sm:pt-32 md:pt-36 pb-14 sm:pb-16 px-4 sm:px-6 md:px-8 relative w-full">
       <div className="max-w-3xl mx-auto">
         {/* Availability Badge */}
         <motion.div
@@ -78,19 +78,19 @@ export const Hero: React.FC = () => {
           </button>
         </motion.div>
 
-        {/* Social / Direct Links */}
+        {/* Social / Direct Links & Location Bar */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
-          className="flex flex-wrap items-center gap-5 pt-6 border-t border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 border-t border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400"
         >
           <div className="flex items-center gap-1.5 text-xs text-slate-500">
-            <MapPin className="w-3.5 h-3.5" />
+            <MapPin className="w-3.5 h-3.5 shrink-0" />
             <span>{PORTFOLIO_DATA.personal.location}</span>
           </div>
 
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-5">
             <a
               href={PORTFOLIO_DATA.personal.github}
               target="_blank"
