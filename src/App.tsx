@@ -1,63 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { CanvasBackground } from './components/CanvasBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { IdentityPhilosophy } from './components/IdentityPhilosophy';
+import { ExperienceTimeline } from './components/ExperienceTimeline';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
-import { TechRadar } from './components/TechRadar';
-import { TechJourneyTimeline } from './components/TechJourneyTimeline';
-import { TerminalConsole } from './components/TerminalConsole';
+import { SkillsSection } from './components/SkillsSection';
+import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { CommandPalette } from './components/CommandPalette';
-import { ErrorBoundary } from './components/ErrorBoundary';
 
 export const App: React.FC = () => {
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    // Default to dark mode or user preference
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return true;
+  });
 
   useEffect(() => {
-    // Ensure initial scroll position starts at the top (Hero) on all devices
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
-    window.scrollTo(0, 0);
-  }, []);
+  }, [darkMode]);
 
   return (
-    <ErrorBoundary>
-      <div className="relative min-h-screen bg-[#06080e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden font-sans">
-        {/* Dynamic Interactive Particle Background with Error Boundary */}
-        <ErrorBoundary fallback={<div className="fixed inset-0 bg-[#06080e] pointer-events-none" />}>
-          <CanvasBackground />
-        </ErrorBoundary>
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200">
+      {/* Subtle background grid pattern */}
+      <div className="fixed inset-0 bg-subtle-grid pointer-events-none opacity-60 z-0" />
 
-        {/* Cyber Grid Background Overlay */}
-        <div className="fixed inset-0 bg-grid-cyber pointer-events-none opacity-40 z-0" />
+      {/* Global Navigation */}
+      <Navbar 
+        darkMode={darkMode} 
+        onToggleTheme={() => setDarkMode(!darkMode)} 
+      />
 
-        {/* Global Navigation HUD */}
-        <Navbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
+      {/* Main Content Sections */}
+      <main className="relative z-10">
+        <Hero />
+        <ExperienceTimeline />
+        <ProjectsShowcase />
+        <SkillsSection />
+        <AboutSection />
+        <ContactSection />
+      </main>
 
-        {/* Main Content Sections */}
-        <main className="relative z-10 pb-8 sm:pb-12">
-          <Hero />
-          <IdentityPhilosophy />
-          <ProjectsShowcase />
-          <TechRadar />
-          <TechJourneyTimeline />
-          <TerminalConsole />
-          <ContactSection />
-        </main>
-
-        {/* Executive Footer */}
-        <Footer />
-
-        {/* Quick Search Command Palette (Cmd+K) */}
-        <CommandPalette 
-          isOpen={isCommandPaletteOpen} 
-          onClose={() => setIsCommandPaletteOpen(false)} 
-        />
-      </div>
-    </ErrorBoundary>
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 };
 

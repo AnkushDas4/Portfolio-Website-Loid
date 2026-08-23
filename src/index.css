@@ -2,39 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-[#fafafa] text-slate-900 antialiased dark:bg-[#0b0d13] dark:text-slate-100 transition-colors duration-200;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
 }
 
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Custom Cyber Scrollbar */
+/* Subtle modern scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #06080e;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 240, 255, 0.15);
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  background: #94a3b8;
 }
 
-/* Hide scrollbar for horizontal chip bars */
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -43,62 +50,24 @@ html, body {
   scrollbar-width: none;
 }
 
-/* Base utility layers */
+/* Custom modern utilities */
 @layer utilities {
-  .bg-grid-cyber {
-    background-size: 28px 28px;
+  .bg-subtle-grid {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  }
+
+  .dark .bg-subtle-grid {
     background-image: 
       linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    transform: translateZ(0);
-  }
-
-  @media (min-width: 768px) {
-    .bg-grid-cyber {
-      background-size: 36px 36px;
-    }
-  }
-
-  .glass-panel {
-    background: rgba(12, 16, 27, 0.82);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-  }
-
-  .glass-panel-glow {
-    background: rgba(12, 16, 27, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 240, 255, 0.28);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.08);
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-  }
-
-  .text-glow-cyan {
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
-  }
-
-  .text-glow-indigo {
-    text-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
   }
 }
 
-/* Animations */
-@keyframes spiral {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.animate-spiral {
-  animation: spiral 1.5s linear infinite;
-}
-
-/* Smooth selection */
+/* Clean text selection */
 ::selection {
-  background: rgba(6, 182, 212, 0.3);
-  color: #00f0ff;
+  background: rgba(59, 130, 246, 0.18);
+  color: inherit;
 }

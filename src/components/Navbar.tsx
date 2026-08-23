@@ -1,244 +1,151 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Terminal, 
-  Layers, 
-  Cpu, 
-  Network, 
-  GitCommit, 
-  Mail, 
-  Volume2, 
-  VolumeX, 
-  Search, 
-  ExternalLink,
-  ShieldCheck,
-  Menu,
-  X
-} from 'lucide-react';
-import { sound } from '../utils/audio';
+import { Moon, Sun, Menu, X, Github, ExternalLink, ArrowUpRight } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { MagneticButton } from './MagneticButton';
 
 interface NavbarProps {
-  onOpenCommandPalette: () => void;
+  darkMode: boolean;
+  onToggleTheme: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
-  const [activeSection, setActiveSection] = useState<string>('hero');
-  const [isSoundOn, setIsSoundOn] = useState<boolean>(sound.getSoundState());
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-
-  const navItems = [
-    { id: 'hero', label: 'Home', icon: Terminal },
-    { id: 'philosophy', label: 'Philosophy', icon: Cpu },
-    { id: 'projects', label: 'Projects', icon: Layers },
-    { id: 'radar', label: 'Radar', icon: Network },
-    { id: 'timeline', label: 'Timeline', icon: GitCommit },
-    { id: 'terminal', label: 'Console', icon: Terminal },
-    { id: 'contact', label: 'Contact', icon: Mail },
-  ];
+export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = navItems.map((item) => document.getElementById(item.id));
-      const scrollPos = window.scrollY + 240;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const el = sectionElements[i];
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(navItems[i].id);
-          break;
-        }
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    sound.playClickSound();
+  const navLinks = [
+    { label: 'Experience', href: '#experience' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     setIsMobileMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const handleToggleSound = () => {
-    const nextState = sound.toggleMute();
-    setIsSoundOn(nextState);
-  };
-
   return (
-    <>
-      {/* Top HUD Status Bar */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-6 md:px-8 py-3 pointer-events-none transition-all duration-300">
-        <div className="max-w-6xl mx-auto flex items-center justify-between pointer-events-auto">
-          {/* Logo & Status Badge */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <MagneticButton strength={0.3}>
-              <button 
-                onClick={() => scrollToSection('hero')}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel border border-cyan-500/30 hover:border-cyan-400 text-slate-100 transition-all group"
-              >
-                <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] animate-pulse" />
-                <span className="font-mono font-bold tracking-wider text-xs sm:text-sm group-hover:text-cyan-400 transition-colors">
-                  LØID<span className="text-cyan-400">.SYS</span>
-                </span>
-              </button>
-            </MagneticButton>
-
-            {/* Live Node Badge (Desktop & Tablet) */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl glass-panel text-xs font-mono text-slate-400 border border-slate-800">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>NODE:</span>
-              <span className="text-emerald-400 font-semibold">{PORTFOLIO_DATA.hero.location}</span>
-            </div>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+        isScrolled
+          ? 'bg-white/80 dark:bg-[#0b0d13]/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 h-16 flex items-center justify-between">
+        {/* Brand / Logo */}
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center gap-2.5 group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-sm flex items-center justify-center transition-transform group-hover:scale-105">
+            AD
           </div>
+          <div>
+            <span className="font-semibold text-slate-900 dark:text-white text-sm tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {PORTFOLIO_DATA.personal.name}
+            </span>
+          </div>
+        </a>
 
-          {/* Quick Action Dock */}
-          <div className="flex items-center gap-2">
-            {/* Command Palette Trigger */}
-            <MagneticButton strength={0.3}>
-              <button
-                onClick={onOpenCommandPalette}
-                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl glass-panel border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 text-xs font-mono transition-all shadow-sm"
-                title="Command Palette (Cmd+K)"
-              >
-                <Search className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Search</span>
-                <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] bg-slate-800/80 border border-slate-700 rounded text-slate-400">
-                  ⌘K
-                </kbd>
-              </button>
-            </MagneticButton>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="hover:text-slate-900 dark:hover:text-white transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
 
-            {/* Sound Toggle */}
-            <MagneticButton strength={0.3}>
-              <button
-                onClick={handleToggleSound}
-                className={`p-2 rounded-xl glass-panel border transition-all text-xs ${
-                  isSoundOn 
-                    ? 'border-cyan-500/40 text-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
-                    : 'border-slate-800 text-slate-500 hover:text-slate-300'
-                }`}
-                title={isSoundOn ? 'Mute Audio FX' : 'Enable Audio FX'}
-                aria-label="Toggle Sound Effects"
-              >
-                {isSoundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-              </button>
-            </MagneticButton>
+        {/* Right Action Icons: GitHub, Theme Toggle, Mobile Menu */}
+        <div className="flex items-center gap-2.5">
+          <a
+            href={PORTFOLIO_DATA.personal.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+            aria-label="GitHub Profile"
+          >
+            <Github className="w-4 h-4" />
+          </a>
 
-            {/* Sednium Official Link (Desktop) */}
-            <MagneticButton strength={0.3} className="hidden md:inline-block">
+          {/* Theme Toggle */}
+          <button
+            onClick={onToggleTheme}
+            className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 md:hidden transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Slide-down Navigation Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0b0d13]/95 backdrop-blur-lg px-4 pt-2 pb-4 space-y-1 shadow-lg"
+          >
+            {navLinks.map((link) => (
               <a
-                href={PORTFOLIO_DATA.company.url}
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between px-3 text-xs text-slate-500">
+              <span>{PORTFOLIO_DATA.personal.location}</span>
+              <a
+                href={PORTFOLIO_DATA.personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/20 hover:border-cyan-400 text-cyan-300 hover:text-cyan-200 text-xs font-mono transition-all"
+                className="flex items-center gap-1 text-blue-600 dark:text-blue-400 font-medium"
               >
-                <span>sednium.com</span>
-                <ExternalLink className="w-3 h-3" />
+                <span>GitHub</span>
+                <ArrowUpRight className="w-3 h-3" />
               </a>
-            </MagneticButton>
-
-            {/* Mobile Hamburger Toggle Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl glass-panel border border-slate-800 text-slate-400 hover:text-white md:hidden"
-              aria-label="Toggle navigation drawer"
-            >
-              {isMobileMenuOpen ? <X className="w-4 h-4 text-cyan-400" /> : <Menu className="w-4 h-4" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Slide-Down HUD Drawer Menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -15, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -15, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="mt-3 p-4 rounded-3xl glass-panel-glow border border-cyan-500/40 shadow-2xl max-w-6xl mx-auto md:hidden pointer-events-auto"
-            >
-              <div className="grid grid-cols-2 gap-2 mb-3">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = activeSection === item.id;
-
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`flex items-center gap-2.5 p-3 rounded-2xl text-xs font-mono transition-all ${
-                        isActive
-                          ? 'bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-bold shadow-[0_0_12px_rgba(0,240,255,0.2)]'
-                          : 'bg-slate-900/60 border border-slate-800 text-slate-300 hover:text-white'
-                      }`}
-                    >
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
-                      <span>{item.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
-                <a
-                  href={PORTFOLIO_DATA.company.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-                >
-                  <span>sednium.com</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-                <span className="text-slate-500">{PORTFOLIO_DATA.hero.location}</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
-      {/* Floating Bottom Navigation Dock (Desktop Only - Hidden on Mobile) */}
-      <motion.nav 
-        initial={{ y: 80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 25 }}
-        className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-[#080c16]/90 backdrop-blur-xl border border-cyan-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.6)] items-center justify-center gap-2 w-auto"
-      >
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeSection === item.id;
-
-          return (
-            <MagneticButton key={item.id} strength={0.2}>
-              <button
-                onClick={() => scrollToSection(item.id)}
-                aria-label={item.label}
-                className={`relative px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full flex items-center gap-1.5 text-xs font-mono transition-all group outline-none shrink-0 ${
-                  isActive
-                    ? 'text-cyan-300 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeNavTab"
-                    className="absolute inset-0 rounded-full bg-cyan-500/20 border border-cyan-400/60 shadow-[0_0_12px_rgba(0,240,255,0.3)]"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-cyan-400' : 'group-hover:text-cyan-300'}`} />
-                <span className="hidden md:inline relative z-10">{item.label}</span>
-              </button>
-            </MagneticButton>
-          );
-        })}
-      </motion.nav>
-    </>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
