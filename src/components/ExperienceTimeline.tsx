@@ -36,11 +36,11 @@ export const ExperienceTimeline: React.FC = () => {
               <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-600 ring-4 ring-white dark:ring-[#0b0d13]" />
 
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 mb-2">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                   {exp.role}
                 </h3>
-                <span className="text-xs font-medium text-slate-500 flex items-center gap-1">
+                <span className="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200/60 dark:border-indigo-800/40 px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 shrink-0 w-fit">
                   <Calendar className="w-3 h-3" />
                   <span>{exp.period}</span>
                 </span>

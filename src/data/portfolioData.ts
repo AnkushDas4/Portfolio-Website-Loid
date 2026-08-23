@@ -48,7 +48,7 @@ export const PORTFOLIO_DATA = {
       role: "Co-Founder & Chief Technology Officer",
       company: "Sednium Technologies",
       companyUrl: "https://www.sednium.com",
-      period: "Jan 2024 – Present",
+      period: "Jan 20, 2024 – Present",
       location: "Remote / West Bengal, India",
       description: "Co-founded Sednium Technologies focusing on decentralized communication protocols, developer productivity tools, and edge infrastructure.",
       achievements: [
