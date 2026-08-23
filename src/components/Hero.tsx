@@ -14,15 +14,15 @@ export const Hero: React.FC = () => {
   return (
     <section className="pt-28 sm:pt-32 md:pt-36 pb-14 sm:pb-16 px-4 sm:px-6 md:px-8 relative w-full">
       <div className="max-w-3xl mx-auto">
-        {/* Availability Badge */}
+        {/* Compact Slim Status Badge */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 text-xs font-medium text-slate-700 dark:text-slate-300 mb-6"
+          transition={{ duration: 0.3 }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-700 dark:text-slate-300 w-fit mb-4"
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Available for projects & engineering collaborations</span>
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Available for projects & collaborations</span>
         </motion.div>
 
         {/* Main Heading */}
@@ -30,7 +30,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-3"
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-3"
         >
           {PORTFOLIO_DATA.personal.name}
         </motion.h1>
@@ -40,7 +40,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="text-xl sm:text-2xl font-medium text-slate-600 dark:text-slate-300 mb-6"
+          className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-600 dark:text-slate-300 mb-5"
         >
           {PORTFOLIO_DATA.personal.title}
         </motion.p>
