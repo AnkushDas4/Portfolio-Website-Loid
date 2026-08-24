@@ -8,6 +8,7 @@ import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { CardAnimationDemo } from './components/demos/CardAnimationDemo';
 import { Footer } from './components/Footer';
+import { SpotlightGrid } from './components/SpotlightGrid';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -31,10 +32,7 @@ export const App: React.FC = () => {
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200">
-      {/* Subtle background grid pattern */}
-      <div className="fixed inset-0 bg-subtle-grid pointer-events-none opacity-60 z-0" />
-
+    <SpotlightGrid className="bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200">
       {/* Global Navigation */}
       <Navbar 
         darkMode={darkMode} 
@@ -54,7 +52,7 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <Footer />
-    </div>
+    </SpotlightGrid>
   );
 };
 
