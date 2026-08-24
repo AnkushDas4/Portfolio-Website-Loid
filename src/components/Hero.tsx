@@ -55,27 +55,38 @@ export const Hero: React.FC = () => {
           {PORTFOLIO_DATA.personal.bio}
         </motion.p>
 
-        {/* Primary Action Buttons */}
+        {/* Primary Action Buttons with Premium Micro-interactions */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.25 }}
           className="flex flex-wrap items-center gap-3.5 mb-10"
         >
-          <button
+          {/* Primary Button ("View Projects") with Shimmer & Animated Arrow */}
+          <motion.button
             onClick={() => scrollTo('projects')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-sm cursor-pointer"
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            className="group relative overflow-hidden inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium text-sm shadow-sm hover:shadow-lg hover:shadow-blue-500/20 dark:hover:shadow-blue-500/10 transition-shadow cursor-pointer"
           >
-            <span>View Projects</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            {/* Shimmer Light Sweep */}
+            <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/25 dark:via-slate-900/15 to-transparent" />
 
-          <button
+            <span className="relative z-10">View Projects</span>
+            <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+          </motion.button>
+
+          {/* Secondary Button ("Get in Touch") */}
+          <motion.button
             onClick={() => scrollTo('contact')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors shadow-sm cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/90 dark:hover:bg-slate-800/90 font-medium text-sm transition-colors shadow-sm cursor-pointer"
           >
             <span>Get in Touch</span>
-          </button>
+          </motion.button>
         </motion.div>
 
         {/* Social / Direct Links & Location Bar */}
