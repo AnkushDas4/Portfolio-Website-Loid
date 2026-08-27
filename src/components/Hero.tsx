@@ -26,15 +26,35 @@ export const Hero: React.FC = () => {
           <span>Available for projects & collaborations</span>
         </motion.div>
 
-        {/* Main Heading */}
-        <motion.h1
+        {/* Main Heading with Animated Gradient Shine, Ambient Aura Glow & Spring Hover */}
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-3"
+          whileHover={{ scale: 1.025 }}
+          className="group relative inline-block cursor-default select-none mb-3"
         >
-          {PORTFOLIO_DATA.personal.name}
-        </motion.h1>
+          {/* Ambient Soft Aura Glow (Dynamic Light Field) */}
+          <div className="pointer-events-none absolute -inset-x-6 -inset-y-3 rounded-3xl bg-gradient-to-r from-blue-500/15 via-indigo-500/20 to-purple-500/15 dark:from-blue-500/25 dark:via-cyan-400/20 dark:to-indigo-500/25 blur-2xl opacity-40 dark:opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
+
+          {/* Main Hero Name with Continuous Gradient Shine */}
+          <motion.h1
+            animate={{
+              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 8,
+              ease: 'linear',
+            }}
+            style={{
+              backgroundSize: '250% 250%',
+            }}
+            className="relative z-10 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-r from-slate-900 via-blue-600 to-slate-800 dark:from-white dark:via-sky-200 dark:to-blue-400 bg-clip-text text-transparent drop-shadow-sm group-hover:drop-shadow-md transition-all"
+          >
+            {PORTFOLIO_DATA.personal.name}
+          </motion.h1>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p
