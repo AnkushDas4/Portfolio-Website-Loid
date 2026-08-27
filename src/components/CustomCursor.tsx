@@ -6,32 +6,39 @@ export const CustomCursor: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
 
   // Smooth spring physics for outer trailing circle
   const ringX = useSpring(mouseX, { stiffness: 500, damping: 28 });
   const ringY = useSpring(mouseY, { stiffness: 500, damping: 28 });
 
   useEffect(() => {
-    // Only activate on devices with a fine pointer/mouse
+    // Only activate on devices with a fine pointer/mouse (desktop)
     if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
 
-    document.documentElement.classList.add('custom-cursor-active');
-
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      if (!isVisible) {
+        setIsVisible(true);
+        document.documentElement.classList.add('custom-cursor-active');
+      }
     };
 
     const handleMouseDown = () => setIsClicked(true);
     const handleMouseUp = () => setIsClicked(false);
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+      document.documentElement.classList.remove('custom-cursor-active');
+    };
+    const handleMouseEnter = () => {
+      setIsVisible(true);
+      document.documentElement.classList.add('custom-cursor-active');
+    };
 
     const handleInteractiveOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
@@ -82,11 +89,11 @@ export const CustomCursor: React.FC = () => {
           translateY: '-50%',
         }}
         animate={{
-          scale: isClicked ? 0.75 : isHovered ? 1.5 : 1,
+          scale: isClicked ? 0.75 : isHovered ? 1.4 : 1,
           borderColor: isHovered ? 'rgba(59, 130, 246, 0.85)' : 'rgba(148, 163, 184, 0.45)',
-          backgroundColor: isHovered ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+          backgroundColor: isHovered ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
         }}
-        transition={{ duration: 0.15, ease: 'easeOut' }}
+        transition={{ duration: 0.12, ease: 'easeOut' }}
         className="fixed top-0 left-0 w-8 h-8 rounded-full border border-slate-400/40 dark:border-slate-500/40"
       />
 
@@ -101,7 +108,7 @@ export const CustomCursor: React.FC = () => {
         animate={{
           scale: isClicked ? 0.6 : isHovered ? 0.5 : 1,
         }}
-        transition={{ duration: 0.1 }}
+        transition={{ duration: 0.08 }}
         className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shadow-sm"
       />
     </div>

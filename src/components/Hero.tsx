@@ -14,62 +14,69 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="pt-28 sm:pt-32 md:pt-36 pb-14 sm:pb-16 px-4 sm:px-6 md:px-8 relative w-full">
-      <div className="max-w-3xl mx-auto flex flex-col items-start gap-3 sm:gap-4 w-full">
-        {/* [1] Status Badge */}
+      <div className="max-w-3xl mx-auto flex flex-col items-start gap-4 w-full">
+        {/* [1] Status Badge (Dedicated Full Row) */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-700 dark:text-slate-300 w-fit mb-1"
+          className="w-full flex"
         >
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Available for projects & collaborations</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-700 dark:text-slate-300">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Available for projects & collaborations</span>
+          </div>
         </motion.div>
 
-        {/* [2] Main Title with Clean Gradient & Isolated Ambient Glow */}
+        {/* [2] Main Heading (Dedicated Full Row Directly Underneath Badge) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="relative group block w-fit"
+          className="w-full relative group"
         >
-          {/* Background Ambient Glow */}
-          <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 opacity-20 blur-xl group-hover:opacity-40 transition duration-500 pointer-events-none" />
+          {/* Subtle Ambient Glow Behind Name */}
+          <div className="absolute -inset-x-2 -inset-y-1 rounded-2xl bg-gradient-to-r from-blue-600/15 to-cyan-500/15 blur-xl opacity-40 group-hover:opacity-75 transition-opacity duration-500 pointer-events-none" />
 
-          {/* Title */}
-          <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] bg-gradient-to-r from-slate-900 via-blue-700 to-blue-500 dark:from-white dark:via-blue-300 dark:to-blue-500 bg-clip-text text-transparent">
-            {PORTFOLIO_DATA.personal.name}
+          <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15] text-slate-900 dark:text-white">
+            <span className="bg-gradient-to-r from-slate-900 via-blue-700 to-blue-500 dark:from-white dark:via-blue-300 dark:to-blue-400 bg-clip-text text-transparent">
+              {PORTFOLIO_DATA.personal.name}
+            </span>
           </h1>
         </motion.div>
 
-        {/* [3] Subtitle / Role */}
-        <motion.p
+        {/* [3] Subtitle / Role (Dedicated Full Row) */}
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
-          className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-600 dark:text-slate-300"
+          className="w-full"
         >
-          {PORTFOLIO_DATA.personal.title}
-        </motion.p>
+          <p className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-600 dark:text-slate-300">
+            {PORTFOLIO_DATA.personal.title}
+          </p>
+        </motion.div>
 
-        {/* [4] Description paragraph */}
-        <motion.p
+        {/* [4] Description Paragraph (Dedicated Full Row) */}
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl my-2"
+          className="w-full"
         >
-          {PORTFOLIO_DATA.personal.bio}
-        </motion.p>
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+            {PORTFOLIO_DATA.personal.bio}
+          </p>
+        </motion.div>
 
-        {/* [5] CTA Buttons with Magnetic Pull & Bouncy Squish */}
+        {/* [5] CTA Buttons (Dedicated Full Row) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.25 }}
-          className="flex flex-wrap items-center gap-4 my-3"
+          className="w-full flex flex-wrap items-center gap-4 pt-1"
         >
-          {/* Primary Magnetic Button ("View Projects") with Shimmer & Animated Arrow */}
+          {/* Primary Magnetic Button ("View Projects") */}
           <MagneticButton
             onClick={() => scrollTo('projects')}
             maxDistance={14}
@@ -92,12 +99,12 @@ export const Hero: React.FC = () => {
           </MagneticButton>
         </motion.div>
 
-        {/* [6] Social / Direct Links & Location Bar */}
+        {/* [6] Social / Direct Links & Location Bar (Dedicated Full Row) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 border-t border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400 w-full mt-2"
+          className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 border-t border-slate-200/80 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400 mt-2"
         >
           <div className="flex items-center gap-1.5 text-xs text-slate-500">
             <MapPin className="w-3.5 h-3.5 shrink-0" />
