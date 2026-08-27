@@ -8,8 +8,8 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-10 sm:py-12 px-4 sm:px-6 md:px-8 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-500">
-      <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer className="py-12 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-500">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           © {new Date().getFullYear()} {PORTFOLIO_DATA.personal.name}. All rights reserved.
         </div>

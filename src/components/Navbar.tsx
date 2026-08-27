@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
           : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
         {/* Brand / Logo */}
         <a
           href="#"
@@ -84,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-400">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
         </nav>
 
         {/* Right Action Icons: GitHub, Theme Toggle, Mobile Menu */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <a
             href={PORTFOLIO_DATA.personal.github}
             target="_blank"
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-3 pb-5 space-y-1 shadow-xl relative z-50"
+            className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-6 pt-3 pb-5 space-y-1 shadow-xl relative z-50"
           >
             {navLinks.map((link) => (
               <a
