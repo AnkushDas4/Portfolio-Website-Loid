@@ -5,15 +5,18 @@ interface GyroTiltCardProps {
   children: React.ReactNode;
   className?: string;
   maxTilt?: number;
+  enableHapticSquish?: boolean;
 }
 
 export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
   children,
   className = '',
-  maxTilt = 15,
+  maxTilt = 12,
+  enableHapticSquish = true,
 }) => {
   const [hasGyro, setHasGyro] = useState<boolean>(false);
   const [isSupported, setIsSupported] = useState<boolean>(true);
+  const [isPressed, setIsPressed] = useState<boolean>(false);
 
   const rawBeta = useMotionValue(0);  // Front-to-back tilt (-180 to 180)
   const rawGamma = useMotionValue(0); // Left-to-right tilt (-90 to 90)
@@ -60,7 +63,7 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
     };
   }, [rawBeta, rawGamma]);
 
-  // Desktop mouse parallax fallback
+  // Desktop mouse parallax
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (hasGyro) return;
     const rect = e.currentTarget.getBoundingClientRect();
@@ -77,6 +80,22 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
     rawGamma.set(0);
   };
 
+  // Impulsive Haptic Press Feedback
+  const handlePressStart = () => {
+    if (!enableHapticSquish) return;
+    setIsPressed(true);
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(15);
+      } catch (_) {}
+    }
+  };
+
+  const handlePressEnd = () => {
+    if (!enableHapticSquish) return;
+    setIsPressed(false);
+  };
+
   return (
     <div
       style={{ perspective: 1000 }}
@@ -88,8 +107,8 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
         animate={
           !hasGyro && !isSupported
             ? {
-                rotateX: [0, 4, -4, 0],
-                rotateY: [0, -6, 6, 0],
+                rotateX: [0, 3, -3, 0],
+                rotateY: [0, -5, 5, 0],
               }
             : undefined
         }
@@ -102,22 +121,46 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
               }
             : undefined
         }
+        whileHover={{ scale: 1.012 }}
+        whileTap={{ scale: 0.96, y: 3 }}
+        transition={{
+          type: 'spring',
+          stiffness: 450,
+          damping: 24,
+          mass: 0.7,
+        }}
+        onMouseDown={handlePressStart}
+        onMouseUp={handlePressEnd}
+        onTouchStart={handlePressStart}
+        onTouchEnd={handlePressEnd}
         style={{
           rotateX,
           rotateY,
           transformStyle: 'preserve-3d',
         }}
-        className={`relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f121a] p-6 shadow-md hover:shadow-xl transition-shadow ${className}`}
+        className={`relative select-none rounded-2xl border transition-all duration-150 p-6 ${
+          isPressed
+            ? 'bg-slate-50 dark:bg-[#0a0d14] border-blue-500/60 shadow-inner ring-2 ring-blue-500/20'
+            : 'bg-white dark:bg-[#0f121a] border-slate-200 dark:border-slate-800/90 shadow-md hover:shadow-xl hover:border-slate-300 dark:hover:border-slate-700'
+        } ${className}`}
       >
         {/* Subtle dynamic sheen reflection */}
         <motion.div
           style={{
             transform: 'translateZ(10px)',
-            opacity: 0.5,
+            opacity: isPressed ? 0.2 : 0.6,
           }}
-          className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/10 dark:via-cyan-500/5 to-transparent"
+          className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/15 dark:via-cyan-500/5 to-transparent transition-opacity duration-150"
         />
 
+        {/* Tactile Z-depth cushion glow */}
+        <div
+          className={`pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-150 ${
+            isPressed ? 'opacity-100 bg-gradient-to-b from-blue-500/10 to-transparent' : 'opacity-0'
+          }`}
+        />
+
+        {/* 3D Elevated Layer Content */}
         <div style={{ transform: 'translateZ(25px)' }} className="relative z-10">
           {children}
         </div>
