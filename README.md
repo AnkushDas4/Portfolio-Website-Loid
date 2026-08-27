@@ -2,7 +2,7 @@
 
 Official high-performance executive portfolio of **Ankush Das (Løid)**, Chief Technology Officer at **Sednium Technologies**.
 
-Live Preview: [https://loid-mocha.vercel.app/](https://loid-mocha.vercel.app/)
+Live Preview: [https://loid.sednium.com/](https://loid.sednium.com/)
 
 ---
 
