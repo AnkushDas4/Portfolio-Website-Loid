@@ -24,27 +24,27 @@ import { HapticPressCard } from './HapticPressCard';
 export const CardAnimationDemo: React.FC = () => {
   return (
     <section id="demo" className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 relative w-full border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/30">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         {/* Section Header */}
-        <div className="mb-10 sm:mb-14 text-center max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/40">
+        <div className="mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Interactive Animation Lab</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Card Animation Variants Lab
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Card Animation Variants
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-2">
-            Move your cursor, tilt your device, swipe, or press each card below to test and compare different interaction physics.
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-1">
+            Test and compare the interaction physics across touch and pointer devices.
           </p>
         </div>
 
-        {/* 1. Core Desktop & Interaction Variants (3 Cards) */}
+        {/* 1. Core Desktop & Interaction Variants */}
         <div className="mb-8">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 px-1">
             Cursor & Hover Physics
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
             
             {/* 1. Spotlight Card */}
             <div className="flex flex-col">
@@ -69,10 +69,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     OnyxChat Protocol
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     Cursor position calculates dynamic radial gradient highlight on hover with smooth opacity transitions.
                   </p>
 
@@ -116,10 +116,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     SHIELD Security
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     Multi-axis parallax rotation following mouse cursor with spring return physics (`stiffness: 300, damping: 25`).
                   </p>
 
@@ -163,10 +163,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     KryptonIDE Native
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     Subtle rotating conic gradient beam that illuminates the outer perimeter on hover without obscuring text.
                   </p>
 
@@ -187,17 +187,7 @@ export const CardAnimationDemo: React.FC = () => {
               </BorderBeamCard>
             </div>
 
-          </div>
-        </div>
-
-        {/* 2. Visual Style & Dynamic Physics Variants (3 Cards) */}
-        <div className="mb-8">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 px-1">
-            Visual Style & Dynamic Pull
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-
-            {/* 4. Glassmorphism Card (Vision Pro Style) */}
+            {/* 4. Glassmorphism Card */}
             <div className="flex flex-col">
               <div className="mb-2.5">
                 <span className="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400 flex items-center gap-1.5">
@@ -220,10 +210,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     Sednicon Engine
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                     Multi-layered backdrop blur with animated chromatic ambient light spheres drifting underneath frosted glass.
                   </p>
 
@@ -243,6 +233,16 @@ export const CardAnimationDemo: React.FC = () => {
                 </div>
               </GlassmorphismCard>
             </div>
+
+          </div>
+        </div>
+
+        {/* 2. Touch & Mobile-First Sensory Variants */}
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 px-1">
+            Sensory & Motion Physics
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
 
             {/* 5. Magnetic Pull Card */}
             <div className="flex flex-col">
@@ -267,10 +267,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     Mesh Peer Discovery
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     The entire card translates smoothly toward the cursor via vector spring physics, snapping back on exit.
                   </p>
 
@@ -314,10 +314,10 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     Zero-Bloat Compiler
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     Staggered border segments trace the perimeter sequentially clockwise on hover with 300ms ease transitions.
                   </p>
 
@@ -337,16 +337,6 @@ export const CardAnimationDemo: React.FC = () => {
                 </div>
               </OutlineDrawCard>
             </div>
-
-          </div>
-        </div>
-
-        {/* 3. Touch & Mobile-First Sensory Variants (3 Cards) */}
-        <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 px-1">
-            Sensory & Mobile-Native Physics
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
 
             {/* 7. Gyroscope Tilt Card */}
             <div className="flex flex-col">
@@ -371,11 +361,11 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     Spatial Matrix Node
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                    Reacts to your phone's physical tilt angles via hardware gyroscope sensors with smooth auto-breathe fallback.
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                    Reacts to physical tilt angles via hardware gyroscope sensors with smooth auto-breathe fallback.
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 mb-4">
@@ -418,11 +408,11 @@ export const CardAnimationDemo: React.FC = () => {
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
                     Interactive Action Card
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                    Horizontal gesture swipe with spring snapping threshold to reveal quick actions underneath (Star, Copy, Share).
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                    Horizontal gesture swipe with spring snapping threshold to reveal quick actions underneath.
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 mb-4">
@@ -440,53 +430,6 @@ export const CardAnimationDemo: React.FC = () => {
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
               </SwipeRevealCard>
-            </div>
-
-            {/* 9. Haptic Squish & Depth Press Card */}
-            <div className="flex flex-col">
-              <div className="mb-2.5">
-                <span className="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 flex items-center gap-1.5">
-                  <Fingerprint className="w-3.5 h-3.5" />
-                  <span>09. Haptic Depth Press</span>
-                </span>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Tactile squish with physical Z-depth depression
-                </p>
-              </div>
-
-              <HapticPressCard className="h-full flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-semibold text-teal-600 dark:text-teal-400 uppercase tracking-wider">
-                      Haptic Squish
-                    </span>
-                    <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 border border-teal-200/60 dark:border-teal-800/40">
-                      3D Depth
-                    </span>
-                  </div>
-
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                    Tactile Button Surface
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                    Physically depresses into the screen with snappy spring physics, shadow-depth collapse, and hardware haptic click.
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    <span className="px-2 py-0.5 rounded text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                      Tactile Feel
-                    </span>
-                    <span className="px-2 py-0.5 rounded text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                      Depth Press
-                    </span>
-                  </div>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-teal-600 dark:text-teal-400 font-medium">
-                  <span>Press & hold to squish</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </div>
-              </HapticPressCard>
             </div>
 
           </div>
