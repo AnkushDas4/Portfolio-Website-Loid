@@ -28,7 +28,7 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* [2] Main Heading (Dedicated Full Row Directly Underneath Badge) */}
+        {/* [2] Main Heading (Dedicated Full Row with Animated Gradient Shine) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,10 +36,10 @@ export const Hero: React.FC = () => {
           className="w-full relative group"
         >
           {/* Subtle Ambient Glow Behind Name */}
-          <div className="absolute -inset-x-2 -inset-y-1 rounded-2xl bg-gradient-to-r from-blue-600/15 to-cyan-500/15 blur-xl opacity-40 group-hover:opacity-75 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute -inset-x-2 -inset-y-1 rounded-2xl bg-gradient-to-r from-blue-600/15 via-cyan-500/15 to-blue-600/15 blur-xl opacity-40 group-hover:opacity-75 transition-opacity duration-500 pointer-events-none" />
 
           <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15] text-slate-900 dark:text-white">
-            <span className="bg-gradient-to-r from-slate-900 via-blue-700 to-blue-500 dark:from-white dark:via-blue-300 dark:to-blue-400 bg-clip-text text-transparent">
+            <span className="inline-block bg-gradient-to-r from-slate-900 via-blue-600 via-sky-500 to-slate-900 dark:from-white dark:via-blue-300 dark:via-cyan-300 dark:to-white bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
               {PORTFOLIO_DATA.personal.name}
             </span>
           </h1>
