@@ -21,21 +21,37 @@
   }
 }
 
-/* Hide default OS cursor on desktop devices with mouse pointers */
-@media (hover: hover) and (pointer: fine) {
-  *,
-  *::before,
-  *::after,
+/* Strictly Hide Default OS Cursor on Desktop Screens */
+@media (min-width: 768px) {
   html,
+  html *,
+  html *::before,
+  html *::after,
   body,
   a,
   button,
   input,
   textarea,
   select,
-  [role="button"] {
+  [role="button"],
+  [class*="cursor-"] {
     cursor: none !important;
   }
+}
+
+html.custom-cursor-active,
+html.custom-cursor-active *,
+html.custom-cursor-active *::before,
+html.custom-cursor-active *::after,
+html.custom-cursor-active body,
+html.custom-cursor-active a,
+html.custom-cursor-active button,
+html.custom-cursor-active input,
+html.custom-cursor-active textarea,
+html.custom-cursor-active select,
+html.custom-cursor-active [role="button"],
+html.custom-cursor-active [class*="cursor-"] {
+  cursor: none !important;
 }
 
 /* Subtle modern scrollbar */
