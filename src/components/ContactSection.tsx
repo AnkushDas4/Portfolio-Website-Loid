@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Send, Github, Check, AlertCircle, Loader2, MessageSquare } from 'lucide-react';
+import { Mail, Send, Github, Check, AlertCircle, Loader2, MessageSquare, Phone } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 export const ContactSection: React.FC = () => {
@@ -81,7 +81,7 @@ export const ContactSection: React.FC = () => {
               <div className="space-y-1">
                 <span className="text-xs text-slate-500 font-medium">Email</span>
                 <a
-                  href={`mailto:${PORTFOLIO_DATA.personal.email}`}
+                  href={PORTFOLIO_DATA.personal.emailLink}
                   className="flex items-center gap-2.5 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-blue-500 shrink-0" />
@@ -99,7 +99,19 @@ export const ContactSection: React.FC = () => {
                   className="flex items-center gap-2.5 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   <Send className="w-4 h-4 text-sky-500 shrink-0" />
-                  <span>@AnkushDas</span>
+                  <span>{PORTFOLIO_DATA.personal.telegramHandle}</span>
+                </a>
+              </div>
+
+              {/* Phone / Mobile */}
+              <div className="space-y-1">
+                <span className="text-xs text-slate-500 font-medium">Mobile / Phone</span>
+                <a
+                  href={PORTFOLIO_DATA.personal.phoneLink}
+                  className="flex items-center gap-2.5 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>{PORTFOLIO_DATA.personal.phone}</span>
                 </a>
               </div>
 

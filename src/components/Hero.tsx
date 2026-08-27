@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Mail, MapPin, Send } from 'lucide-react';
+import { ArrowRight, Github, Mail, MapPin, Send, Phone } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { MagneticButton } from './MagneticButton';
 
@@ -111,7 +111,7 @@ export const Hero: React.FC = () => {
             <span>{PORTFOLIO_DATA.personal.location}</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6">
             <a
               href={PORTFOLIO_DATA.personal.github}
               target="_blank"
@@ -133,11 +133,19 @@ export const Hero: React.FC = () => {
             </a>
 
             <a
-              href={`mailto:${PORTFOLIO_DATA.personal.email}`}
+              href={PORTFOLIO_DATA.personal.emailLink}
               className="flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <Mail className="w-4 h-4" />
               <span>Email</span>
+            </a>
+
+            <a
+              href={PORTFOLIO_DATA.personal.phoneLink}
+              className="flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-white transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              <span>Call</span>
             </a>
           </div>
         </motion.div>
