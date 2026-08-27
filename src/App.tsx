@@ -9,6 +9,7 @@ import { ContactSection } from './components/ContactSection';
 import { CardAnimationDemo } from './components/demos/CardAnimationDemo';
 import { Footer } from './components/Footer';
 import { SpotlightGrid } from './components/SpotlightGrid';
+import { CustomCursor } from './components/CustomCursor';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -33,6 +34,9 @@ export const App: React.FC = () => {
 
   return (
     <SpotlightGrid className="bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200">
+      {/* Desktop-only sleek circular custom cursor */}
+      <CustomCursor />
+
       {/* Global Navigation */}
       <Navbar 
         darkMode={darkMode} 
