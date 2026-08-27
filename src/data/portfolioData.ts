@@ -78,29 +78,29 @@ export const PORTFOLIO_DATA = {
     {
       id: "onyxchat",
       name: "OnyxChat",
-      tagline: "Decentralized, offline-first peer-to-peer encrypted messaging client.",
-      description: "A secure communication client routing messages directly between peer devices without centralized message inspection. Automatically queues and synchronizes messages upon reconnection.",
+      tagline: "Zero-knowledge encrypted messaging client.",
+      description: "A local-first Android chat application built on the S.H.I.E.L.D. protocol, featuring stateless routing and hardware-backed storage.",
       highlights: [
-        "Noise Protocol handshake with ephemeral Curve25519 key negotiation.",
-        "Zero-knowledge local database encryption with SQLCipher and ChaCha20-Poly1305.",
-        "Dynamic peer discovery via libp2p Kademlia DHT and local mDNS mesh."
+        "Stateless message routing via Vercel Edge Functions with zero data retention.",
+        "Local-first SQLite database encrypted with AES-256-GCM via the Android Keystore.",
+        "Uses Firebase Cloud Messaging strictly as a blind push transport for ciphertext."
       ],
-      tech: ["Kotlin", "libp2p", "Noise Protocol", "SQLCipher", "Android"],
+      tech: ["Kotlin", "Jetpack Compose", "Android", "End to end messaging app", "Built on serverless functions"],
       url: "https://onyxchat.sednium.com",
       githubUrl: "https://github.com/Sednium-Technologies",
       featured: true
     },
     {
       id: "shield-protocol",
-      name: "SHIELD Protocol",
-      tagline: "High-throughput edge security proxy and rate limiter in Go.",
-      description: "A defensive infrastructure layer built to absorb volumetric network abuse at the edge with near-zero latency overhead before packets reach application servers.",
+      name: "S.H.I.E.L.D. Protocol",
+      tagline: "Six-layer zero-knowledge messaging architecture.",
+      description: "A defense-in-depth cryptographic framework designed to eliminate server-side data retention, identity correlation, and metadata leakage.",
       highlights: [
-        "Kernel-level packet filtering with Linux eBPF/XDP drivers.",
-        "High-throughput sliding-window rate limiting backed by distributed Redis clusters.",
-        "Evaluates traffic with sub-millisecond latency overhead on verified production requests."
+        "Replaces real-world identifiers with non-deterministic 8-character hex Routing IDs.",
+        "Combines X25519 and ML-KEM-768 via HKDF-SHA256 for hybrid post-quantum encryption.",
+        "Runs alongside the Signal Double Ratchet to maintain per-message forward secrecy."
       ],
-      tech: ["Go", "eBPF", "Redis", "Docker", "Linux XDP"],
+      tech: ["Protocol Design", "Zero-Knowledge", "Post-Quantum", "System Architecture"],
       url: "https://sednium.com/shield",
       githubUrl: "https://github.com/Sednium-Technologies",
       featured: true
@@ -108,14 +108,14 @@ export const PORTFOLIO_DATA = {
     {
       id: "kryptonide",
       name: "KryptonIDE",
-      tagline: "Lightweight, touch-optimized development environment for mobile devices.",
-      description: "A native development environment designed to write, parse, and compile code on mobile devices. Features incremental syntax parsing, integrated terminal, and responsive UI.",
+      tagline: "Native Android integrated development environment.",
+      description: "A lightweight, touch-optimized environment designed to write, parse, and compile code directly on mobile devices.",
       highlights: [
-        "Native Tree-sitter incremental AST parsing for instant syntax highlighting.",
-        "Integrated PTY terminal bridge with full ANSI color support and custom gestures.",
-        "Optimized memory footprint running smoothly on constrained mobile hardware."
+        "Built natively using Kotlin and Jetpack Compose.",
+        "Features incremental syntax parsing and an integrated PTY terminal bridge.",
+        "Optimized memory footprint for constrained mobile hardware performance."
       ],
-      tech: ["Kotlin", "Jetpack Compose", "Tree-sitter", "Termux", "C/Rust"],
+      tech: ["Kotlin", "Jetpack Compose", "Mobile IDE", "Terminal", "Android"],
       url: "https://kryptonide.sednium.com",
       githubUrl: "https://github.com/Sednium-Technologies",
       featured: true
@@ -123,14 +123,14 @@ export const PORTFOLIO_DATA = {
     {
       id: "sednicon",
       name: "Sednicon",
-      tagline: "Automated SVG optimization and cross-platform iconography asset pipeline.",
-      description: "Asset delivery library and CLI pipeline that compresses vector graphics and exports type-safe components for React and Android Jetpack Compose.",
+      tagline: "Automated SVG optimization and cross-platform iconography API.",
+      description: "An asset delivery pipeline that compresses vector graphics and exports type-safe components.",
       highlights: [
-        "Automated SVGO optimization reducing file sizes by up to 85%.",
-        "Generates tree-shakeable React TypeScript components and Compose VectorDrawables.",
-        "Instant build-time synchronization for multiplatform design systems."
+        "Automated SVGO optimization to reduce file sizes.",
+        "Generates tree-shakeable React components and Compose VectorDrawables.",
+        "Deployed as a multi-platform design utility via Vercel and Supabase."
       ],
-      tech: ["TypeScript", "React", "Node.js", "SVGO", "Tailwind CSS"],
+      tech: ["HTML/CSS/JS", "Headless API", "Icon API", "SVG Engine"],
       url: "https://sednicon.sednium.com",
       githubUrl: "https://github.com/Sednium-Technologies",
       featured: true
