@@ -21,6 +21,23 @@
   }
 }
 
+/* Hide default OS cursor on desktop devices with mouse pointers */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after,
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"] {
+    cursor: none !important;
+  }
+}
+
 /* Subtle modern scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
