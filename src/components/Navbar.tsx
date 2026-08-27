@@ -26,7 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
     { label: 'Skills', href: '#skills' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Demos', href: '#demo' },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

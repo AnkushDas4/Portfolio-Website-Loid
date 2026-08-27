@@ -6,7 +6,6 @@ import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { SkillsSection } from './components/SkillsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
-import { CardAnimationDemo } from './components/demos/CardAnimationDemo';
 import { Footer } from './components/Footer';
 import { SpotlightGrid } from './components/SpotlightGrid';
 import { CustomCursor } from './components/CustomCursor';
@@ -51,7 +50,6 @@ export const App: React.FC = () => {
         <SkillsSection />
         <AboutSection />
         <ContactSection />
-        <CardAnimationDemo />
       </main>
 
       {/* Footer */}
