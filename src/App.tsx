@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { TelemetryHub } from './components/TelemetryHub';
 import { ExperienceTimeline } from './components/ExperienceTimeline';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { SkillsSection } from './components/SkillsSection';
@@ -36,15 +37,16 @@ export const App: React.FC = () => {
       {/* Desktop-only sleek circular custom cursor */}
       <CustomCursor />
 
-      {/* Global Navigation */}
+      {/* Global Navigation with Audio Sound Engine Toggle */}
       <Navbar 
         darkMode={darkMode} 
         onToggleTheme={() => setDarkMode(!darkMode)} 
       />
 
       {/* Main Content Sections with Generous Max Width & Vertical Spacing */}
-      <main id="main" role="main" aria-label="Main content" className="w-full max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-20 sm:space-y-24 relative z-10">
+      <main id="main" role="main" aria-label="Main content" className="w-full max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-16 sm:space-y-20 relative z-10">
         <Hero />
+        <TelemetryHub />
         <ExperienceTimeline />
         <ProjectsShowcase />
         <SkillsSection />

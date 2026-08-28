@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FolderGit2, ArrowUpRight, Github } from 'lucide-react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { FolderGit2, ArrowUpRight, Github, Layers } from 'lucide-react';
+import { PORTFOLIO_DATA, Project } from '../data/portfolioData';
 import { GyroTiltCard } from './demos/GyroTiltCard';
+import { ProjectModal } from './ProjectModal';
+import { sound } from '../utils/audio';
 
 export const ProjectsShowcase: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   return (
     <section id="projects" className="pt-12 pb-6 relative w-full border-t border-slate-200/80 dark:border-slate-800/80">
       <div className="w-full max-w-7xl mx-auto">
@@ -90,7 +94,7 @@ export const ProjectsShowcase: React.FC = () => {
                   </ul>
                 </div>
 
-                {/* Bottom Tech Tags */}
+                {/* Bottom Action Bar: Tech Tags + Architecture Trigger Button */}
                 <div className="pt-5 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-3 mt-auto">
                   <div className="flex flex-wrap gap-1.5">
                     {project.tech.map((t) => (
@@ -103,20 +107,41 @@ export const ProjectsShowcase: React.FC = () => {
                     ))}
                   </div>
 
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 ml-auto"
-                  >
-                    <span>Visit project</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="flex items-center gap-3 ml-auto">
+                    {/* Architecture Deep Dive Trigger */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.playClickSound();
+                        setSelectedProject(project);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-600 dark:text-blue-400 text-xs font-bold border border-blue-200/80 dark:border-blue-800/50 transition-all cursor-pointer shadow-sm"
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>Architecture</span>
+                    </button>
+
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 inline-flex items-center gap-1"
+                    >
+                      <span>Visit</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
               </GyroTiltCard>
             </motion.div>
           ))}
         </div>
+
+        {/* Deep Dive Architecture Modal */}
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, Github, Check, AlertCircle, Loader2, MessageSquare, Phone } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { CopyButton } from './CopyButton';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -79,7 +80,10 @@ export const ContactSection: React.FC = () => {
 
               {/* Email */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-500 font-medium">Email</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500 font-medium">Email</span>
+                  <CopyButton text={PORTFOLIO_DATA.personal.email} label="" className="text-xs text-slate-400 hover:text-blue-600" />
+                </div>
                 <a
                   href={PORTFOLIO_DATA.personal.emailLink}
                   className="flex items-center gap-2.5 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -91,7 +95,10 @@ export const ContactSection: React.FC = () => {
 
               {/* Telegram */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-500 font-medium">Telegram</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500 font-medium">Telegram</span>
+                  <CopyButton text={PORTFOLIO_DATA.personal.telegramHandle} label="" className="text-xs text-slate-400 hover:text-blue-600" />
+                </div>
                 <a
                   href={PORTFOLIO_DATA.personal.telegram}
                   target="_blank"
@@ -105,7 +112,10 @@ export const ContactSection: React.FC = () => {
 
               {/* Phone / Mobile */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-500 font-medium">Mobile / Phone</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500 font-medium">Mobile / Phone</span>
+                  <CopyButton text={PORTFOLIO_DATA.personal.phone} label="" className="text-xs text-slate-400 hover:text-blue-600" />
+                </div>
                 <a
                   href={PORTFOLIO_DATA.personal.phoneLink}
                   className="flex items-center gap-2.5 text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -117,7 +127,10 @@ export const ContactSection: React.FC = () => {
 
               {/* GitHub */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-500 font-medium">GitHub</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500 font-medium">GitHub</span>
+                  <CopyButton text={PORTFOLIO_DATA.personal.github} label="" className="text-xs text-slate-400 hover:text-blue-600" />
+                </div>
                 <a
                   href={PORTFOLIO_DATA.personal.github}
                   target="_blank"

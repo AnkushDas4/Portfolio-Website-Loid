@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { sound } from '../utils/audio';
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -49,11 +50,22 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     y.set(0);
   };
 
+  const handleClick = () => {
+    sound.playClickSound();
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(15);
+      } catch (_) {}
+    }
+    if (onClick) onClick();
+  };
+
   return (
     <motion.button
       ref={ref}
-      onClick={onClick}
+      onClick={handleClick}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => sound.playHoverBlip()}
       onMouseLeave={handleMouseLeave}
       style={{
         x: springX,

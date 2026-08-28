@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Menu, X, Github, ArrowUpRight } from 'lucide-react';
+import { Moon, Sun, Menu, X, Github, ArrowUpRight, Volume2, VolumeX } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { sound } from '../utils/audio';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -11,14 +12,21 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
+    setSoundEnabled(sound.getSoundState());
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleToggleSound = () => {
+    const newState = sound.toggleMute();
+    setSoundEnabled(newState);
+  };
 
   const navLinks = [
     { label: 'Experience', href: '#experience' },
@@ -30,6 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    sound.playClickSound();
     setIsMobileMenuOpen(false);
 
     // Reliable smooth scrolling for both mobile and desktop viewports
@@ -69,6 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
           href="#"
           onClick={(e) => {
             e.preventDefault();
+            sound.playClickSound();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className="flex items-center gap-2.5 group"
@@ -89,6 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
             <a
               key={link.label}
               href={link.href}
+              onMouseEnter={() => sound.playHoverBlip()}
               onClick={(e) => handleNavClick(e, link.href)}
               className="hover:text-slate-900 dark:hover:text-white transition-colors"
             >
@@ -97,12 +108,27 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
           ))}
         </nav>
 
-        {/* Right Action Icons: GitHub, Theme Toggle, Mobile Menu */}
-        <div className="flex items-center gap-3">
+        {/* Right Action Icons: Sound FX, GitHub, Theme Toggle, Mobile Menu */}
+        <div className="flex items-center gap-2.5">
+          {/* Sound FX Opt-in Toggle */}
+          <button
+            onClick={handleToggleSound}
+            className={`p-2 rounded-lg transition-colors cursor-pointer ${
+              soundEnabled
+                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
+            }`}
+            title={soundEnabled ? 'Disable Synthesizer Audio FX' : 'Enable Synthesizer Audio FX'}
+            aria-label="Toggle sound effects"
+          >
+            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </button>
+
           <a
             href={PORTFOLIO_DATA.personal.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => sound.playClickSound()}
             className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
             aria-label="GitHub Profile"
           >
@@ -111,7 +137,10 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
 
           {/* Theme Toggle */}
           <button
-            onClick={onToggleTheme}
+            onClick={() => {
+              sound.playClickSound();
+              onToggleTheme();
+            }}
             className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
             aria-label="Toggle theme"
           >
@@ -120,7 +149,10 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, onToggleTheme }) => {
 
           {/* Mobile Menu Toggle Button */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => {
+              sound.playClickSound();
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
             className="p-2 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 md:hidden transition-colors"
             aria-label="Toggle navigation menu"
           >
