@@ -43,7 +43,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Sections with Generous Max Width & Vertical Spacing */}
-      <main className="w-full max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-20 sm:space-y-24 relative z-10">
+      <main id="main" role="main" aria-label="Main content" className="w-full max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-20 sm:space-y-24 relative z-10">
         <Hero />
         <ExperienceTimeline />
         <ProjectsShowcase />
