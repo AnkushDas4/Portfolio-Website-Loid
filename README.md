@@ -1,58 +1,219 @@
-# Løid | CTO & Systems Architect Portfolio
+# Løid — Ankush Das · CTO & Systems Architect Portfolio
 
-Official high-performance executive portfolio of **Ankush Das (Løid)**, Chief Technology Officer at **Sednium Technologies**.
+Official high-performance executive portfolio of **Ankush Das (Løid)**, Co-Founder & Chief Technology Officer at **Sednium Technologies**.
 
-Live Preview: [https://loid.sednium.com/](https://loid.sednium.com/)
+> **Live site:** [https://loid.sednium.com/](https://loid.sednium.com/)  
+> **Repository:** [github.com/AnkushDas4/Loid](https://github.com/AnkushDas4/Loid)
 
----
-
-## ⚡ Key Highlights & Architecture
-
-- **Mobile-Native Systems Engineering**: Built under hardware constraints with zero bloat, maximum CPU/memory efficiency, and direct Linux/PTY compilation workflows.
-- **Flagship Production Architectures**:
-  - **OnyxChat**: Offline-first peer-to-peer messaging mesh with Noise Protocol & Triple-Lock encryption.
-  - **SHIELD Protocol**: Edge-level request inspection & automated blind routing using kernel-level eBPF XDP filters.
-  - **KryptonIDE Native**: Touch-first mobile native IDE with Tree-sitter AST incremental parsing and on-device build pipelines.
-  - **Sednicon**: Unified vector iconography delivery system.
-- **Interactive CLI HUD Terminal**: Built-in shell emulator with custom command parser (`about`, `projects`, `skills`, `matrix`, `telemetry`, `cat onyx.proto`, `contact`).
-- **Command Palette (`⌘K`)**: Lightning-fast fuzzy keyboard search across all systems, routes, and external links.
-- **Interactive 3D Particle Constellation**: Canvas-rendered interactive nodes with mouse gravitational dynamics.
-- **Futuristic Synthesizer Micro-Audio**: Web Audio API synthesized haptic blips, clicks, and activation hums.
+A modern, single-page portfolio built with **React 19 + TypeScript + Vite**, featuring a custom glassmorphism design system, interactive animations, a direct contact workflow, and a full **SEO & AI-discovery layer**.
 
 ---
 
-## 🛠️ Tech Stack
+## 📖 Table of Contents
 
-- **Framework**: React 19 + TypeScript + Vite
-- **Styling**: Tailwind CSS + Custom Obsidian Glassmorphism Design System
-- **Animation**: Framer Motion (60 FPS springs, layout transitions, scroll progression)
-- **Icons**: Lucide React
-- **Audio Engine**: Web Audio API Synthesizer
+- [✨ Highlights](#-highlights)
+- [📦 Flagship Projects](#-flagship-projects)
+- [🧰 Tech Stack](#-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [📜 Available Scripts](#-available-scripts)
+- [🔌 Contact API](#-contact-api)
+- [🤖 SEO & AI Discovery](#-seo--ai-discovery)
+- [🌐 Deployment](#-deployment)
+- [♿ Accessibility & Performance](#-accessibility--performance)
+- [📬 Contact & Comms](#-contact--comms)
+
+---
+
+## ✨ Highlights
+
+- **Executive layout** — Hero, Experience, Projects, Skills, About, and Contact sections in a clean, focused single-page flow.
+- **Obsidian Glassmorphism design system** — dark/light theme with Tailwind CSS, blur surfaces, border glows, and brand-blue accents.
+- **Framer Motion animations** — 60 FPS springs, scroll-observed reveals, layout transitions, and hover/tap micro-interactions.
+- **Magnetic buttons** — proximity-driven cursor pull on CTAs and interactive controls.
+- **Custom cursor** — sleek desktop-only cursor with hover and click states (hidden on touch devices).
+- **Web Audio micro-interactions** — synthesized haptic blips, clicks, and activation hums via the Web Audio API (`src/utils/audio.ts`).
+- **Interactive card demos** — a curated library of animated UI primitives (glassmorphism, gyro tilt, magnetic, spotlight, outline draw, swipe reveal, border beam, haptic press).
+- **Responsive navigation** — sticky/frosted header, smooth anchor scrolling with header offset, and an animated mobile drawer.
+- **Direct contact workflow** — form backed by a serverless endpoint plus one-click Email, Telegram, and Phone links.
+- **Robust SEO** — canonical URL, Open Graph/Twitter social cards, and JSON-LD structured data.
+- **AI-ready content** — `robots.txt`, `ai.txt`, `llms.txt`, `llms-full.txt`, and `sitemap.xml` for crawlers and LLM agents.
+- **Accessible by default** — skip-to-content link, clear focus states, semantic landmarks, and `aria-label`s on icon controls.
+
+---
+
+## 📦 Flagship Projects
+
+| Project | What it is | Link |
+| --- | --- | --- |
+| **OnyxChat** | Local-first Android encrypted messaging client built on the S.H.I.E.L.D. protocol, with stateless routing and hardware-backed storage. | [onyxchat.sednium.com](https://onyxchat.sednium.com) |
+| **S.H.I.E.L.D. Protocol** | Six-layer zero-knowledge messaging architecture using hybrid post-quantum cryptography and per-message forward secrecy. | [sednium.com/shield](https://sednium.com/shield) |
+| **KryptonIDE** | Native Android IDE with incremental syntax parsing and an integrated PTY terminal bridge, optimized for constrained hardware. | [kryptonide.sednium.com](https://kryptonide.sednium.com) |
+| **Sednicon** | Automated SVG optimization and cross-platform iconography delivery API. | [sednicon.sednium.com](https://sednicon.sednium.com) |
+
+---
+
+## 🧰 Tech Stack
+
+| Layer | Tools |
+| --- | --- |
+| **UI** | React 19, TypeScript, Vite 6, Tailwind CSS |
+| **Animation** | Framer Motion (springs, layout transitions, scroll reveals) |
+| **Icons** | Lucide React |
+| **Audio** | Web Audio API synthesizer |
+| **Styling** | Tailwind CSS + custom Obsidian Glassmorphism design system |
+| **Contact backend** | Python serverless handler (`api/contact.py`) + Gmail SMTP |
+| **SEO / AI** | JSON-LD, Open Graph, Twitter Cards, `robots.txt`, `sitemap.xml`, `ai.txt`, `llms.txt`, `llms-full.txt` |
+
+---
+
+## 📁 Project Structure
+
+```text
+Loid/
+├── api/
+│   └── contact.py              # Vercel serverless contact endpoint
+├── public/                     # Served as-is at the site root
+│   ├── robots.txt              # Crawler access policy (search + AI bots)
+│   ├── sitemap.xml             # XML sitemap
+│   ├── ai.txt                  # AI-crawler agent policy manifest
+│   ├── llms.txt                # Curated map for language models
+│   ├── llms-full.txt           # Full plain-text content for deep ingestion
+│   └── og-image.png            # 1200×630 social share card
+├── src/
+│   ├── components/             # Sections, nav, cursor, and reusable UI
+│   │   └── demos/              # Animated card primitives
+│   ├── data/
+│   │   └── portfolioData.ts    # Single source of truth for content
+│   ├── utils/
+│   │   └── audio.ts            # Web Audio synthesizer
+│   ├── App.tsx                 # App shell + theme state
+│   ├── main.tsx                # React entry point
+│   └── index.css               # Global styles
+├── index.html                  # Metadata, fonts, JSON-LD, noscript fallback
+├── package.json
+├── vite.config.ts
+└── tailwind.config.js
+```
 
 ---
 
 ## 🚀 Getting Started
 
-```bash
-# Clone the repository
-git clone https://github.com/AnkushDas4/Loid.git
+### Prerequisites
 
-# Install dependencies
+- **Node.js 20+**
+- **npm 10+**
+
+### Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/AnkushDas4/Loid.git
+cd Loid
+
+# 2. Install dependencies
 npm install
 
-# Start the local development server
+# 3. Start the dev server (http://localhost:3000)
 npm run dev
-
-# Build for production
-npm run build
 ```
+
+The Vite dev server is bound to `0.0.0.0` (host: `true`), so it works with container/sandbox previews.
+
+### Production build
+
+```bash
+npm run build       # Outputs to dist/
+npm run preview     # Preview the production build locally
+```
+
+---
+
+## 📜 Available Scripts
+
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server on port `3000` |
+| `npm run build` | Type-check and build for production into `dist/` |
+| `npm run preview` | Serve the production build locally |
+
+---
+
+## 🔌 Contact API
+
+The contact form posts to `POST /api/contact`, implemented by [`api/contact.py`](api/contact.py) (a Vercel-compatible serverless handler). It validates the payload and forwards it as an email over Gmail SMTP.
+
+### Request body
+
+```json
+{
+  "name": "Alex Rivers",
+  "email": "alex@example.com",
+  "subject": "Project inquiry",
+  "payload": "Hi Ankush, ..."
+}
+```
+
+### Server environment variables
+
+| Variable | Description |
+| --- | --- |
+| `SMTP_PASS` | Gmail app password for `loid.sednium@gmail.com` |
+| `GMAIL_APP_PASS` | Alias for `SMTP_PASS` (optional, used as fallback) |
+
+> Without a configured password the endpoint returns a clear `500` error; the UI then falls back to a `mailto:` link so visitors are never blocked.
+
+---
+
+## 🤖 SEO & AI Discovery
+
+The site ships with a full machine-readable discovery layer:
+
+| File | Purpose |
+| --- | --- |
+| `robots.txt` | Explicit allow rules for search engines and major AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) |
+| `sitemap.xml` | Canonical XML sitemap with `lastmod`, `changefreq`, and `priority` |
+| `ai.txt` | Human/machine-readable AI agent policy: identity, allowed crawlers, permissions, and citation requirements |
+| `llms.txt` | Curated, token-efficient Markdown map of the portfolio for language models |
+| `llms-full.txt` | Full plain-text content snapshot for deep-context AI ingestion |
+| `og-image.png` | 1200×630 Open Graph / Twitter social card |
+
+`index.html` additionally provides a canonical URL, rich Open Graph + Twitter metadata, geo tags, and a JSON-LD `Person` / `Organization` / `WebSite` / `ItemList` graph for structured results.
+
+---
+
+## 🌐 Deployment
+
+The app is configured for **Vercel** (or any static Vite host). Files in `public/` are copied verbatim to the deployment root, so the SEO/AI files are immediately reachable at `https://loid.sednium.com/robots.txt`, `/llms.txt`, etc.
+
+For the contact API, deploy `api/contact.py` as a serverless function on the same host and configure the `SMTP_PASS` environment variable.
+
+---
+
+## ♿ Accessibility & Performance
+
+- Skip-to-content link with visible focus treatment.
+- Semantic landmarks (`header`, `main`, `footer`, section headings).
+- Keyboard-reachable icon controls with descriptive `aria-label`s.
+- Responsive `prefers-color-scheme` theme detection with persisted preference.
+- Static, dependency-light build with lazy interaction-friendly visuals.
 
 ---
 
 ## 📬 Contact & Comms
 
-- **Email**: `loid@sednium.com`
+- **Email**: [loid@sednium.com](mailto:loid@sednium.com)
+- **Telegram**: [@ankushdas4](https://t.me/ankushdas4)
+- **Phone**: [+91 90645 18100](tel:+919064518100)
 - **Sednium Technologies**: [sednium.com](https://www.sednium.com)
 - **Personal GitHub**: [github.com/AnkushDas4](https://github.com/AnkushDas4)
 - **Sednium GitHub**: [github.com/Sednium-Technologies](https://github.com/Sednium-Technologies)
+- **LinkedIn**: [linkedin.com/in/ankush-das](https://www.linkedin.com/in/ankush-das)
 - **PGP Fingerprint**: `4A8F 9C12 E5B7 88D1 32A4 F0E9 77B2 C19A`
+
+---
+
+## 📜 License
+
+All rights reserved. © Ankush Das. This repository is distributed for portfolio and professional purposes; no public license is granted unless explicitly stated by the author.
