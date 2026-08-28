@@ -14,6 +14,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
   useEffect(() => {
     if (project) {
+      setActiveTab('architecture');
       sound.playActivateHum();
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
