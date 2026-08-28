@@ -1,0 +1,44 @@
+# Loid — Ankush Das · Full-Stack Developer & Systems Enthusiast
+
+> Official portfolio of Ankush Das (Løid), Co-Founder & Chief Technology Officer at Sednium Technologies. This is a single-page portfolio covering professional experience, flagship open-source architecture projects, skills, and direct contact channels.
+
+Ankush Das is a full-stack developer and systems engineer based in West Bengal, India. He co-founded Sednium Technologies and works across the full stack — accessible web interfaces in React and TypeScript, high-performance backend services in Go and Node.js, mobile-native systems, and cryptographic/edge infrastructure. The content below is the canonical summary of https://loid.sednium.com/.
+
+For a single-file plain-text snapshot intended for deep context ingestion, fetch [llms-full.txt](https://loid.sednium.com/llms-full.txt). For crawler access policy, see [robots.txt](https://loid.sednium.com/robots.txt) and [ai.txt](https://loid.sednium.com/ai.txt).
+
+## Profile
+
+- [Home / Overview](https://loid.sednium.com/): Hero, quick identity, and primary call-to-action.
+- [About](https://loid.sednium.com/#about): Short biography, professional story, and engineering philosophy.
+- [Experience](https://loid.sednium.com/#experience): Career timeline with focus areas and measurable achievements.
+- [Skills](https://loid.sednium.com/#skills): Languages, frontend, backend & systems, and DevOps & tooling competencies.
+- [Resume / Readme](https://www.sednium.com): Extended background and company context.
+
+## Projects
+
+- [OnyxChat](https://onyxchat.sednium.com): Local-first Android encrypted messaging client built on the S.H.I.E.L.D. protocol, with stateless routing and hardware-backed storage.
+- [S.H.I.E.L.D. Protocol](https://sednium.com/shield): Six-layer zero-knowledge messaging architecture with hybrid post-quantum cryptography, forward secrecy, and routing anonymity.
+- [KryptonIDE](https://kryptonide.sednium.com): Native Android integrated development environment with incremental parsing and an integrated PTY terminal bridge.
+- [Sednicon](https://sednicon.sednium.com): Automated SVG optimization and cross-platform iconography delivery API.
+
+## Experience
+
+- [Sednium Technologies — Co-Founder & CTO](https://www.sednium.com): Distributed systems, decentralized communication protocols, and developer productivity infrastructure (Jan 2024 – present).
+- [Independent / Open Source — Full-Stack & Systems Developer](https://github.com/AnkushDas4): Mobile-native development, developer tooling, and responsive web platforms (2022 – 2024).
+
+## Knowledge & Skills
+
+- [Languages & Tools](https://loid.sednium.com/#skills): TypeScript, JavaScript, Go, Kotlin, Python, SQL, C, HTML/CSS.
+- [Frontend](https://loid.sednium.com/#skills): React, Next.js, Tailwind CSS, Vite, Framer Motion, Jetpack Compose, responsive/accessible UI.
+- [Backend & Systems](https://loid.sednium.com/#skills): Node.js, Express, Go, REST APIs, PostgreSQL, Redis, libp2p, eBPF.
+- [DevOps & Tooling](https://loid.sednium.com/#skills): Git/GitHub, Docker, Linux Shell/Bash, CI/CD Actions, Vercel, Termux, Android Studio.
+
+## Contact & External Links
+
+- [Contact section](https://loid.sednium.com/#contact): Direct contact form, email, phone, Telegram, and GitHub/LinkedIn links.
+- [Email](mailto:loid@sednium.com): loid@sednium.com
+- [Telegram](https://t.me/ankushdas4): @ankushdas4
+- [GitHub](https://github.com/AnkushDas4): AnkushDas4
+- [LinkedIn](https://www.linkedin.com/in/ankush-das): ankush-das
+- [Sednium Technologies](https://www.sednium.com): Official company site
+- [Sednium GitHub](https://github.com/Sednium-Technologies): Engineering organization

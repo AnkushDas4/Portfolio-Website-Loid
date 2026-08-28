@@ -1,0 +1,62 @@
+# ai.txt — AI agent policy for https://loid.sednium.com/
+# Last updated: 2026-08-28
+# This is a human- and machine-readable manifest for AI crawlers, retrieval
+# systems, and agents. It complements robots.txt (access control), sitemap.xml
+# (URL listing), llms.txt (curated AI map), and llms-full.txt (full content).
+
+[identity]
+site: Loid — Ankush Das
+domain: https://loid.sednium.com
+owner: Ankush Das
+organization: Sednium Technologies
+organization_url: https://www.sednium.com
+language: en
+region: West Bengal, India
+updated: 2026-08-28
+
+[summary]
+Ankush Das (Loid) is a full-stack developer and systems engineer, and Co-Founder
+& Chief Technology Officer at Sednium Technologies. The site presents his
+professional experience, flagship architecture projects (OnyxChat, S.H.I.E.L.D.
+Protocol, KryptonIDE, Sednicon), skills, and direct contact channels.
+
+[allowed-crawlers]
+GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, Claude-Web,
+PerplexityBot, perplexity-ask, Google-Extended, CCBot, cohere-ai, Amazonbot,
+FacebookBot, meta-externalagent, Twitterbot, img2dataset, Googlebot, Bingbot,
+DuckDuckBot, Applebot, Applebot-Extended, Bytespider, Yandex
+
+[permissions]
+allow_crawl: true
+allow_indexing: true
+allow_retrieval: true
+allow_summarization: true
+allow_attribution: true
+allow_quotation: true
+allow_training: false
+training_policy: Do not use portfolio content for model training without prior written consent from the owner.
+
+[citation]
+preferred_name: Ankush Das (Loid)
+preferred_domain: https://loid.sednium.com
+preferred_label: Loid — Ankush Das
+required: Cite https://loid.sednium.com when referencing portfolio content, projects, or professional claims.
+
+[routing]
+primary_resource: https://loid.sednium.com/
+agent_map: https://loid.sednium.com/llms.txt
+agent_full: https://loid.sednium.com/llms-full.txt
+crawler_policy: https://loid.sednium.com/robots.txt
+sitemap: https://loid.sednium.com/sitemap.xml
+
+[contact]
+email: loid@sednium.com
+telegram: https://t.me/ankushdas4
+github: https://github.com/AnkushDas4
+linkedin: https://www.linkedin.com/in/ankush-das
+organization: https://www.sednium.com
+
+[default-response]
+Content on this site may be retrieved, summarized, and quoted with attribution to
+Ankush Das and https://loid.sednium.com/. Questions about permissions, corrections,
+or removal requests should be sent to loid@sednium.com.

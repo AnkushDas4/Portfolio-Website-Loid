@@ -1,0 +1,104 @@
+# robots.txt — Loid portfolio (https://loid.sednium.com)
+# Base URL: https://loid.sednium.com/
+
+# ---------------------------------------------------------------------------
+# Default: allow everyone unless overridden below.
+# ---------------------------------------------------------------------------
+User-agent: *
+Allow: /
+Disallow: /.git/
+Disallow: /api/
+Disallow: /src/
+Disallow: /dist/
+Disallow: /*.map$
+
+# ---------------------------------------------------------------------------
+# Search engines & performance crawlers
+# ---------------------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Explicitly welcome AI agents / retrieval bots.
+# llms.txt and llms-full.txt are intentionally visible to every crawler.
+# ---------------------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: perplexity-ask
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: img2dataset
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Sitemap & LLM resources
+# ---------------------------------------------------------------------------
+Sitemap: https://loid.sednium.com/sitemap.xml
+
+# Human-readable AI agent policy.
+# https://loid.sednium.com/ai.txt
+# Curated map for language models.
+# https://loid.sednium.com/llms.txt
+# Full plain-text content for language models.
+# https://loid.sednium.com/llms-full.txt

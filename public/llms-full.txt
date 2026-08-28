@@ -1,0 +1,118 @@
+# Ankush Das (Loid) — Full-Stack Developer & Systems Enthusiast
+
+Ankush Das, also known as Loid, is a full-stack developer and systems engineer based in West Bengal, India, and the Co-Founder & Chief Technology Officer of Sednium Technologies. His portfolio is published at https://loid.sednium.com/.
+
+Key facts:
+- Name: Ankush Das
+- Online alias: Loid
+- Role: Co-Founder & Chief Technology Officer, Sednium Technologies
+- Specialty: Full-stack engineering, systems architecture, cryptography, mobile-native development, developer tooling
+- Location: West Bengal, India (remote-friendly)
+- Email: loid@sednium.com
+- Phone: +91 90645 18100
+- Telegram: @ankushdas4
+- GitHub: https://github.com/AnkushDas4
+- LinkedIn: https://www.linkedin.com/in/ankush-das
+- Company: https://www.sednium.com
+- Company GitHub: https://github.com/Sednium-Technologies
+- PGP fingerprint: 4A8F 9C12 E5B7 88D1 32A4 F0E9 77B2 C19A
+
+## Professional Summary
+
+Ankush builds responsive web applications, robust backends, and developer tooling. His career started with a strong curiosity about how computers and networks operate under the hood. Working on mobile Linux environments early on taught him to write lean, efficient code without unnecessary bloat. Today he works across the entire stack: clean accessible web interfaces in React and TypeScript, high-performance backend services in Go and Node.js, and cryptographic/edge infrastructure at Sednium Technologies.
+
+## Experience
+
+### Sednium Technologies — Co-Founder & Chief Technology Officer
+- Period: January 2024 – Present
+- Location: Remote / West Bengal, India
+- Description: Co-founded Sednium Technologies focusing on decentralized communication protocols, developer productivity tools, and edge infrastructure.
+- Achievements:
+  - Architected and deployed high-performance distributed systems in Go and Node.js with sub-millisecond routing efficiency.
+  - Engineered the Onyx encrypted P2P messaging protocol with end-to-end local-first cryptographic storage.
+  - Built automated CI/CD deployment workflows and containerized production microservices with Docker.
+- Technologies: Go, TypeScript, React, Node.js, Docker, eBPF, libp2p, PostgreSQL
+
+### Independent / Open Source — Full-Stack & Systems Developer
+- Period: 2022 – 2024
+- Location: West Bengal, India
+- Description: Built open-source developer tooling, mobile-native applications, and responsive web platforms under strict hardware and performance constraints.
+- Achievements:
+  - Authored mobile development workflows and native compilation pipelines on Android Linux subsystems.
+  - Built responsive frontends with React, Vite, and Tailwind CSS focusing on accessibility and fast load times.
+  - Contributed to open-source developer tools, CLI utilities, and cryptographic libraries.
+- Technologies: TypeScript, React, Kotlin, Tailwind CSS, Linux Shell, Git, REST APIs
+
+## Projects
+
+### OnyxChat
+- Tagline: Zero-knowledge encrypted messaging client.
+- Description: A local-first Android chat application built on the S.H.I.E.L.D. protocol, featuring stateless routing and hardware-backed storage.
+- Highlights:
+  - Stateless message routing via Vercel Edge Functions with zero data retention.
+  - Local-first SQLite database encrypted with AES-256-GCM via the Android Keystore.
+  - Uses Firebase Cloud Messaging strictly as a blind push transport for ciphertext.
+- Technologies: Kotlin, Jetpack Compose, Android, end-to-end messaging, serverless functions
+- URL: https://onyxchat.sednium.com
+
+### S.H.I.E.L.D. Protocol
+- Tagline: Six-layer zero-knowledge messaging architecture.
+- Description: A defense-in-depth cryptographic framework designed to eliminate server-side data retention, identity correlation, and metadata leakage.
+- Highlights:
+  - Replaces real-world identifiers with non-deterministic 8-character hex Routing IDs.
+  - Combines X25519 and ML-KEM-768 via HKDF-SHA256 for hybrid post-quantum encryption.
+  - Runs alongside the Signal Double Ratchet to maintain per-message forward secrecy.
+- Technologies: Protocol Design, Zero-Knowledge, Post-Quantum, System Architecture
+- URL: https://sednium.com/shield
+
+### KryptonIDE
+- Tagline: Native Android integrated development environment.
+- Description: A lightweight, touch-optimized environment designed to write, parse, and compile code directly on mobile devices.
+- Highlights:
+  - Built natively using Kotlin and Jetpack Compose.
+  - Features incremental syntax parsing and an integrated PTY terminal bridge.
+  - Optimized memory footprint for constrained mobile hardware performance.
+- Technologies: Kotlin, Jetpack Compose, Mobile IDE, Terminal, Android
+- URL: https://kryptonide.sednium.com
+
+### Sednicon
+- Tagline: Automated SVG optimization and cross-platform iconography API.
+- Description: An asset delivery pipeline that compresses vector graphics and exports type-safe components.
+- Highlights:
+  - Automated SVGO optimization to reduce file sizes.
+  - Generates tree-shakeable React components and Compose VectorDrawables.
+  - Deployed as a multi-platform design utility via Vercel and Supabase.
+- Technologies: HTML/CSS/JS, Headless API, Icon API, SVG Engine
+- URL: https://sednicon.sednium.com
+
+## Skills
+
+### Languages
+TypeScript, JavaScript, Go, Kotlin, Python, SQL, C, HTML / CSS
+
+### Frontend
+React, Next.js, Tailwind CSS, Vite, Framer Motion, Jetpack Compose, Responsive UI
+
+### Backend & Systems
+Node.js, Express, Go, REST APIs, PostgreSQL, Redis, libp2p, eBPF
+
+### DevOps & Tooling
+Git & GitHub, Docker, Linux Shell / Bash, CI/CD Actions, Vercel, Termux, Android Studio
+
+## Contact
+
+- Email: loid@sednium.com
+- Phone: +91 90645 18100
+- Telegram: https://t.me/ankushdas4
+- GitHub: https://github.com/AnkushDas4
+- LinkedIn: https://www.linkedin.com/in/ankush-das
+- Sednium Technologies: https://www.sednium.com
+- Sednium GitHub: https://github.com/Sednium-Technologies
+
+## Related Machine-Readable Resources
+
+- https://loid.sednium.com/robots.txt — crawler access policy
+- https://loid.sednium.com/ai.txt — AI agent usage policy
+- https://loid.sednium.com/llms.txt — curated AI map of this site
+- https://loid.sednium.com/sitemap.xml — XML sitemap
+- https://loid.sednium.com/llms-full.txt — this full plain-text document
