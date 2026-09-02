@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Cpu, Code2, Layout, Server, Terminal, Sparkles, Check } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
@@ -48,24 +48,24 @@ export const SkillsSection: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="pt-12 pb-6 relative w-full border-t border-slate-200/80 dark:border-slate-800/80">
+    <section id="skills" className="pt-10 sm:pt-12 pb-4 sm:pb-6 relative w-full border-t border-slate-200/80 dark:border-slate-800/80">
       <div className="w-full max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
             <Cpu className="w-3.5 h-3.5" />
             <span>Technical Capabilities</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
             Skills & Stack
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-1">
+          <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm md:text-base mt-1">
             Languages, frameworks, and distributed systems tooling. Tap or hover over any skill pill to inspect.
           </p>
         </div>
 
-        {/* 4-Column Responsive Grid on Large Screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {PORTFOLIO_DATA.skills.map((category, catIdx) => {
             const theme = CATEGORY_THEMES[category.title] || {
               ring: 'hover:border-blue-500/50',
@@ -81,7 +81,7 @@ export const SkillsSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: catIdx * 0.08 }}
-                className={`group relative overflow-hidden p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200 dark:border-slate-800/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between ${theme.ring}`}
+                className={`group relative overflow-hidden p-5 sm:p-6 md:p-7 rounded-2xl bg-white dark:bg-[#0f121a] border border-slate-200 dark:border-slate-800/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between ${theme.ring}`}
               >
                 {/* Dynamic Ambient Background Glow on Hover / Focus */}
                 <div
@@ -90,13 +90,13 @@ export const SkillsSection: React.FC = () => {
 
                 <div>
                   {/* Header */}
-                  <div className="relative z-10 flex items-center justify-between pb-3.5 mb-5 border-b border-slate-100 dark:border-slate-800/80">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/50">
+                  <div className="relative z-10 flex items-center justify-between pb-3 mb-4 sm:mb-5 border-b border-slate-100 dark:border-slate-800/80">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="p-1.5 sm:p-2 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/50 shrink-0">
                         {icon}
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
+                        <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
                           {category.title}
                         </h3>
                         <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
@@ -106,8 +106,8 @@ export const SkillsSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Interactive Skill Pills with Layout Animation & Zero Width Shift */}
-                  <motion.div layout className="relative z-10 flex flex-wrap gap-2">
+                  {/* Interactive Skill Pills with Zero Width Shift */}
+                  <motion.div layout className="relative z-10 flex flex-wrap gap-1.5 sm:gap-2">
                     {category.skills.map((skill, sIdx) => {
                       const isSelected = activeSkill === skill;
 
@@ -133,7 +133,7 @@ export const SkillsSection: React.FC = () => {
                             transition: { type: 'spring', stiffness: 600, damping: 20 },
                           }}
                           onClick={() => handleSkillTouch(skill)}
-                          className={`group/pill relative overflow-hidden px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors duration-200 flex items-center gap-2 cursor-pointer select-none border ${
+                          className={`group/pill relative overflow-hidden px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors duration-200 flex items-center gap-1.5 sm:gap-2 cursor-pointer select-none border min-h-[34px] ${
                             isSelected
                               ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 border-blue-500 ring-2 ring-blue-500/40'
                               : 'bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-slate-700/60 hover:bg-white dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-950 dark:hover:text-white hover:shadow-sm'

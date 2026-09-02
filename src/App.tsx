@@ -33,7 +33,7 @@ export const App: React.FC = () => {
   }, [darkMode]);
 
   return (
-    <SpotlightGrid className="bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200">
+    <SpotlightGrid className="bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200 font-sans transition-colors duration-200 min-h-screen">
       {/* Desktop-only sleek circular custom cursor */}
       <CustomCursor />
 
@@ -43,8 +43,8 @@ export const App: React.FC = () => {
         onToggleTheme={() => setDarkMode(!darkMode)} 
       />
 
-      {/* Main Content Sections with Generous Max Width & Vertical Spacing */}
-      <main id="main" role="main" aria-label="Main content" className="w-full max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-16 sm:space-y-20 relative z-10">
+      {/* Main Content Sections with Fluid Responsive Gutters & Spacing */}
+      <main id="main" role="main" aria-label="Main content" className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-6 sm:py-10 space-y-12 sm:space-y-16 md:space-y-20 relative z-10">
         <Hero />
         <TelemetryHub />
         <ExperienceTimeline />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 interface GyroTiltCardProps {
@@ -11,12 +11,14 @@ interface GyroTiltCardProps {
 export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
   children,
   className = '',
-  maxTilt = 12,
+  maxTilt = 8,
   enableHapticSquish = true,
 }) => {
   const [hasGyro, setHasGyro] = useState<boolean>(false);
   const [isSupported, setIsSupported] = useState<boolean>(true);
   const [isPressed, setIsPressed] = useState<boolean>(false);
+
+  const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   const rawBeta = useMotionValue(0);  // Front-to-back tilt (-180 to 180)
   const rawGamma = useMotionValue(0); // Left-to-right tilt (-90 to 90)
@@ -80,20 +82,47 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
     rawGamma.set(0);
   };
 
-  // Impulsive Haptic Press Feedback
-  const handlePressStart = () => {
+  // Impulsive Haptic Press Feedback (Safe on mobile page scroll)
+  const handleMouseDown = () => {
     if (!enableHapticSquish) return;
     setIsPressed(true);
-    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-      try {
-        navigator.vibrate(15);
-      } catch (_) {}
+  };
+
+  const handleMouseUp = () => {
+    if (!enableHapticSquish) return;
+    setIsPressed(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!enableHapticSquish) return;
+    const touch = e.touches[0];
+    touchStartPos.current = { x: touch.clientX, y: touch.clientY };
+    setIsPressed(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const touch = e.touches[0];
+    const diffX = Math.abs(touch.clientX - touchStartPos.current.x);
+    const diffY = Math.abs(touch.clientY - touchStartPos.current.y);
+
+    // If user is scrolling the page, cancel squish state and don't trigger haptic
+    if (diffX > 10 || diffY > 10) {
+      setIsPressed(false);
+      touchStartPos.current = null;
     }
   };
 
-  const handlePressEnd = () => {
-    if (!enableHapticSquish) return;
+  const handleTouchEnd = () => {
+    if (isPressed && enableHapticSquish) {
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try {
+          navigator.vibrate(12);
+        } catch (_) {}
+      }
+    }
     setIsPressed(false);
+    touchStartPos.current = null;
   };
 
   return (
@@ -101,44 +130,29 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
       style={{ perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="w-full"
+      className="w-full h-full"
     >
       <motion.div
-        animate={
-          !hasGyro && !isSupported
-            ? {
-                rotateX: [0, 3, -3, 0],
-                rotateY: [0, -5, 5, 0],
-              }
-            : undefined
-        }
-        transition={
-          !hasGyro && !isSupported
-            ? {
-                repeat: Infinity,
-                duration: 6,
-                ease: 'easeInOut',
-              }
-            : undefined
-        }
-        whileHover={{ scale: 1.012 }}
-        whileTap={{ scale: 0.96, y: 3 }}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.97, y: 2 }}
         transition={{
           type: 'spring',
           stiffness: 450,
           damping: 24,
           mass: 0.7,
         }}
-        onMouseDown={handlePressStart}
-        onMouseUp={handlePressEnd}
-        onTouchStart={handlePressStart}
-        onTouchEnd={handlePressEnd}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         style={{
           rotateX,
           rotateY,
           transformStyle: 'preserve-3d',
         }}
-        className={`relative select-none rounded-2xl border transition-all duration-150 p-6 ${
+        className={`relative select-none rounded-2xl border transition-all duration-150 h-full flex flex-col justify-between ${
           isPressed
             ? 'bg-slate-50 dark:bg-[#0a0d14] border-blue-500/60 shadow-inner ring-2 ring-blue-500/20'
             : 'bg-white dark:bg-[#0f121a] border-slate-200 dark:border-slate-800/90 shadow-md hover:shadow-xl hover:border-slate-300 dark:hover:border-slate-700'
@@ -161,7 +175,7 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
         />
 
         {/* 3D Elevated Layer Content */}
-        <div style={{ transform: 'translateZ(25px)' }} className="relative z-10">
+        <div style={{ transform: 'translateZ(20px)' }} className="relative z-10 w-full h-full flex flex-col justify-between">
           {children}
         </div>
       </motion.div>
