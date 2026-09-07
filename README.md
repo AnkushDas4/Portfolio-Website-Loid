@@ -47,6 +47,7 @@ A modern, single-page portfolio built with **React 19 + TypeScript + Vite**, fea
 | Project | What it is | Link |
 | --- | --- | --- |
 | **OnyxChat** | Local-first Android encrypted messaging client built on the S.H.I.E.L.D. protocol, with stateless routing and hardware-backed storage. | [onyxchat.sednium.com](https://onyxchat.sednium.com) |
+| **Blade Launcher** | Next-generation mobile launcher for Minecraft: Java Edition on Android with isolated Java 8–26 runtimes and multi-renderer graphics. | [blade-launcher.sednium.com](https://blade-launcher.sednium.com/) |
 | **S.H.I.E.L.D. Protocol** | Six-layer zero-knowledge messaging architecture using hybrid post-quantum cryptography and per-message forward secrecy. | [sednium.com/shield](https://sednium.com/shield) |
 | **KryptonIDE** | Native Android IDE with incremental syntax parsing and an integrated PTY terminal bridge, optimized for constrained hardware. | [kryptonide.sednium.com](https://kryptonide.sednium.com) |
 | **Sednicon** | Automated SVG optimization and cross-platform iconography delivery API. | [sednicon.sednium.com](https://sednicon.sednium.com) |

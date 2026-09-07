@@ -55,6 +55,17 @@ Ankush builds responsive web applications, robust backends, and developer toolin
 - Technologies: Kotlin, Jetpack Compose, Android, end-to-end messaging, serverless functions
 - URL: https://onyxchat.sednium.com
 
+### Blade Launcher
+- Tagline: Next-generation mobile launcher for Minecraft: Java Edition on Android.
+- Description: A refined, portrait-first Minecraft Java Edition client for Android engineered with isolated Java 8–26 runtimes, multi-renderer graphics pipeline, and dual Microsoft/offline accounts.
+- Highlights:
+  - Ergonomic vertical portrait UX with rapid launch controls anchored in the thumb zone.
+  - Hardware-accelerated Vulkan (Zink / Turnip / VirGL) and NG-GL4ES render backends for 60+ FPS gameplay.
+  - Built-in runtime manager downloading isolated OpenJDK 8 to 26 runtimes with automated JVM routing.
+  - Split-process architecture isolating launcher UI (:main) from the game JVM (:game) for crash immunity.
+- Technologies: Kotlin, Jetpack Compose, Android, Vulkan / GL4ES, OpenJDK, GPLv3
+- URL: https://blade-launcher.sednium.com/
+
 ### S.H.I.E.L.D. Protocol
 - Tagline: Six-layer zero-knowledge messaging architecture.
 - Description: A defense-in-depth cryptographic framework designed to eliminate server-side data retention, identity correlation, and metadata leakage.

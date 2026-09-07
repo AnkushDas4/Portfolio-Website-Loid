@@ -17,8 +17,8 @@ updated: 2026-08-28
 [summary]
 Ankush Das (Loid) is a full-stack developer and systems engineer, and Co-Founder
 & Chief Technology Officer at Sednium Technologies. The site presents his
-professional experience, flagship architecture projects (OnyxChat, S.H.I.E.L.D.
-Protocol, KryptonIDE, Sednicon), skills, and direct contact channels.
+professional experience, flagship architecture projects (OnyxChat, Blade Launcher,
+S.H.I.E.L.D. Protocol, KryptonIDE, Sednicon), skills, and direct contact channels.
 
 [allowed-crawlers]
 GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, Claude-Web,

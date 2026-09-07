@@ -129,6 +129,46 @@ export const PORTFOLIO_DATA = {
       }
     },
     {
+      id: "blade-launcher",
+      name: "Blade Launcher",
+      tagline: "Next-generation mobile launcher for Minecraft: Java Edition on Android.",
+      description: "A refined, portrait-first Minecraft Java Edition client for Android engineered with isolated Java 8–26 runtimes, multi-renderer graphics pipeline, and dual Microsoft/offline accounts.",
+      highlights: [
+        "Ergonomic vertical portrait UX with rapid launch controls anchored in the thumb zone.",
+        "Hardware-accelerated Vulkan (Zink / Turnip / VirGL) and NG-GL4ES render backends for 60+ FPS gameplay.",
+        "Built-in runtime manager downloading isolated OpenJDK 8 to 26 runtimes with automated JVM routing.",
+        "Split-process architecture isolating launcher UI (:main) from the game JVM (:game) for crash immunity."
+      ],
+      tech: ["Kotlin", "Jetpack Compose", "Android", "Vulkan / GL4ES", "OpenJDK", "GPLv3"],
+      url: "https://blade-launcher.sednium.com/",
+      githubUrl: "https://github.com/Sednium-Technologies/Blade-Launcher",
+      featured: true,
+      architecture: {
+        layers: [
+          { name: "Mobile UI & Input Layer", role: "120Hz Portrait Touch HUD", tech: "Kotlin / Jetpack Compose M3E", detail: "Thumb-anchored portrait interface with draggable on-screen controls, haptic feedback, and gamepad HID mapping." },
+          { name: "Process Isolation Boundary", role: "Split-Process Game Sandbox", tech: "Android IPC / Sub-process (:game)", detail: "Decouples launcher UI (:main) from the game runtime (:game), guaranteeing launcher survivability on JVM OOM or game crashes." },
+          { name: "Multi-Backend Graphics Pipeline", role: "Vulkan & OpenGL Translation", tech: "Vulkan Zink / Turnip / VirGL / GL4ES", detail: "Dynamic GPU probing suggests optimal driver paths (Zink Vulkan vs. GL4ES) for hardware-accelerated 60+ FPS rendering." },
+          { name: "Dynamic Runtime Manager", role: "Isolated JRE Environment", tech: "OpenJDK 8, 11, 17, 21, 25, 26", detail: "On-demand runtime downloader with automatic per-version JVM routing (e.g., Java 21 for Minecraft 1.20.5+)." }
+        ],
+        securitySpec: [
+          { title: "Process Crash Immunity", desc: "Heavy modpacks and native memory leaks in the game JVM cannot destabilize or terminate the parent launcher process." },
+          { title: "Checksum-Verified Runtimes", desc: "Zero bundled binary bloat; all OpenJDK packages and native library dependencies are fetched on-demand and hash-verified." },
+          { title: "Dual-Mode Authentication", desc: "Secure Microsoft OAuth 2.0 PKCE authentication alongside local offline nickname profiles without tracking or telemetry." }
+        ],
+        benchmarks: [
+          { label: "Render Framerate", value: "60+ FPS", detail: "Hardware-accelerated Vulkan Zink & GL4ES" },
+          { label: "JDK Runtime Range", value: "Java 8 – 26", detail: "Automatic per-version OpenJDK routing" },
+          { label: "Launcher Overhead", value: "< 85 MB", detail: "Lightweight Compose heap before game handoff" }
+        ],
+        dataFlow: [
+          { step: 1, title: "Version & Profile Selection", desc: "User chooses Minecraft release or snapshot with target loader (Fabric, Forge, NeoForge, Quilt)." },
+          { step: 2, title: "Runtime & Driver Verification", desc: "Launcher inspects target version requirements, verifies OpenJDK installation, and selects optimal GPU renderer." },
+          { step: 3, title: "Isolated Sub-Process Fork", desc: "Spawns dedicated :game process with calibrated JVM heap arguments, native library paths, and classpath arguments." },
+          { step: 4, title: "Input & Surface Binding", desc: "Binds touch HUD input events directly to GLFW/LWJGL while Vulkan or OpenGL blits directly to the surface." }
+        ]
+      }
+    },
+    {
       id: "shield-protocol",
       name: "S.H.I.E.L.D. Protocol",
       tagline: "Six-layer zero-knowledge messaging architecture.",
