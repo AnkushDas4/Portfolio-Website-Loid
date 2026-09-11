@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Clock, KeyRound, Globe, Terminal, Zap } from 'lucide-react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { CopyButton } from './CopyButton';
+import { Activity, Clock, Globe, Terminal, Zap } from 'lucide-react';
 
 export const TelemetryHub: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -54,13 +52,9 @@ export const TelemetryHub: React.FC = () => {
               <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white tracking-tight">
                 Live Systems Telemetry
               </h3>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
-                <span>All Nodes Healthy</span>
-              </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Real-time node diagnostics, local timezone sync, and key verification.
+              Real-time node diagnostics and local timezone sync.
             </p>
           </div>
         </div>
@@ -73,8 +67,8 @@ export const TelemetryHub: React.FC = () => {
         </div>
       </div>
 
-      {/* 4-Item Diagnostic Metric Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6">
+      {/* 3-Item Diagnostic Metric Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6">
         {/* 1. Local Time & Clock */}
         <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/60 dark:bg-[#121622]/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -114,27 +108,6 @@ export const TelemetryHub: React.FC = () => {
           </div>
           <div className="text-[11px] text-slate-500 dark:text-slate-400">
             via Telegram / Encrypted Mail
-          </div>
-        </div>
-
-        {/* 4. PGP Fingerprint Quick Verify */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/60 dark:bg-[#121622]/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
-              <KeyRound className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span>PGP Key ID</span>
-            </div>
-            <CopyButton
-              text={PORTFOLIO_DATA.personal.pgpFingerprint}
-              label=""
-              className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline min-h-[32px] min-w-[32px] flex items-center justify-center"
-            />
-          </div>
-          <div className="text-xs font-mono font-bold text-slate-900 dark:text-white break-all">
-            {PORTFOLIO_DATA.personal.pgpFingerprint}
-          </div>
-          <div className="text-[11px] text-slate-500 dark:text-slate-400">
-            Tap icon to copy fingerprint
           </div>
         </div>
       </div>
