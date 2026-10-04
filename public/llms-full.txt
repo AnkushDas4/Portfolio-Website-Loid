@@ -9,7 +9,6 @@ Key facts:
 - Specialty: Full-stack engineering, systems architecture, cryptography, mobile-native development, developer tooling
 - Location: West Bengal, India (remote-friendly)
 - Email: loid@sednium.com
-- Phone: +91 90645 18100
 - Telegram: @ankushdas4
 - GitHub: https://github.com/AnkushDas4
 - LinkedIn: https://www.linkedin.com/in/ankush-das
@@ -19,12 +18,12 @@ Key facts:
 
 ## Professional Summary
 
-Ankush builds responsive web applications, robust backends, and developer tooling. His career started with a strong curiosity about how computers and networks operate under the hood. Working on mobile Linux environments early on taught him to write lean, efficient code without unnecessary bloat. Today he works across the entire stack: clean accessible web interfaces in React and TypeScript, high-performance backend services in Go and Node.js, and cryptographic/edge infrastructure at Sednium Technologies.
+Ankush builds responsive web applications, robust backends, and developer tooling. His career started with a strong curiosity about how computers and networks operate under the hood. Working on mobile Linux environments early on taught him to write lean, efficient code without unnecessary bloat. Today he works across the entire stack: clean accessible web interfaces in React and TypeScript, high-performance backend services in Go and Node.js, and cryptographic/edge infrastructure at Sednium Technologies (created on January 20, 2024).
 
 ## Experience
 
 ### Sednium Technologies — Co-Founder & Chief Technology Officer
-- Period: January 2024 – Present
+- Period: Created January 20, 2024 (January 20, 2024 – Present)
 - Location: Remote / West Bengal, India
 - Description: Co-founded Sednium Technologies focusing on decentralized communication protocols, developer productivity tools, and edge infrastructure.
 - Achievements:
@@ -113,7 +112,6 @@ Git & GitHub, Docker, Linux Shell / Bash, CI/CD Actions, Vercel, Termux, Android
 ## Contact
 
 - Email: loid@sednium.com
-- Phone: +91 90645 18100
 - Telegram: https://t.me/ankushdas4
 - GitHub: https://github.com/AnkushDas4
 - LinkedIn: https://www.linkedin.com/in/ankush-das

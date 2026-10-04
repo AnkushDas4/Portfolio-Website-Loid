@@ -42,7 +42,10 @@ export const AboutSection: React.FC = () => {
               <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                 Sednium Technologies
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 sm:mt-2 leading-relaxed">
+              <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
+                Created on January 20, 2024
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
                 Focused on decentralized communication protocols, developer productivity tools, and edge infrastructure.
               </p>
             </div>

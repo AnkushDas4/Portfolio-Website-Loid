@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Clock, Globe, Terminal, Zap } from 'lucide-react';
+import { Activity, Clock, Terminal, Zap } from 'lucide-react';
 
 export const TelemetryHub: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -67,8 +67,8 @@ export const TelemetryHub: React.FC = () => {
         </div>
       </div>
 
-      {/* 3-Item Diagnostic Metric Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6">
+      {/* 2-Item Diagnostic Metric Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6">
         {/* 1. Local Time & Clock */}
         <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/60 dark:bg-[#121622]/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -83,21 +83,7 @@ export const TelemetryHub: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. Availability Status */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/60 dark:bg-[#121622]/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
-            <Globe className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-            <span>Engineering Status</span>
-          </div>
-          <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>Available for Hire</span>
-          </div>
-          <div className="text-[11px] text-slate-500 dark:text-slate-400">
-            Consulting, Systems & Full-Stack
-          </div>
-        </div>
-
-        {/* 3. SLA & Direct Response */}
+        {/* 2. SLA & Direct Response */}
         <div className="p-3.5 sm:p-4 rounded-xl bg-slate-50/60 dark:bg-[#121622]/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
             <Terminal className="w-3.5 h-3.5 text-purple-500 shrink-0" />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Mail, MapPin, Send, Phone } from 'lucide-react';
+import { ArrowRight, Github, Mail, MapPin, Send } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { MagneticButton } from './MagneticButton';
 
@@ -24,7 +24,7 @@ export const Hero: React.FC = () => {
         >
           <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-700 dark:text-slate-300">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className="truncate">Available for projects & collaborations</span>
+            <span className="truncate">Co-Founder & CTO at Sednium Technologies</span>
           </div>
         </motion.div>
 
@@ -138,14 +138,6 @@ export const Hero: React.FC = () => {
             >
               <Mail className="w-4 h-4 text-blue-500 shrink-0" />
               <span>Email</span>
-            </a>
-
-            <a
-              href={PORTFOLIO_DATA.personal.phoneLink}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm hover:text-slate-900 dark:hover:text-white transition-colors min-h-[38px]"
-            >
-              <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
-              <span>Call</span>
             </a>
           </div>
         </motion.div>

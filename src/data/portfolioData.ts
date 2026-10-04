@@ -43,9 +43,7 @@ export const PORTFOLIO_DATA = {
     location: "West Bengal, India",
     timezone: "UTC+5:30 (IST)",
     email: "loid@sednium.com",
-    emailLink: "mailto:loid@sednium.com?subject=Connecting%20via%20your%20portfolio&body=Hi%20Ankush,%0D%0AI%20came%20across%20your%20portfolio%20website%20and%20would%20love%20to%20chat%20about...",
-    phone: "+91 90645 18100",
-    phoneLink: "tel:+919064518100",
+    emailLink: "mailto:loid@sednium.com",
     pgpFingerprint: "4A8F 9C12 E5B7 88D1 32A4 F0E9 77B2 C19A",
     github: "https://github.com/AnkushDas4",
     linkedin: "https://www.linkedin.com/in/ankush-das",
@@ -64,7 +62,7 @@ export const PORTFOLIO_DATA = {
       companyUrl: "https://www.sednium.com",
       period: "Jan 20, 2024 – Present",
       location: "Remote / West Bengal, India",
-      description: "Co-founded Sednium Technologies focusing on decentralized communication protocols, developer productivity tools, and edge infrastructure.",
+      description: "Co-founded Sednium Technologies (created on January 20, 2024) focusing on decentralized communication protocols, developer productivity tools, and edge infrastructure.",
       achievements: [
         "Architected and deployed high-performance distributed systems in Go and Node.js with sub-millisecond routing efficiency.",
         "Engineered the Onyx encrypted P2P messaging protocol with end-to-end local-first cryptographic storage.",
@@ -311,7 +309,7 @@ export const PORTFOLIO_DATA = {
     paragraphs: [
       "I'm a full-stack developer and systems engineer based in West Bengal, India. My journey into software development started with a strong curiosity for how computers and networks operate under the hood.",
       "Having built applications and compiled large codebases directly on mobile Linux environments early on, I developed a strong appreciation for writing lean, efficient, and well-structured code without unnecessary bloat.",
-      "Today, as Co-Founder & CTO at Sednium Technologies, I work across the entire stack—from building clean, accessible web interfaces in React and TypeScript to architecting high-performance backend services in Go and Node.js."
+      "Today, as Co-Founder & CTO at Sednium Technologies (created on January 20, 2024), I work across the entire stack—from building clean, accessible web interfaces in React and TypeScript to architecting high-performance backend services in Go and Node.js."
     ]
   }
 };

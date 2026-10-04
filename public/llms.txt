@@ -24,7 +24,7 @@ For a single-file plain-text snapshot intended for deep context ingestion, fetch
 
 ## Experience
 
-- [Sednium Technologies — Co-Founder & CTO](https://www.sednium.com): Distributed systems, decentralized communication protocols, and developer productivity infrastructure (Jan 2024 – present).
+- [Sednium Technologies — Co-Founder & CTO](https://www.sednium.com): Created on January 20, 2024. Distributed systems, decentralized communication protocols, and developer productivity infrastructure (Jan 20, 2024 – present).
 - [Independent / Open Source — Full-Stack & Systems Developer](https://github.com/AnkushDas4): Mobile-native development, developer tooling, and responsive web platforms (2022 – 2024).
 
 ## Knowledge & Skills
@@ -36,7 +36,7 @@ For a single-file plain-text snapshot intended for deep context ingestion, fetch
 
 ## Contact & External Links
 
-- [Contact section](https://loid.sednium.com/#contact): Direct contact form, email, phone, Telegram, and GitHub/LinkedIn links.
+- [Contact section](https://loid.sednium.com/#contact): Direct contact form via mailto, email, Telegram, and GitHub/LinkedIn links.
 - [Email](mailto:loid@sednium.com): loid@sednium.com
 - [Telegram](https://t.me/ankushdas4): @ankushdas4
 - [GitHub](https://github.com/AnkushDas4): AnkushDas4

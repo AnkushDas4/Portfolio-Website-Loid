@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Send, Github, Check, AlertCircle, Loader2, MessageSquare, Phone } from 'lucide-react';
+import { Mail, Send, Github, Check, AlertCircle, Loader2, MessageSquare } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { CopyButton } from './CopyButton';
 
@@ -16,38 +16,28 @@ export const ContactSection: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message || isSubmitting) return;
+    if (!formData.message || isSubmitting) return;
 
     setIsSubmitting(true);
     setStatus('idle');
     setStatusMessage('');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject || 'Portfolio Contact Inquiry',
-          payload: formData.message,
-        }),
-      });
+      const subject = encodeURIComponent(formData.subject || 'Portfolio Inquiry');
+      const body = encodeURIComponent(
+        `Hi Ankush,\n\n${formData.message}\n\n---\nFrom: ${formData.name || 'Anonymous'}${formData.email ? ` <${formData.email}>` : ''}`
+      );
 
-      const data = await response.json().catch(() => ({}));
+      window.location.href = `mailto:${PORTFOLIO_DATA.personal.email}?subject=${subject}&body=${body}`;
 
-      if (response.ok && data.status === 'success') {
-        setStatus('success');
-        setStatusMessage('Thank you! Your message was delivered successfully.');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error(data.message || 'Failed to dispatch email.');
-      }
+      setStatus('success');
+      setStatusMessage('Opening your default mail client with your pre-filled message...');
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: any) {
       setStatus('error');
-      setStatusMessage(err?.message || 'Could not send message automatically. Please email me directly.');
+      setStatusMessage(err?.message || 'Could not open mail client automatically. Please email loid@sednium.com directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +75,7 @@ export const ContactSection: React.FC = () => {
                   <CopyButton text={PORTFOLIO_DATA.personal.email} label="" className="text-xs text-slate-400 hover:text-blue-600 min-h-[32px] min-w-[32px] flex items-center justify-center" />
                 </div>
                 <a
-                  href={PORTFOLIO_DATA.personal.emailLink}
+                  href={`mailto:${PORTFOLIO_DATA.personal.email}`}
                   className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[36px]"
                 >
                   <Mail className="w-4 h-4 text-blue-500 shrink-0" />
@@ -107,21 +97,6 @@ export const ContactSection: React.FC = () => {
                 >
                   <Send className="w-4 h-4 text-sky-500 shrink-0" />
                   <span>{PORTFOLIO_DATA.personal.telegramHandle}</span>
-                </a>
-              </div>
-
-              {/* Phone / Mobile */}
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500 font-medium">Mobile / Phone</span>
-                  <CopyButton text={PORTFOLIO_DATA.personal.phone} label="" className="text-xs text-slate-400 hover:text-blue-600 min-h-[32px] min-w-[32px] flex items-center justify-center" />
-                </div>
-                <a
-                  href={PORTFOLIO_DATA.personal.phoneLink}
-                  className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[36px]"
-                >
-                  <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <span>{PORTFOLIO_DATA.personal.phone}</span>
                 </a>
               </div>
 
@@ -148,7 +123,7 @@ export const ContactSection: React.FC = () => {
                 Location & Timezone
               </div>
               <div>{PORTFOLIO_DATA.personal.location} (UTC+5:30)</div>
-              <div>Typical response time: within 24 hours.</div>
+              <div>Direct mail client support: Click send to launch mailto.</div>
             </div>
           </div>
 
@@ -158,11 +133,10 @@ export const ContactSection: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 sm:mb-2">
-                    Your Name *
+                    Your Name
                   </label>
                   <input
                     type="text"
-                    required
                     disabled={isSubmitting}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -173,11 +147,10 @@ export const ContactSection: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 sm:mb-2">
-                    Email Address *
+                    Email Address
                   </label>
                   <input
                     type="email"
-                    required
                     disabled={isSubmitting}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -241,14 +214,6 @@ export const ContactSection: React.FC = () => {
                       <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
                       <span>{statusMessage}</span>
                     </div>
-                    <div className="pl-6 pt-0.5">
-                      <a
-                        href={`mailto:${PORTFOLIO_DATA.personal.email}?subject=${encodeURIComponent(formData.subject || 'Inquiry')}&body=${encodeURIComponent(formData.message)}`}
-                        className="font-medium underline hover:text-rose-900 dark:hover:text-rose-200"
-                      >
-                        Click to open your default email client &rarr;
-                      </a>
-                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -261,16 +226,16 @@ export const ContactSection: React.FC = () => {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Sending message...</span>
+                    <span>Launching Mail Client...</span>
                   </>
                 ) : status === 'success' ? (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Message Sent</span>
+                    <span>Mail Client Opened</span>
                   </>
                 ) : (
                   <>
-                    <span>Send Message</span>
+                    <span>Send Message (mailto)</span>
                     <Send className="w-3.5 h-3.5" />
                   </>
                 )}

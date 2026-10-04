@@ -206,8 +206,7 @@ For the contact API, deploy `api/contact.py` as a serverless function on the sam
 
 - **Email**: [loid@sednium.com](mailto:loid@sednium.com)
 - **Telegram**: [@ankushdas4](https://t.me/ankushdas4)
-- **Phone**: [+91 90645 18100](tel:+919064518100)
-- **Sednium Technologies**: [sednium.com](https://www.sednium.com)
+- **Sednium Technologies**: [sednium.com](https://www.sednium.com) *(Created on January 20, 2024)*
 - **Personal GitHub**: [github.com/AnkushDas4](https://github.com/AnkushDas4)
 - **Sednium GitHub**: [github.com/Sednium-Technologies](https://github.com/Sednium-Technologies)
 - **LinkedIn**: [linkedin.com/in/ankush-das](https://www.linkedin.com/in/ankush-das)
