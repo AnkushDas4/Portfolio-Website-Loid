@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    { "source": "/client-intake", "destination": "/index.html" },
+    { "source": "/domain-onboarding", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/client-intake",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/domain-onboarding",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
+}

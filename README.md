@@ -217,3 +217,15 @@ For the contact API, deploy `api/contact.py` as a serverless function on the sam
 ## 📜 License
 
 All rights reserved. © Ankush Das. This repository is distributed for portfolio and professional purposes; no public license is granted unless explicitly stated by the author.
+
+---
+
+## 🧾 Client Intake Page
+
+A private onboarding form for Domain Procurement, DNS Setup & SEO Foundations clients, served at `/client-intake` (alias `/domain-onboarding`).
+
+- **Code:** `src/pages/ClientIntake.tsx`, `src/components/intake/*`, rules in `src/utils/intake.ts` (validation, normalisation, summary).
+- **Backend:** `POST /api/intake` (`api/intake.py`) emails the submission to `loid@sednium.com` using the same `SMTP_PASS` as the contact form. Optional `INTAKE_TO` overrides the recipient.
+- **Swap the backend:** set `VITE_INTAKE_ENDPOINT` (e.g. a Formspree URL). For Web3Forms also set `VITE_INTAKE_ACCESS_KEY`. The payload already includes `name`, `email`, `subject` and `message`.
+- **Routing:** `vercel.json` rewrites both paths to `index.html` and sends `X-Robots-Tag: noindex`. The page also sets `noindex` itself and both paths are disallowed in `robots.txt`.
+- **Local testing:** `/api/intake` only exists under `vercel dev`, not plain `vite`.
