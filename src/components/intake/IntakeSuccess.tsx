@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Check, Copy } from 'lucide-react';
-import { copyText, SummaryGroup } from '../../utils/intake';
+import { ArrowLeft, Check, Copy, Mail, Send } from 'lucide-react';
+import { copyText, SummaryGroup, buildMailtoUrl, buildTelegramUrl } from '../../utils/intake';
 
 interface IntakeSuccessProps {
   refId: string;
+  brandName: string;
+  primaryDomain: string;
   groups: SummaryGroup[];
   summaryText: string;
 }
 
-export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, groups, summaryText }) => {
+export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, primaryDomain, groups, summaryText }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+
+  const mailtoUrl = buildMailtoUrl(refId, brandName, summaryText);
+  const telegramUrl = buildTelegramUrl(refId, brandName, primaryDomain);
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -29,13 +34,13 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, groups, sum
         initial={{ opacity: 0, y: 8, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-        className="rounded-2xl p-6 sm:p-8 bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl shadow-slate-900/10"
+        className="rounded-2xl p-6 sm:p-8 bg-slate-900 text-white dark:bg-[#121622] border border-slate-800 dark:border-slate-700/80 shadow-2xl"
       >
         <div className="flex items-center gap-3 mb-5">
           <span className="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
             <Check className="w-5 h-5" strokeWidth={3} aria-hidden="true" />
           </span>
-          <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-white/10 dark:bg-slate-900/10">
+          <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-white/10 text-emerald-400">
             Ref {refId}
           </span>
         </div>
@@ -47,9 +52,29 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, groups, sum
         >
           Intake received.
         </h2>
-        <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-300 dark:text-slate-600 max-w-xl">
+        <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-300 max-w-xl">
           Our team is running domain availability and WHOIS registry checks. We will connect with you via WhatsApp/Email within 2–4 hours with the registry preview and next steps.
         </p>
+
+        {/* Action dispatch buttons */}
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href={mailtoUrl}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors shadow-sm"
+          >
+            <Mail className="w-4 h-4" />
+            <span>Launch Mail Client (mailto)</span>
+          </a>
+          <a
+            href={telegramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-sm transition-colors"
+          >
+            <Send className="w-4 h-4 text-sky-400" />
+            <span>Notify on Telegram / WhatsApp</span>
+          </a>
+        </div>
       </motion.div>
 
       <div className="rounded-2xl p-5 sm:p-7 bg-white dark:bg-[#0f121a] border border-slate-200 dark:border-slate-800/90 shadow-sm">
@@ -68,7 +93,7 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, groups, sum
             ) : (
               <Copy className="w-4 h-4" aria-hidden="true" />
             )}
-            <span>{copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed, select the text below' : 'Copy summary'}</span>
+            <span>{copyState === 'copied' ? 'Copied to Clipboard' : copyState === 'failed' ? 'Copy failed, select the text below' : 'Copy summary'}</span>
           </button>
         </div>
         <span className="sr-only" aria-live="polite">{copyState === 'copied' ? 'Summary copied to clipboard' : ''}</span>

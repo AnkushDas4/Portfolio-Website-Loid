@@ -220,12 +220,10 @@ All rights reserved. © Ankush Das. This repository is distributed for portfolio
 
 ---
 
-## 🧾 Client Intake Page
+## 🧾 Client Intake & Onboarding Page
 
-A private onboarding form for Domain Procurement, DNS Setup & SEO Foundations clients, served at `/client-intake` (alias `/domain-onboarding`).
+A dedicated onboarding form for Domain Procurement, DNS Setup & SEO Foundations clients (₹1.2k – ₹1.5k), served at `/domain-onboarding` (alias `/client-intake`).
 
-- **Code:** `src/pages/ClientIntake.tsx`, `src/components/intake/*`, rules in `src/utils/intake.ts` (validation, normalisation, summary).
-- **Backend:** `POST /api/intake` (`api/intake.py`) emails the submission to `loid@sednium.com` using the same `SMTP_PASS` as the contact form. Optional `INTAKE_TO` overrides the recipient.
-- **Swap the backend:** set `VITE_INTAKE_ENDPOINT` (e.g. a Formspree URL). For Web3Forms also set `VITE_INTAKE_ACCESS_KEY`. The payload already includes `name`, `email`, `subject` and `message`.
-- **Routing:** `vercel.json` rewrites both paths to `index.html` and sends `X-Robots-Tag: noindex`. The page also sets `noindex` itself and both paths are disallowed in `robots.txt`.
-- **Local testing:** `/api/intake` only exists under `vercel dev`, not plain `vite`.
+- **Code:** [`src/pages/ClientIntake.tsx`](src/pages/ClientIntake.tsx), [`src/components/intake/*`](src/components/intake/), rules & validators in [`src/utils/intake.ts`](src/utils/intake.ts).
+- **Architecture:** Zero-dependency client-side dispatch. Submissions instantly open the verified mail client (`mailto:loid@sednium.com`) with a formatted intake record, generate a reference tracking code, provide a one-click copy summary button, and offer Telegram/WhatsApp notification.
+- **Routing:** `vercel.json` rewrites both `/domain-onboarding` and `/client-intake` to `index.html` with `X-Robots-Tag: noindex, nofollow` to protect client privacy. Both paths are disallowed from public crawling in `robots.txt`.

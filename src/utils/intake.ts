@@ -4,7 +4,7 @@
  * No React in here so the rules are easy to test and reuse.
  */
 
-export type Tld = 'in' | 'com' | 'open';
+export type Tld = 'in' | 'com' | 'sednium-subdomain' | 'other' | 'open';
 export type Platform = 'custom' | 'wordpress' | 'wix' | 'shopify' | 'in-development' | 'other';
 export type Hosting = 'have-hosting' | 'need-dns' | 'need-recommendation';
 export type Geography = 'local' | 'pan-india' | 'international';
@@ -75,9 +75,11 @@ export interface Option<T extends string> {
 }
 
 export const TLD_OPTIONS: Option<Tld>[] = [
-  { value: 'in', label: '.in', hint: 'India-focused' },
-  { value: 'com', label: '.com', hint: 'Global reach' },
-  { value: 'open', label: 'Not sure', hint: 'Open to your recommendation' },
+  { value: 'in', label: '.in', hint: 'India-exclusive registry' },
+  { value: 'com', label: '.com', hint: 'Global reach & international audience' },
+  { value: 'sednium-subdomain', label: 'Subdomain on sednium.com', hint: 'e.g. yourbrand.sednium.com (included managed subdomain)' },
+  { value: 'other', label: 'Other TLD', hint: '.org, .co, .io, .net, .store, etc.' },
+  { value: 'open', label: 'Open to recommendation', hint: 'We will suggest the best TLD for your budget & market' },
 ];
 
 export const PLATFORM_OPTIONS: Option<Platform>[] = [
@@ -375,3 +377,15 @@ export async function copyText(text: string): Promise<boolean> {
     }
   }
 }
+
+export function buildMailtoUrl(refId: string, brandName: string, summaryText: string): string {
+  const to = 'loid@sednium.com';
+  const subject = `[Domain Intake Ref: ${refId}] - ${brandName || 'New Client'}`;
+  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(summaryText)}`;
+}
+
+export function buildTelegramUrl(refId: string, brandName: string, primaryDomain: string): string {
+  const text = `Hey Ankush! I submitted the Domain Onboarding Intake form for ${brandName} (Domain: ${primaryDomain}). Reference ID: ${refId}`;
+  return `https://t.me/ankushdas4?text=${encodeURIComponent(text)}`;
+}
+
