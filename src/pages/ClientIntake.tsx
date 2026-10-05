@@ -17,6 +17,8 @@ import {
 import { useTheme } from '../hooks/useTheme';
 import { SpotlightGrid } from '../components/SpotlightGrid';
 import { IntakeSuccess } from '../components/intake/IntakeSuccess';
+import { DomainPreviewCard } from '../components/intake/DomainPreviewCard';
+import { GoogleSerpPreviewCard } from '../components/intake/GoogleSerpPreviewCard';
 import { 
   TextField, 
   ChoiceField, 
@@ -351,6 +353,15 @@ export const ClientIntake: React.FC = () => {
                   onChange={(v) => setField('tld', v)}
                   columns={2}
                 />
+
+                {/* Dynamic Domain & DNS Live Preview Simulation */}
+                <div className="pt-2">
+                  <DomainPreviewCard
+                    primaryDomain={values.primaryDomain}
+                    tld={values.tld}
+                    brandName={values.brandName}
+                  />
+                </div>
               </section>
 
               {/* SECTION C */}
@@ -492,6 +503,18 @@ export const ClientIntake: React.FC = () => {
                   onChange={(v) => setField('competitors', v)}
                   onBlur={() => handleBlur('competitors')}
                 />
+
+                {/* Dynamic Google Search SERP Preview */}
+                <div className="pt-2">
+                  <GoogleSerpPreviewCard
+                    brandName={values.brandName}
+                    cityState={values.cityState}
+                    description={values.description}
+                    primaryDomain={values.primaryDomain}
+                    tld={values.tld}
+                    keywords={values.keywords}
+                  />
+                </div>
               </section>
 
               {/* Confirmation Checkbox */}
