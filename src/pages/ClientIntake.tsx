@@ -380,6 +380,17 @@ export const ClientIntake: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Current Website Name / URL */}
+                <TextField
+                  name="existingWebsite"
+                  label="Current Website Name or URL"
+                  tag="If already online"
+                  hint="If you already have a website or staging link, enter its address or name so we can test connections."
+                  value={values.existingWebsite}
+                  placeholder="e.g. https://yourbrand.vercel.app, yourbrand.wixsite.com, or existing domain"
+                  onChange={(v) => setField('existingWebsite', v)}
+                />
+
                 <ChoiceField
                   name="platform"
                   label="Current Website Platform"
@@ -415,17 +426,57 @@ export const ClientIntake: React.FC = () => {
                   columns={3}
                 />
 
-                <TextField
-                  name="hostingDetails"
-                  label="Host/Server Details or Nameservers"
-                  tag="Optional"
-                  multiline
-                  rows={3}
-                  hint="If you already have server IPs (e.g. 76.76.21.21) or custom nameservers (e.g. ns1.vercel-dns.com), paste them here."
-                  value={values.hostingDetails}
-                  placeholder="e.g. Server IP: 185.199.108.153 or Cloudflare nameservers"
-                  onChange={(v) => setField('hostingDetails', v)}
-                />
+                <div className="space-y-1.5">
+                  <TextField
+                    name="hostingDetails"
+                    label="Server IP (A Record), CNAME, or Nameservers"
+                    tag="If available"
+                    multiline
+                    rows={3}
+                    hint="If you have an IP address, CNAME target, or hosting nameservers, type or paste them here for DNS record pointing."
+                    value={values.hostingDetails}
+                    placeholder="e.g. Server IP: 76.76.21.21, CNAME: cname.vercel-dns.com, or Nameservers: ns1.hosting.com, ns2.hosting.com"
+                    onChange={(v) => setField('hostingDetails', v)}
+                  />
+
+                  {/* Quick-insert tags for DNS records */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs text-slate-500 dark:text-slate-400">
+                    <span className="text-[11px] font-medium mr-1">Quick insert:</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = values.hostingDetails;
+                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                        setField('hostingDetails', `${current}${prefix}Server IP: `);
+                      }}
+                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                    >
+                      + Server IP (A)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = values.hostingDetails;
+                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                        setField('hostingDetails', `${current}${prefix}CNAME: `);
+                      }}
+                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                    >
+                      + CNAME Target
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = values.hostingDetails;
+                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                        setField('hostingDetails', `${current}${prefix}Nameservers: ns1., ns2.`);
+                      }}
+                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                    >
+                      + Nameservers (NS)
+                    </button>
+                  </div>
+                </div>
               </section>
 
               {/* SECTION D */}

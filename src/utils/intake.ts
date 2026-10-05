@@ -19,6 +19,7 @@ export interface IntakeValues {
   altDomain1: string;
   altDomain2: string;
   tld: Tld;
+  existingWebsite: string;
   platform: Platform | '';
   platformOther: string;
   hosting: Hosting | '';
@@ -46,6 +47,7 @@ export const EMPTY_VALUES: IntakeValues = {
   altDomain1: '',
   altDomain2: '',
   tld: 'open',
+  existingWebsite: '',
   platform: '',
   platformOther: '',
   hosting: '',
@@ -258,14 +260,14 @@ export function validate(v: IntakeValues): Errors {
 export const FIELD_ORDER: FieldKey[] = [
   'fullName', 'brandName', 'email', 'phone', 'cityState',
   'primaryDomain', 'altDomain1', 'altDomain2', 'tld',
-  'platform', 'platformOther', 'hosting', 'hostingDetails',
+  'existingWebsite', 'platform', 'platformOther', 'hosting', 'hostingDetails',
   'description', 'keywords', 'geography', 'radiusKm', 'competitors', 'confirm',
 ];
 
 export const SECTIONS = [
   { id: 'a', letter: 'A', title: 'You & your business', keys: ['fullName', 'brandName', 'email', 'phone', 'cityState'] as FieldKey[] },
   { id: 'b', letter: 'B', title: 'Your domain', keys: ['primaryDomain', 'altDomain1', 'altDomain2'] as FieldKey[] },
-  { id: 'c', letter: 'C', title: 'Website & hosting', keys: ['platform', 'platformOther', 'hosting'] as FieldKey[] },
+  { id: 'c', letter: 'C', title: 'Website & hosting', keys: ['existingWebsite', 'platform', 'platformOther', 'hosting'] as FieldKey[] },
   { id: 'd', letter: 'D', title: 'Search presence', keys: ['description', 'keywords', 'geography', 'competitors'] as FieldKey[] },
 ];
 
@@ -286,6 +288,7 @@ export function normalizeValues(v: IntakeValues): IntakeValues {
     primaryDomain: cleanDomain(v.primaryDomain),
     altDomain1: cleanDomain(v.altDomain1),
     altDomain2: cleanDomain(v.altDomain2),
+    existingWebsite: v.existingWebsite.trim(),
     platformOther: v.platform === 'other' ? collapse(v.platformOther) : '',
     hostingDetails: v.hostingDetails.trim(),
     description: collapse(v.description),
@@ -326,9 +329,10 @@ export function buildSummaryGroups(v: IntakeValues): SummaryGroup[] {
     {
       title: 'Website & hosting',
       rows: rows([
+        ['Existing website URL / name', v.existingWebsite],
         ['Website built with', v.platform === 'other' && v.platformOther ? `Other: ${v.platformOther}` : labelOf(PLATFORM_OPTIONS, v.platform)],
-        ['Hosting', labelOf(HOSTING_OPTIONS, v.hosting)],
-        ['Hosting / nameserver details', v.hostingDetails],
+        ['Hosting status', labelOf(HOSTING_OPTIONS, v.hosting)],
+        ['IP / CNAME / Nameserver details', v.hostingDetails],
       ]),
     },
     {
