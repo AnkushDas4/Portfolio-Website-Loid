@@ -8,7 +8,6 @@ User-agent: *
 Allow: /
 Disallow: /.git/
 Disallow: /api/
-Disallow: /launchpad
 Disallow: /client-intake
 Disallow: /domain-onboarding
 Disallow: /src/

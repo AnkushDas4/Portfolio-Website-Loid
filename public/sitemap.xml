@@ -5,10 +5,18 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://loid.sednium.com/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://loid.sednium.com/"/>
     <xhtml:link rel="canonical" href="https://loid.sednium.com/"/>
+  </url>
+  <url>
+    <loc>https://loid.sednium.com/launchpad</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loid.sednium.com/launchpad"/>
+    <xhtml:link rel="canonical" href="https://loid.sednium.com/launchpad"/>
   </url>
 </urlset>

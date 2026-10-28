@@ -6,10 +6,6 @@
   ],
   "headers": [
     {
-      "source": "/launchpad",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
-    },
-    {
       "source": "/client-intake",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },

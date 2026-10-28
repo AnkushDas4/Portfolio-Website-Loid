@@ -130,21 +130,21 @@ export const WORKTREE_BRANCH_OPTIONS: Option<WorktreeBranch>[] = [
   {
     value: 'launchpad-full',
     label: 'Complete Website + Domain Launch',
-    hint: 'Turnkey 1-page high-conversion site, custom domain (.in / .com), edge hosting, WhatsApp CTA & SEO.',
+    hint: 'Turnkey 1-page high-conversion site, custom domain (.in / .com), edge hosting, instant WhatsApp CTA & Google SEO foundations.',
     badge: 'Most Popular',
     price: '₹4,499 – ₹6,499',
   },
   {
     value: 'domain-only',
     label: 'Domain Procurement & DNS Setup',
-    hint: 'Procure your official brand domain or subdomain, configure Anycast DNS, SSL & Google indexing.',
+    hint: 'Procure official brand domain or subdomain with legitimate ICANN WHOIS ownership, Anycast DNS & SSL.',
     badge: 'Quick Setup',
     price: '₹1,499',
   },
   {
     value: 'redesign-existing',
     label: 'Website Build for Existing Domain',
-    hint: 'You already own a domain or existing site; we build a modern, high-speed website and connect DNS.',
+    hint: 'Migrate or revamp your existing site with ultra-fast modern design, mobile optimization & Anycast DNS pointing.',
     badge: 'Site Upgrade',
     price: '₹3,999 – ₹5,999',
   },
@@ -174,13 +174,13 @@ export interface SectionItem {
 }
 
 export const AVAILABLE_SECTIONS: SectionItem[] = [
-  { id: 'hero', name: 'Hero Hook & CTA', description: 'Headline, subhead, primary WhatsApp or call button' },
-  { id: 'services', name: 'Services / Offerings', description: 'Interactive cards detailing core services or products' },
-  { id: 'about', name: 'About Us / Doctor Bio', description: 'Founder background, credentials, and experience' },
-  { id: 'pricing', name: 'Pricing / Packages', description: 'Transparent fee structures or service tiers' },
-  { id: 'testimonials', name: 'Social Proof & Reviews', description: 'Verified customer feedback, ratings, and stats' },
-  { id: 'contact-whatsapp', name: 'Instant Contact Widget', description: 'One-click WhatsApp chat and quick inquiry form' },
-  { id: 'location-map', name: 'Storefront / Clinic Map', description: 'Google Maps embed, clinic address, and directions' },
+  { id: 'hero', name: 'Hero Hook & Primary CTA', description: 'Headline, value proposition, instant WhatsApp or call action' },
+  { id: 'services', name: 'Core Services & Product Catalog', description: 'Visual interactive cards showcasing offerings, menus, or treatments' },
+  { id: 'about', name: 'About Practice / Founder Bio', description: 'Credentials, founder story, certifications, and experience' },
+  { id: 'pricing', name: 'Transparent Packages & Fees', description: 'Clear fee structures or service tiers with zero hidden charges' },
+  { id: 'testimonials', name: 'Verified Social Proof & Reviews', description: 'Real client feedback, ratings, and measurable results' },
+  { id: 'contact-whatsapp', name: 'Instant WhatsApp & Booking CTA', description: 'Direct WhatsApp order/appointment button & zero-spam inquiry form' },
+  { id: 'location-map', name: 'Storefront / Clinic Google Map', description: 'Interactive Google Maps directions, OPD timings & physical address' },
 ];
 
 export const VISUAL_VIBE_OPTIONS: Option<VisualVibe>[] = [

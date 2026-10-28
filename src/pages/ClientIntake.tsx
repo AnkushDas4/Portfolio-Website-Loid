@@ -74,6 +74,82 @@ export const ClientIntake: React.FC = () => {
   const [summaryText, setSummaryText] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
 
+  // Dynamic SEO meta tags and Schema injection for search engine visibility & social sharing
+  React.useEffect(() => {
+    const originalTitle = document.title;
+    document.title = 'Sednium Launchpad | Turnkey Website Creator & Custom Domain Setup';
+
+    const updateOrCreateMeta = (selector: string, attr: string, value: string) => {
+      let el = document.querySelector(selector) as HTMLMetaElement | null;
+      if (!el) {
+        el = document.createElement('meta');
+        const [k, v] = selector.replace(/[\[\]"]/g, '').split('=');
+        el.setAttribute(k, v);
+        document.head.appendChild(el);
+      }
+      el.setAttribute(attr, value);
+    };
+
+    updateOrCreateMeta('meta[name="description"]', 'content', 'Launch your custom domain (.in / .com) and high-conversion 1-page website in 24–48 hours. Anycast DNS, SSL, WhatsApp CTA, Google SEO foundations & 100% direct client ownership with zero monthly subscription fees.');
+    updateOrCreateMeta('meta[name="keywords"]', 'content', 'turnkey website creator, 1-page website development, domain setup India, Anycast DNS, doctor clinic website, local business website, WhatsApp ordering, no subscription website, Sednium');
+    updateOrCreateMeta('meta[name="robots"]', 'content', 'index, follow, max-image-preview:large, max-snippet:-1');
+    updateOrCreateMeta('meta[property="og:title"]', 'content', 'Sednium Launchpad | Turnkey Website Creator & Custom Domain Setup');
+    updateOrCreateMeta('meta[property="og:description"]', 'content', 'Launch your custom domain (.in / .com) and high-conversion 1-page website in 24–48 hours with Anycast DNS, SSL, and instant WhatsApp CTA.');
+    updateOrCreateMeta('meta[property="og:url"]', 'content', 'https://loid.sednium.com/launchpad');
+
+    // JSON-LD Structured Data Schema for LocalBusiness / ProfessionalService
+    let schemaScript = document.getElementById('launchpad-jsonld-schema') as HTMLScriptElement | null;
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'launchpad-jsonld-schema';
+      schemaScript.type = 'application/ld+json';
+      schemaScript.text = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        'name': 'Sednium Launchpad: Turnkey Website & Domain Creator',
+        'serviceType': 'Web Development & Domain Procurement',
+        'provider': {
+          '@type': 'Person',
+          'name': 'Ankush Das (Loid)',
+          'jobTitle': 'Chief Technology Officer',
+          'worksFor': {
+            '@type': 'Organization',
+            'name': 'Sednium Technologies',
+            'url': 'https://www.sednium.com'
+          }
+        },
+        'offers': [
+          {
+            '@type': 'Offer',
+            'name': 'Domain Procurement & Anycast DNS Setup',
+            'price': '1499',
+            'priceCurrency': 'INR',
+            'description': 'Procure brand domain, setup Anycast DNS, SSL & Google indexing.'
+          },
+          {
+            '@type': 'Offer',
+            'name': 'Turnkey Website + Domain Launch',
+            'price': '4499',
+            'priceCurrency': 'INR',
+            'description': 'Turnkey 1-page high-conversion site, custom domain (.in / .com), edge hosting, WhatsApp CTA & SEO.'
+          }
+        ],
+        'areaServed': [
+          { '@type': 'Country', 'name': 'India' },
+          { '@type': 'AdministrativeArea', 'name': 'West Bengal' }
+        ],
+        'description': 'Turnkey 1-page high-conversion website development and custom domain procurement with edge hosting, SSL, and instant WhatsApp booking.'
+      });
+      document.head.appendChild(schemaScript);
+    }
+
+    return () => {
+      document.title = originalTitle;
+      const existingSchema = document.getElementById('launchpad-jsonld-schema');
+      if (existingSchema) existingSchema.remove();
+    };
+  }, []);
+
   // Restore draft from localStorage on mount (supports new launchpad key or legacy domain intake key)
   React.useEffect(() => {
     try {
@@ -299,12 +375,13 @@ export const ClientIntake: React.FC = () => {
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div className="space-y-1 text-xs sm:text-sm">
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 flex-wrap">
                   <span>100% Direct Client Ownership Guarantee</span>
                   <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-semibold">Zero Lock-In</span>
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-700 dark:text-blue-300 font-semibold">No Monthly Fees</span>
                 </div>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Your domain and website are registered directly under your verified business email and phone. You retain full ICANN registry control, source code access, and EPP transfer authorization keys. No hidden recurring platform fees.
+                  Your domain and website are registered directly under your verified business email and phone. You retain full ICANN registry control, source code access, and EPP transfer keys. Escape recurring ₹2,000–₹4,000/month platform fees—you own your web property forever.
                 </p>
               </div>
             </motion.div>
@@ -333,14 +410,27 @@ export const ClientIntake: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2">
+                <div 
+                  role="radiogroup" 
+                  aria-label="Launchpad package options"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2"
+                >
                   {WORKTREE_BRANCH_OPTIONS.map((opt) => {
                     const isSelected = values.worktreeBranch === opt.value;
                     return (
                       <div
                         key={opt.value}
+                        role="radio"
+                        aria-checked={isSelected}
+                        tabIndex={0}
                         onClick={() => setField('worktreeBranch', opt.value)}
-                        className={`relative p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setField('worktreeBranch', opt.value);
+                          }
+                        }}
+                        className={`relative p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
                           isSelected
                             ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 shadow-md ring-2 ring-blue-500/20'
                             : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:border-slate-300 dark:hover:border-slate-700'
