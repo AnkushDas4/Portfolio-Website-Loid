@@ -46,6 +46,13 @@ export const GyroTiltCard: React.FC<GyroTiltCardProps> = ({
       }
     };
 
+    // On mobile devices (< 640px), skip continuous gyro polling to conserve GPU/battery
+    const isMobileViewport = typeof window !== 'undefined' && window.innerWidth < 640;
+    if (isMobileViewport) {
+      setHasGyro(false);
+      return;
+    }
+
     if (typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
       window.addEventListener('deviceorientation', handleOrientation, true);
     } else {
