@@ -1,22 +1,31 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Lock, ShieldCheck, Zap, Server, ExternalLink } from 'lucide-react';
-import { Tld } from '../../utils/intake';
+import { Globe, Lock, ShieldCheck, Zap, Server, Sparkles, Layout } from 'lucide-react';
+import { Tld, WorktreeBranch, VisualVibe, labelOf, VISUAL_VIBE_OPTIONS } from '../../utils/intake';
 
 interface DomainPreviewCardProps {
   primaryDomain: string;
   tld: Tld;
   brandName: string;
+  branch?: WorktreeBranch;
+  visualVibe?: VisualVibe | '';
+  existingWebsite?: string;
+  sectionsCount?: number;
 }
 
 export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
   primaryDomain,
   tld,
   brandName,
+  branch = 'launchpad-full',
+  visualVibe,
+  existingWebsite = '',
+  sectionsCount = 4,
 }) => {
   // Format the target live URL preview
   const computeDomain = (): string => {
-    const raw = primaryDomain.trim().toLowerCase().replace(/^[a-z]+:\/\//i, '').replace(/\/.*$/, '');
+    const targetRaw = (branch === 'redesign-existing' && !primaryDomain) ? existingWebsite : primaryDomain;
+    const raw = targetRaw.trim().toLowerCase().replace(/^[a-z]+:\/\//i, '').replace(/\/.*$/, '');
     const cleanBrand = (brandName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'yourbrand').replace(/^-+|-+$/g, '');
 
     if (tld === 'sednium-subdomain') {
@@ -49,6 +58,14 @@ export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
 
   const domain = computeDomain();
   const displayBrand = brandName.trim() || 'Your Brand';
+  const vibeLabel = visualVibe ? labelOf(VISUAL_VIBE_OPTIONS, visualVibe) : 'Modern Tech';
+
+  const branchBadge =
+    branch === 'launchpad-full'
+      ? { label: 'Turnkey Launch: Site + Domain', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' }
+      : branch === 'redesign-existing'
+      ? { label: 'Site Redesign + DNS Pointing', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' }
+      : { label: 'Domain Procurement & DNS', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' };
 
   return (
     <motion.div
@@ -65,12 +82,13 @@ export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
           </div>
           <span className="text-xs font-mono font-medium text-slate-400 pl-2">
-            Live DNS & Browser Preview
+            Live Browser & Edge Simulator
           </span>
         </div>
-        <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Active Simulation</span>
+
+        <span className={`inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-0.5 rounded-full border ${branchBadge.color}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+          <span>{branchBadge.label}</span>
         </span>
       </div>
 
@@ -83,16 +101,31 @@ export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
       </div>
 
       {/* Mini Viewport Card */}
-      <div className="p-4 rounded-xl bg-gradient-to-b from-slate-950/60 to-slate-900/60 border border-slate-800/60 text-center space-y-1.5">
-        <div className="text-xs uppercase tracking-wider font-mono text-slate-400">
-          Destination Site
+      <div className="p-4 rounded-xl bg-gradient-to-b from-slate-950/70 to-slate-900/70 border border-slate-800/80 text-center space-y-2">
+        <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono text-slate-400">
+          <Globe className="w-3.5 h-3.5 text-blue-400" />
+          <span>Preview Destination</span>
         </div>
         <div className="text-base sm:text-lg font-extrabold text-white tracking-tight">
           {displayBrand}
         </div>
-        <div className="text-xs text-slate-400 max-w-sm mx-auto">
-          Securely routed with edge HTTPS, custom DNS records & WHOIS protection.
-        </div>
+        
+        {branch !== 'domain-only' ? (
+          <div className="flex items-center justify-center gap-2 flex-wrap pt-1">
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-md bg-white/10 text-slate-300">
+              <Layout className="w-3 h-3 text-blue-400" />
+              <span>{sectionsCount} Core Sections</span>
+            </span>
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-md bg-white/10 text-slate-300">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>{vibeLabel}</span>
+            </span>
+          </div>
+        ) : (
+          <div className="text-xs text-slate-400 max-w-sm mx-auto">
+            Configured with Anycast DNS records, SSL certification & clean name routing.
+          </div>
+        )}
       </div>
 
       {/* Dynamic Diagnostics Grid */}
@@ -108,9 +141,9 @@ export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
         <div className="p-2.5 rounded-lg bg-slate-950/50 border border-slate-800/60 space-y-0.5">
           <div className="flex items-center gap-1 text-slate-400">
             <Lock className="w-3 h-3 text-emerald-400" />
-            <span>SSL / TLS</span>
+            <span>SSL Certificate</span>
           </div>
-          <div className="font-semibold text-emerald-300">Auto-Provisioned</div>
+          <div className="font-semibold text-emerald-300">Auto Edge HTTPS</div>
         </div>
 
         <div className="p-2.5 rounded-lg bg-slate-950/50 border border-slate-800/60 space-y-0.5">
@@ -124,9 +157,9 @@ export const DomainPreviewCard: React.FC<DomainPreviewCardProps> = ({
         <div className="p-2.5 rounded-lg bg-slate-950/50 border border-slate-800/60 space-y-0.5">
           <div className="flex items-center gap-1 text-slate-400">
             <Zap className="w-3 h-3 text-amber-400" />
-            <span>Propagation</span>
+            <span>Delivery SLA</span>
           </div>
-          <div className="font-semibold text-slate-200">&lt; 2 Hours SLA</div>
+          <div className="font-semibold text-slate-200">{branch === 'domain-only' ? '< 6 Hours' : '< 48 Hours'}</div>
         </div>
       </div>
     </motion.div>

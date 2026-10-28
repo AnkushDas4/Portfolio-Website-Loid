@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Tld } from '../../utils/intake';
+import { Tld, WorktreeBranch } from '../../utils/intake';
 
 interface GoogleSerpPreviewCardProps {
   brandName: string;
@@ -10,6 +10,8 @@ interface GoogleSerpPreviewCardProps {
   primaryDomain: string;
   tld: Tld;
   keywords: string[];
+  branch?: WorktreeBranch;
+  existingWebsite?: string;
 }
 
 export const GoogleSerpPreviewCard: React.FC<GoogleSerpPreviewCardProps> = ({
@@ -19,10 +21,13 @@ export const GoogleSerpPreviewCard: React.FC<GoogleSerpPreviewCardProps> = ({
   primaryDomain,
   tld,
   keywords,
+  branch = 'launchpad-full',
+  existingWebsite = '',
 }) => {
   // Compute clean display URL
   const computeDomain = (): string => {
-    const raw = primaryDomain.trim().toLowerCase().replace(/^[a-z]+:\/\//i, '').replace(/\/.*$/, '');
+    const targetRaw = (branch === 'redesign-existing' && !primaryDomain) ? existingWebsite : primaryDomain;
+    const raw = targetRaw.trim().toLowerCase().replace(/^[a-z]+:\/\//i, '').replace(/\/.*$/, '');
     const cleanBrand = (brandName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'yourbrand').replace(/^-+|-+$/g, '');
 
     if (tld === 'sednium-subdomain') {

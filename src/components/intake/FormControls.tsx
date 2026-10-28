@@ -209,6 +209,85 @@ export function ChoiceField<T extends string>({
 
 /* ------------------------------------------------------------------ */
 
+interface CheckboxGroupFieldProps {
+  name: string;
+  label: string;
+  values: string[];
+  options: { id: string; name: string; description?: string }[];
+  onChange: (next: string[]) => void;
+  error?: string;
+  hint?: React.ReactNode;
+  required?: boolean;
+}
+
+export const CheckboxGroupField: React.FC<CheckboxGroupFieldProps> = ({
+  name,
+  label,
+  values,
+  options,
+  onChange,
+  error,
+  hint,
+  required,
+}) => {
+  const toggle = (id: string) => {
+    if (values.includes(id)) {
+      onChange(values.filter((v) => v !== id));
+    } else {
+      onChange([...values, id]);
+    }
+  };
+
+  return (
+    <FieldShell name={name} label={label} required={required} hint={hint} error={error} bindLabel={false}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {options.map((opt) => {
+          const checked = values.includes(opt.id);
+          return (
+            <label
+              key={opt.id}
+              className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer select-none min-h-[48px] transition-all focus-within:ring-2 focus-within:ring-blue-500/40 ${
+                checked
+                  ? 'border-blue-500 bg-blue-50/70 dark:bg-blue-500/10'
+                  : error
+                  ? 'border-rose-300 dark:border-rose-500/50 bg-slate-50 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-600'
+                  : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
+              }`}
+            >
+              <input
+                type="checkbox"
+                name={`${name}[]`}
+                value={opt.id}
+                checked={checked}
+                onChange={() => toggle(opt.id)}
+                className="sr-only"
+              />
+              <span
+                aria-hidden="true"
+                className={`mt-0.5 w-4 h-4 shrink-0 rounded border flex items-center justify-center transition-colors ${
+                  checked ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-300 dark:border-slate-600'
+                }`}
+              >
+                {checked && <Check className="w-2.5 h-2.5" strokeWidth={3.5} />}
+              </span>
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold text-slate-900 dark:text-white">{opt.name}</span>
+                {opt.description && (
+                  <span className="block text-xs leading-snug text-slate-500 dark:text-slate-400 mt-0.5">
+                    {opt.description}
+                  </span>
+                )}
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    </FieldShell>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+
 interface SelectFieldProps {
   name: string;
   label: string;

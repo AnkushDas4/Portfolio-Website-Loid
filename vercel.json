@@ -1,9 +1,14 @@
 {
   "rewrites": [
+    { "source": "/launchpad", "destination": "/index.html" },
     { "source": "/client-intake", "destination": "/index.html" },
     { "source": "/domain-onboarding", "destination": "/index.html" }
   ],
   "headers": [
+    {
+      "source": "/launchpad",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
     {
       "source": "/client-intake",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]

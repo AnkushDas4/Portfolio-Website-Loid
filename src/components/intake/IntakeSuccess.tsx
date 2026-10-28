@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Check, Copy, Mail, Send } from 'lucide-react';
-import { copyText, SummaryGroup, buildMailtoUrl, buildTelegramUrl } from '../../utils/intake';
+import { ArrowLeft, Check, Copy, Mail, Send, MessageSquare } from 'lucide-react';
+import { 
+  copyText, 
+  SummaryGroup, 
+  buildMailtoUrl, 
+  buildTelegramUrl, 
+  buildWhatsAppUrl,
+  WorktreeBranch 
+} from '../../utils/intake';
 
 interface IntakeSuccessProps {
   refId: string;
@@ -9,14 +16,23 @@ interface IntakeSuccessProps {
   primaryDomain: string;
   groups: SummaryGroup[];
   summaryText: string;
+  branch?: WorktreeBranch;
 }
 
-export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, primaryDomain, groups, summaryText }) => {
+export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ 
+  refId, 
+  brandName, 
+  primaryDomain, 
+  groups, 
+  summaryText,
+  branch = 'launchpad-full'
+}) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
 
-  const mailtoUrl = buildMailtoUrl(refId, brandName, summaryText);
-  const telegramUrl = buildTelegramUrl(refId, brandName, primaryDomain);
+  const mailtoUrl = buildMailtoUrl(refId, brandName, summaryText, branch);
+  const telegramUrl = buildTelegramUrl(refId, brandName, primaryDomain, branch);
+  const whatsappUrl = buildWhatsAppUrl(refId, brandName, primaryDomain, branch);
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -27,6 +43,13 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
     setCopyState(ok ? 'copied' : 'failed');
     window.setTimeout(() => setCopyState('idle'), 2500);
   };
+
+  const branchTitle =
+    branch === 'launchpad-full'
+      ? 'Website + Domain Launch Spec'
+      : branch === 'redesign-existing'
+      ? 'Website Redesign Spec'
+      : 'Domain Procurement & DNS Spec';
 
   return (
     <div className="space-y-6">
@@ -43,6 +66,9 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
           <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-white/10 text-emerald-400">
             Ref {refId}
           </span>
+          <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-400">
+            {branchTitle}
+          </span>
         </div>
         <h2
           ref={headingRef}
@@ -50,10 +76,10 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
           role="status"
           className="text-2xl sm:text-3xl font-bold tracking-tight focus:outline-none"
         >
-          Intake received.
+          Launchpad Spec Generated!
         </h2>
         <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-300 max-w-xl">
-          Our team is running domain availability and WHOIS registry checks. We will connect with you via WhatsApp/Email within 2–4 hours with the registry preview and next steps.
+          Your project configuration is ready. Send it directly to our engineering desk via Email, WhatsApp, or Telegram. We review specs in 2–4 hours and reply with initial live mocks and availability confirmation before any invoice.
         </p>
 
         {/* Action dispatch buttons */}
@@ -63,7 +89,16 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors shadow-sm"
           >
             <Mail className="w-4 h-4" />
-            <span>Launch Mail Client (mailto)</span>
+            <span>Launch Email Draft (mailto)</span>
+          </a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors shadow-sm"
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>Notify on WhatsApp</span>
           </a>
           <a
             href={telegramUrl}
@@ -72,7 +107,7 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-sm transition-colors"
           >
             <Send className="w-4 h-4 text-sky-400" />
-            <span>Notify on Telegram / WhatsApp</span>
+            <span>Telegram</span>
           </a>
         </div>
       </motion.div>
@@ -80,8 +115,8 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
       <div className="rounded-2xl p-5 sm:p-7 bg-white dark:bg-[#0f121a] border border-slate-200 dark:border-slate-800/90 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">Your submitted details</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Copy this for your own records. Quote the reference if you message us.</p>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">Your Project Spec Summary</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Copy this for your own records or quote Reference <code className="font-mono text-blue-500 font-semibold">{refId}</code> when texting us.</p>
           </div>
           <button
             type="button"
@@ -93,7 +128,7 @@ export const IntakeSuccess: React.FC<IntakeSuccessProps> = ({ refId, brandName, 
             ) : (
               <Copy className="w-4 h-4" aria-hidden="true" />
             )}
-            <span>{copyState === 'copied' ? 'Copied to Clipboard' : copyState === 'failed' ? 'Copy failed, select the text below' : 'Copy summary'}</span>
+            <span>{copyState === 'copied' ? 'Copied to Clipboard' : copyState === 'failed' ? 'Copy failed, select the text below' : 'Copy Complete Spec'}</span>
           </button>
         </div>
         <span className="sr-only" aria-live="polite">{copyState === 'copied' ? 'Summary copied to clipboard' : ''}</span>

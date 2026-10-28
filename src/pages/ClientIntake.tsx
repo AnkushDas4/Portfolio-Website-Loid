@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, 
   ShieldCheck, 
@@ -13,7 +13,13 @@ import {
   Lock, 
   Sparkles,
   AlertCircle,
-  Zap
+  Zap,
+  Rocket,
+  RefreshCw,
+  Palette,
+  Layout,
+  Layers,
+  HelpCircle
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { SpotlightGrid } from '../components/SpotlightGrid';
@@ -24,7 +30,8 @@ import {
   TextField, 
   ChoiceField, 
   SelectField, 
-  KeywordField 
+  KeywordField,
+  CheckboxGroupField
 } from '../components/intake/FormControls';
 import { 
   EMPTY_VALUES, 
@@ -36,15 +43,21 @@ import {
   buildSummaryGroups, 
   buildSummaryText, 
   generateRefId, 
-  buildMailtoUrl, 
+  buildMailtoUrl,
+  WORKTREE_BRANCH_OPTIONS,
   TLD_OPTIONS, 
+  SITE_TYPE_OPTIONS,
+  AVAILABLE_SECTIONS,
+  VISUAL_VIBE_OPTIONS,
+  DNS_ACCESS_OPTIONS,
   PLATFORM_OPTIONS, 
   HOSTING_OPTIONS, 
   GEO_OPTIONS, 
   RADIUS_OPTIONS, 
   LIMITS,
   FIELD_ORDER,
-  SummaryGroup
+  SummaryGroup,
+  WorktreeBranch
 } from '../utils/intake';
 
 export const ClientIntake: React.FC = () => {
@@ -61,15 +74,15 @@ export const ClientIntake: React.FC = () => {
   const [summaryText, setSummaryText] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Restore draft from localStorage on mount
+  // Restore draft from localStorage on mount (supports new launchpad key or legacy domain intake key)
   React.useEffect(() => {
     try {
-      const saved = localStorage.getItem('sednium_domain_intake_draft');
+      const saved = localStorage.getItem('sednium_launchpad_draft') || localStorage.getItem('sednium_domain_intake_draft');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
           const hasContent = Object.entries(parsed).some(([k, v]) => 
-            k !== 'tld' && k !== 'confirm' && (Array.isArray(v) ? v.length > 0 : Boolean(v))
+            k !== 'worktreeBranch' && k !== 'tld' && k !== 'confirm' && (Array.isArray(v) ? v.length > 0 : Boolean(v))
           );
           if (hasContent) {
             setValues((prev) => ({ ...prev, ...parsed }));
@@ -84,13 +97,14 @@ export const ClientIntake: React.FC = () => {
   React.useEffect(() => {
     if (!isSubmitted) {
       try {
-        localStorage.setItem('sednium_domain_intake_draft', JSON.stringify(values));
+        localStorage.setItem('sednium_launchpad_draft', JSON.stringify(values));
       } catch {}
     }
   }, [values, isSubmitted]);
 
   const clearDraft = () => {
     try {
+      localStorage.removeItem('sednium_launchpad_draft');
       localStorage.removeItem('sednium_domain_intake_draft');
     } catch {}
     setValues(EMPTY_VALUES);
@@ -102,7 +116,7 @@ export const ClientIntake: React.FC = () => {
   // Field change handler with real-time protocol strip
   const setField = <K extends keyof IntakeValues>(key: K, val: IntakeValues[K]) => {
     let sanitizedVal = val;
-    if (key === 'primaryDomain' || key === 'altDomain1' || key === 'altDomain2') {
+    if (key === 'primaryDomain' || key === 'altDomain1' || key === 'altDomain2' || key === 'existingWebsite') {
       if (typeof val === 'string') {
         sanitizedVal = val.replace(/^[a-z]+:\/\//i, '').replace(/^\/\//, '').replace(/\/.*$/, '').trim() as IntakeValues[K];
       }
@@ -121,16 +135,6 @@ export const ClientIntake: React.FC = () => {
       return next;
     });
   };
-
-  const isFormReady = Boolean(
-    values.fullName.trim() &&
-    values.brandName.trim() &&
-    values.email.trim() &&
-    values.phone.trim() &&
-    values.cityState.trim() &&
-    values.primaryDomain.trim() &&
-    values.confirm
-  );
 
   const handleBlur = (key: FieldKey) => {
     setTouched((prev) => ({ ...prev, [key]: true }));
@@ -177,6 +181,7 @@ export const ClientIntake: React.FC = () => {
 
     // Clear saved draft from localStorage
     try {
+      localStorage.removeItem('sednium_launchpad_draft');
       localStorage.removeItem('sednium_domain_intake_draft');
     } catch {}
 
@@ -186,11 +191,22 @@ export const ClientIntake: React.FC = () => {
     setIsSubmitted(true);
 
     // Launch mail client via mailto
-    const mailto = buildMailtoUrl(newRefId, clean.brandName, summary);
+    const mailto = buildMailtoUrl(newRefId, clean.brandName, summary, clean.worktreeBranch);
     window.location.href = mailto;
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const isFormReady = Boolean(
+    values.fullName.trim() &&
+    values.brandName.trim() &&
+    values.email.trim() &&
+    values.phone.trim() &&
+    values.cityState.trim() &&
+    ((values.worktreeBranch === 'redesign-existing' && values.existingWebsite.trim()) ||
+     (values.worktreeBranch !== 'redesign-existing' && values.primaryDomain.trim())) &&
+    values.confirm
+  );
 
   return (
     <SpotlightGrid className="min-h-screen bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200">
@@ -208,13 +224,13 @@ export const ClientIntake: React.FC = () => {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-blue-200 dark:border-blue-900/60 bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
-              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              <span>Domain & SEO Intake (₹1.2k – ₹1.5k)</span>
+              <Rocket className="w-3.5 h-3.5 text-blue-500" />
+              <span>Sednium Launchpad</span>
             </div>
 
             <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
               <Zap className="w-3 h-3 text-emerald-500" />
-              <span>&lt; 24h Setup • UPI Accepted</span>
+              <span>24–48h Turnkey Delivery</span>
             </div>
 
             <button
@@ -235,9 +251,10 @@ export const ClientIntake: React.FC = () => {
           <IntakeSuccess
             refId={refId}
             brandName={values.brandName}
-            primaryDomain={values.primaryDomain}
+            primaryDomain={values.worktreeBranch === 'redesign-existing' ? values.existingWebsite : values.primaryDomain}
             groups={summaryGroups}
             summaryText={summaryText}
+            branch={values.worktreeBranch}
           />
         ) : (
           <div className="space-y-8 sm:space-y-10">
@@ -246,7 +263,7 @@ export const ClientIntake: React.FC = () => {
               <div className="p-3 px-4 rounded-xl bg-blue-50/90 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/80 flex items-center justify-between text-xs text-blue-900 dark:text-blue-200">
                 <span className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0" />
-                  <span>Your draft was automatically restored from your last session.</span>
+                  <span>Your launchpad draft was automatically restored from your last session.</span>
                 </span>
                 <button
                   type="button"
@@ -261,18 +278,18 @@ export const ClientIntake: React.FC = () => {
             {/* Page Header */}
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/80 mb-3">
-                <Globe className="w-3.5 h-3.5" />
-                <span>Domain Procurement & SEO Foundations</span>
+                <Rocket className="w-3.5 h-3.5 text-blue-500" />
+                <span>Turnkey Web & Domain Launchpad</span>
               </div>
               <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                Client Onboarding & Technical Intake
+                Launch Your Website & Brand Domain
               </h1>
               <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                Please provide your essential business, domain, and SEO requirements. We handle legitimate WHOIS domain registration, DNS record propagation, and Google search foundations.
+                Choose your primary launch goal below. Our decision worktree dynamically adapts to your exact technical needs—from high-conversion 1-page websites with instant WhatsApp CTA, to standalone domain procurement and DNS routing.
               </p>
             </div>
 
-            {/* WHOIS Security Guarantee Banner */}
+            {/* WHOIS & Ownership Guarantee Banner */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -283,29 +300,104 @@ export const ClientIntake: React.FC = () => {
               </div>
               <div className="space-y-1 text-xs sm:text-sm">
                 <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span>WHOIS & Domain Ownership Guarantee</span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">100% Direct Ownership</span>
+                  <span>100% Direct Client Ownership Guarantee</span>
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-semibold">Zero Lock-In</span>
                 </div>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Your domain will be registered strictly under your verified business identity (official email & phone). You retain full ICANN administrative ownership, EPP authorization transfer keys, and DNS control.
+                  Your domain and website are registered directly under your verified business email and phone. You retain full ICANN registry control, source code access, and EPP transfer authorization keys. No hidden recurring platform fees.
                 </p>
               </div>
             </motion.div>
 
-            {/* Onboarding Form */}
+            {/* Launchpad Form with Worktree Branches */}
             <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-8">
-              {/* SECTION A */}
+              
+              {/* WORKTREE ROOT: STEP 1 - CHOOSE YOUR GOAL */}
+              <section id="group-worktreeBranch" className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/90 border border-blue-200/90 dark:border-blue-900/60 shadow-lg space-y-4">
+                <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      1
+                    </span>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Choose Your Launch Goal (Worktree Root)
+                      </h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Pick your package. The questionnaire below dynamically updates based on your choice.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-mono font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-900">
+                    Step 1 of 4
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2">
+                  {WORKTREE_BRANCH_OPTIONS.map((opt) => {
+                    const isSelected = values.worktreeBranch === opt.value;
+                    return (
+                      <div
+                        key={opt.value}
+                        onClick={() => setField('worktreeBranch', opt.value)}
+                        className={`relative p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
+                          isSelected
+                            ? 'border-blue-600 bg-blue-50/70 dark:bg-blue-950/40 shadow-md ring-2 ring-blue-500/20'
+                            : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:border-slate-300 dark:hover:border-slate-700'
+                        }`}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-2">
+                            <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
+                              isSelected
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                            }`}>
+                              {opt.badge}
+                            </span>
+                            <span className="text-xs font-bold text-blue-600 dark:text-blue-400 font-mono">
+                              {opt.price}
+                            </span>
+                          </div>
+
+                          <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 flex items-center gap-1.5">
+                            {opt.value === 'launchpad-full' && <Rocket className="w-4 h-4 text-blue-500 shrink-0" />}
+                            {opt.value === 'domain-only' && <Globe className="w-4 h-4 text-emerald-500 shrink-0" />}
+                            {opt.value === 'redesign-existing' && <RefreshCw className="w-4 h-4 text-purple-500 shrink-0" />}
+                            <span>{opt.label}</span>
+                          </h3>
+
+                          <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                            {opt.hint}
+                          </p>
+                        </div>
+
+                        <div className="pt-4 mt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs font-semibold">
+                          <span className={isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}>
+                            {isSelected ? '✓ Selected Path' : 'Click to select'}
+                          </span>
+                          <span className="text-[11px] font-mono text-slate-400">
+                            {opt.value === 'domain-only' ? '2–6h SLA' : '24–48h SLA'}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+
+              {/* WORKTREE NODE 2: IDENTITY & OWNER DETAILS (COMMON TO ALL) */}
               <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
                 <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
                   <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                    A
+                    2
                   </span>
                   <div>
                     <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                      Client & WHOIS Registrant Identity
+                      Business & Registrant Identity
                     </h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Official registry contact info required for ICANN ownership verification.
+                      Official registry contact info required for ICANN ownership verification and project coordination.
                     </p>
                   </div>
                 </div>
@@ -316,17 +408,17 @@ export const ClientIntake: React.FC = () => {
                     label="Full Legal Name"
                     required
                     value={values.fullName}
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder="e.g. Dr. Rajesh Sharma"
                     error={touched.fullName ? errors.fullName : undefined}
                     onChange={(v) => setField('fullName', v)}
                     onBlur={() => handleBlur('fullName')}
                   />
                   <TextField
                     name="brandName"
-                    label="Business / Brand Name"
+                    label="Business / Brand / Clinic Name"
                     required
                     value={values.brandName}
-                    placeholder="e.g. Apex Studio"
+                    placeholder="e.g. Apex Multispeciality Clinic"
                     error={touched.brandName ? errors.brandName : undefined}
                     onChange={(v) => setField('brandName', v)}
                     onBlur={() => handleBlur('brandName')}
@@ -339,19 +431,19 @@ export const ClientIntake: React.FC = () => {
                     label="Official Email Address"
                     required
                     type="email"
-                    hint="Primary domain owner email for ICANN registry verification."
+                    hint="Primary owner email for domain registration verification & live previews."
                     value={values.email}
-                    placeholder="e.g. contact@yourbrand.com"
+                    placeholder="e.g. info@apexclinic.com"
                     error={touched.email ? errors.email : undefined}
                     onChange={(v) => setField('email', v)}
                     onBlur={() => handleBlur('email')}
                   />
                   <TextField
                     name="phone"
-                    label="Phone / WhatsApp Number"
+                    label="WhatsApp / Mobile Number"
                     required
                     type="tel"
-                    hint="Used for urgent registry SMS OTPs & domain verification."
+                    hint="Used for project updates, live mock links, and WHOIS OTPs."
                     value={values.phone}
                     placeholder="e.g. 98765 43210"
                     prefix="+91"
@@ -365,231 +457,368 @@ export const ClientIntake: React.FC = () => {
                   name="cityState"
                   label="City & State"
                   required
-                  hint="Required for registry geographical contact records and local search citation."
+                  hint="Used for WHOIS geographic contact records and Google Local SEO citation."
                   value={values.cityState}
-                  placeholder="e.g. Kolkata, West Bengal"
+                  placeholder="e.g. Durgapur, West Bengal"
                   error={touched.cityState ? errors.cityState : undefined}
                   onChange={(v) => setField('cityState', v)}
                   onBlur={() => handleBlur('cityState')}
                 />
               </section>
 
-              {/* SECTION B */}
-              <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
-                <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                    B
-                  </span>
-                  <div>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                      Domain Specifications
-                    </h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Your chosen web address and alternative fallbacks in case of premium tiers.
-                    </p>
+              {/* WORKTREE NODE 3: DOMAIN SPECIFICATIONS (BRANCH A & B) OR EXISTING ASSETS (BRANCH C) */}
+              {values.worktreeBranch !== 'redesign-existing' ? (
+                /* Branch A & B: Domain Procurement */
+                <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
+                  <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      3
+                    </span>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Domain Selection & Scope
+                      </h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Choose your desired address. We handle registry verification and Anycast DNS setup.
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <TextField
-                  name="primaryDomain"
-                  label="Preferred Primary Domain"
-                  required
-                  hint="Type your first choice (protocols like https:// and www are automatically stripped)."
-                  value={values.primaryDomain}
-                  placeholder="e.g. yourbrand.in or yourbrand.com"
-                  error={touched.primaryDomain ? errors.primaryDomain : undefined}
-                  onChange={(v) => setField('primaryDomain', v)}
-                  onBlur={() => handleBlur('primaryDomain')}
-                />
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <TextField
-                    name="altDomain1"
-                    label="Alternative Domain Choice 1"
-                    tag="Recommended"
-                    hint="Fallback if primary choice is unavailable or high-tier auction."
-                    value={values.altDomain1}
-                    placeholder="e.g. getyourbrand.in"
-                    error={touched.altDomain1 ? errors.altDomain1 : undefined}
-                    onChange={(v) => setField('altDomain1', v)}
-                    onBlur={() => handleBlur('altDomain1')}
-                  />
-                  <TextField
-                    name="altDomain2"
-                    label="Alternative Domain Choice 2"
-                    tag="Optional"
-                    hint="Second backup option."
-                    value={values.altDomain2}
-                    placeholder="e.g. yourbrandstudio.com"
-                    error={touched.altDomain2 ? errors.altDomain2 : undefined}
-                    onChange={(v) => setField('altDomain2', v)}
-                    onBlur={() => handleBlur('altDomain2')}
-                  />
-                </div>
-
-                <ChoiceField
-                  name="tld"
-                  label="Preferred Extension / Scope"
-                  required
-                  value={values.tld}
-                  options={TLD_OPTIONS}
-                  error={errors.tld}
-                  onChange={(v) => setField('tld', v)}
-                  columns={2}
-                />
-
-                {/* Dynamic Domain & DNS Live Preview Simulation */}
-                <div className="pt-2">
-                  <DomainPreviewCard
-                    primaryDomain={values.primaryDomain}
-                    tld={values.tld}
-                    brandName={values.brandName}
-                  />
-                </div>
-              </section>
-
-              {/* SECTION C */}
-              <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
-                <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                    C
-                  </span>
-                  <div>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                      Website & Hosting Status
-                    </h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      How your site is built and where your domain DNS records should point.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Current Website Name / URL */}
-                <TextField
-                  name="existingWebsite"
-                  label="Current Website Name or URL"
-                  tag="If already online"
-                  hint="If you already have a website or staging link, enter its address or name so we can test connections."
-                  value={values.existingWebsite}
-                  placeholder="e.g. https://yourbrand.vercel.app, yourbrand.wixsite.com, or existing domain"
-                  onChange={(v) => setField('existingWebsite', v)}
-                />
-
-                <ChoiceField
-                  name="platform"
-                  label="Current Website Platform"
-                  required
-                  value={values.platform}
-                  options={PLATFORM_OPTIONS}
-                  error={errors.platform}
-                  onChange={(v) => setField('platform', v)}
-                  columns={3}
-                />
-
-                {values.platform === 'other' && (
-                  <TextField
-                    name="platformOther"
-                    label="Specify Your Platform"
+                    name="primaryDomain"
+                    label="Preferred Domain Name"
                     required
-                    value={values.platformOther}
-                    placeholder="e.g. Webflow, Squarespace, Ghost, Static HTML"
-                    error={errors.platformOther}
-                    onChange={(v) => setField('platformOther', v)}
-                    onBlur={() => handleBlur('platformOther')}
-                  />
-                )}
-
-                <ChoiceField
-                  name="hosting"
-                  label="Hosting Provider Status"
-                  required
-                  value={values.hosting}
-                  options={HOSTING_OPTIONS}
-                  error={errors.hosting}
-                  onChange={(v) => setField('hosting', v)}
-                  columns={3}
-                />
-
-                <div className="space-y-1.5">
-                  <TextField
-                    name="hostingDetails"
-                    label="Server IP (A Record), CNAME, or Nameservers"
-                    tag="If available"
-                    multiline
-                    rows={3}
-                    hint="If you have an IP address, CNAME target, or hosting nameservers, type or paste them here for DNS record pointing."
-                    value={values.hostingDetails}
-                    placeholder="e.g. Server IP: 76.76.21.21, CNAME: cname.vercel-dns.com, or Nameservers: ns1.hosting.com, ns2.hosting.com"
-                    onChange={(v) => setField('hostingDetails', v)}
+                    hint="Type your first choice (protocols like https:// and www are automatically stripped)."
+                    value={values.primaryDomain}
+                    placeholder="e.g. apexclinic.in or apexclinic.com"
+                    error={touched.primaryDomain ? errors.primaryDomain : undefined}
+                    onChange={(v) => setField('primaryDomain', v)}
+                    onBlur={() => handleBlur('primaryDomain')}
                   />
 
-                  {/* Quick-insert tags for DNS records */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs text-slate-500 dark:text-slate-400">
-                    <span className="text-[11px] font-medium mr-1">Quick insert:</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const current = values.hostingDetails;
-                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
-                        setField('hostingDetails', `${current}${prefix}Server IP: `);
-                      }}
-                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
-                    >
-                      + Server IP (A)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const current = values.hostingDetails;
-                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
-                        setField('hostingDetails', `${current}${prefix}CNAME: `);
-                      }}
-                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
-                    >
-                      + CNAME Target
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const current = values.hostingDetails;
-                        const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
-                        setField('hostingDetails', `${current}${prefix}Nameservers: ns1., ns2.`);
-                      }}
-                      className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
-                    >
-                      + Nameservers (NS)
-                    </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <TextField
+                      name="altDomain1"
+                      label="Alternative Domain Choice 1"
+                      tag="Recommended"
+                      hint="Fallback in case primary choice is already taken or high-tier auction."
+                      value={values.altDomain1}
+                      placeholder="e.g. getapexclinic.in"
+                      error={touched.altDomain1 ? errors.altDomain1 : undefined}
+                      onChange={(v) => setField('altDomain1', v)}
+                      onBlur={() => handleBlur('altDomain1')}
+                    />
+                    <TextField
+                      name="altDomain2"
+                      label="Alternative Domain Choice 2"
+                      tag="Optional"
+                      hint="Second backup option."
+                      value={values.altDomain2}
+                      placeholder="e.g. apexhealthcare.com"
+                      error={touched.altDomain2 ? errors.altDomain2 : undefined}
+                      onChange={(v) => setField('altDomain2', v)}
+                      onBlur={() => handleBlur('altDomain2')}
+                    />
                   </div>
-                </div>
-              </section>
 
-              {/* SECTION D */}
+                  <ChoiceField
+                    name="tld"
+                    label="Extension Preference"
+                    required
+                    value={values.tld}
+                    options={TLD_OPTIONS}
+                    error={errors.tld}
+                    onChange={(v) => setField('tld', v)}
+                    columns={2}
+                  />
+
+                  {/* Dynamic Domain & DNS Live Preview Simulation */}
+                  <div className="pt-2">
+                    <DomainPreviewCard
+                      primaryDomain={values.primaryDomain}
+                      tld={values.tld}
+                      brandName={values.brandName}
+                      branch={values.worktreeBranch}
+                      visualVibe={values.visualVibe}
+                      sectionsCount={values.sectionsNeeded.length}
+                    />
+                  </div>
+                </section>
+              ) : (
+                /* Branch C: Existing Domain & DNS Access */
+                <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
+                  <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      3
+                    </span>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Existing Domain & DNS Access
+                      </h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Tell us about your current web address so we can point it to the new high-performance build.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <TextField
+                      name="existingWebsite"
+                      label="Current Domain / Website Address"
+                      required
+                      hint="Your existing web address that you want to upgrade or point."
+                      value={values.existingWebsite}
+                      placeholder="e.g. drsharma.com or oldclinic.in"
+                      error={touched.existingWebsite ? errors.existingWebsite : undefined}
+                      onChange={(v) => setField('existingWebsite', v)}
+                      onBlur={() => handleBlur('existingWebsite')}
+                    />
+                    <TextField
+                      name="registrar"
+                      label="Domain Registrar (Where was it bought?)"
+                      tag="Optional"
+                      hint="e.g. GoDaddy, Hostinger, Spaceship, Namecheap, Google Domains"
+                      value={values.registrar}
+                      placeholder="e.g. GoDaddy"
+                      onChange={(v) => setField('registrar', v)}
+                    />
+                  </div>
+
+                  <ChoiceField
+                    name="hasDnsAccess"
+                    label="DNS & Dashboard Access Status"
+                    required
+                    value={values.hasDnsAccess}
+                    options={DNS_ACCESS_OPTIONS}
+                    error={errors.hasDnsAccess}
+                    onChange={(v) => setField('hasDnsAccess', v)}
+                    columns={3}
+                  />
+
+                  <div className="space-y-1.5">
+                    <TextField
+                      name="hostingDetails"
+                      label="Existing IP / CNAME / Nameservers (if known)"
+                      tag="Optional"
+                      multiline
+                      rows={2}
+                      hint="Paste existing DNS records or server IP if you have them. Otherwise, leave blank and we will provide DNS target records."
+                      value={values.hostingDetails}
+                      placeholder="e.g. Current Nameservers: ns1.godaddy.com, ns2.godaddy.com"
+                      onChange={(v) => setField('hostingDetails', v)}
+                    />
+                  </div>
+
+                  {/* Dynamic Domain & DNS Live Preview Simulation */}
+                  <div className="pt-2">
+                    <DomainPreviewCard
+                      primaryDomain={values.primaryDomain}
+                      existingWebsite={values.existingWebsite}
+                      tld={values.tld}
+                      brandName={values.brandName}
+                      branch={values.worktreeBranch}
+                      visualVibe={values.visualVibe}
+                      sectionsCount={values.sectionsNeeded.length}
+                    />
+                  </div>
+                </section>
+              )}
+
+              {/* WORKTREE NODE 4: WEBSITE CREATOR ARCHITECTURE (BRANCH A & C) OR HOSTING CONNECTION (BRANCH B) */}
+              {values.worktreeBranch !== 'domain-only' ? (
+                /* Branch A & C: Turnkey Website Creator */
+                <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
+                  <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      4
+                    </span>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Website Structure & Visual Design
+                      </h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Tailor your website layout, included sections, and aesthetic style for maximum conversion.
+                      </p>
+                    </div>
+                  </div>
+
+                  <ChoiceField
+                    name="siteType"
+                    label="Primary Website Category"
+                    required
+                    value={values.siteType}
+                    options={SITE_TYPE_OPTIONS}
+                    error={errors.siteType}
+                    onChange={(v) => setField('siteType', v)}
+                    columns={3}
+                  />
+
+                  {values.siteType === 'other' && (
+                    <TextField
+                      name="siteTypeOther"
+                      label="Describe Your Website Goal"
+                      required
+                      value={values.siteTypeOther}
+                      placeholder="e.g. Non-profit NGO donation portal, Real estate property booking"
+                      error={errors.siteTypeOther}
+                      onChange={(v) => setField('siteTypeOther', v)}
+                      onBlur={() => handleBlur('siteTypeOther')}
+                    />
+                  )}
+
+                  <CheckboxGroupField
+                    name="sectionsNeeded"
+                    label="Included Website Sections & Components"
+                    required
+                    hint="Select which sections to include on your high-conversion 1-page layout (minimum 2)."
+                    values={values.sectionsNeeded}
+                    options={AVAILABLE_SECTIONS}
+                    error={errors.sectionsNeeded}
+                    onChange={(v) => setField('sectionsNeeded', v)}
+                  />
+
+                  <ChoiceField
+                    name="visualVibe"
+                    label="Visual Theme & Aesthetic Vibe"
+                    required
+                    value={values.visualVibe}
+                    options={VISUAL_VIBE_OPTIONS}
+                    error={errors.visualVibe}
+                    onChange={(v) => setField('visualVibe', v)}
+                    columns={2}
+                  />
+                </section>
+              ) : (
+                /* Branch B: Domain Only Hosting & Connection Status */
+                <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
+                  <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      4
+                    </span>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                        Hosting & Site Connection
+                      </h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        How your existing site is hosted and where your domain DNS records should point.
+                      </p>
+                    </div>
+                  </div>
+
+                  <ChoiceField
+                    name="hosting"
+                    label="Hosting Provider Status"
+                    required
+                    value={values.hosting}
+                    options={HOSTING_OPTIONS}
+                    error={errors.hosting}
+                    onChange={(v) => setField('hosting', v)}
+                    columns={3}
+                  />
+
+                  <ChoiceField
+                    name="platform"
+                    label="Website Platform (if already building)"
+                    value={values.platform}
+                    options={PLATFORM_OPTIONS}
+                    onChange={(v) => setField('platform', v)}
+                    columns={3}
+                  />
+
+                  {values.platform === 'other' && (
+                    <TextField
+                      name="platformOther"
+                      label="Specify Your Platform"
+                      required
+                      value={values.platformOther}
+                      placeholder="e.g. Webflow, Squarespace, Ghost, Static HTML"
+                      error={errors.platformOther}
+                      onChange={(v) => setField('platformOther', v)}
+                      onBlur={() => handleBlur('platformOther')}
+                    />
+                  )}
+
+                  <div className="space-y-1.5">
+                    <TextField
+                      name="hostingDetails"
+                      label="Server IP (A Record), CNAME, or Nameservers"
+                      tag="Optional"
+                      multiline
+                      rows={2}
+                      hint="If you have an IP address, CNAME target, or hosting nameservers, type or paste them here for DNS record pointing."
+                      value={values.hostingDetails}
+                      placeholder="e.g. Server IP: 76.76.21.21, CNAME: cname.vercel-dns.com, or Nameservers: ns1.hosting.com, ns2.hosting.com"
+                      onChange={(v) => setField('hostingDetails', v)}
+                    />
+
+                    {/* Quick-insert tags for DNS records */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs text-slate-500 dark:text-slate-400">
+                      <span className="text-[11px] font-medium mr-1">Quick insert:</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current = values.hostingDetails;
+                          const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                          setField('hostingDetails', `${current}${prefix}Server IP: `);
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                      >
+                        + Server IP (A)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current = values.hostingDetails;
+                          const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                          setField('hostingDetails', `${current}${prefix}CNAME: `);
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                      >
+                        + CNAME Target
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current = values.hostingDetails;
+                          const prefix = current ? (current.endsWith('\n') ? '' : '\n') : '';
+                          setField('hostingDetails', `${current}${prefix}Nameservers: ns1., ns2.`);
+                        }}
+                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-[11px] transition-colors cursor-pointer"
+                      >
+                        + Nameservers (NS)
+                      </button>
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {/* WORKTREE NODE 5: SEARCH PRESENCE & SEO FOUNDATIONS (COMMON TO ALL) */}
               <section className="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#121622]/80 border border-slate-200 dark:border-slate-800/90 shadow-sm space-y-5">
                 <div className="border-b border-slate-100 dark:border-slate-800/80 pb-3 flex items-center gap-2.5">
                   <span className="w-7 h-7 rounded-lg bg-amber-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                    D
+                    5
                   </span>
                   <div>
                     <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                       Search Presence & SEO Foundations
                     </h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Keywords and business description used for meta titles, descriptions, and Google Search Console.
+                      Keywords and business description used for meta titles, descriptions, and Google Search Console indexing.
                     </p>
                   </div>
                 </div>
 
                 <TextField
                   name="description"
-                  label="Core Business Description"
+                  label="Core Business Description & Specialty"
                   required
                   multiline
                   rows={3}
                   maxLength={LIMITS.descriptionMax}
                   showCount
-                  hint="2–3 sentences describing your core offering. This will be used to author your primary search meta descriptions."
+                  hint="2–3 sentences describing your core offering. Used to author high-CTR Google search snippets."
                   value={values.description}
-                  placeholder="e.g. We provide artisanal architectural woodwork and custom interior cabinetry for modern residential homes across Kolkata."
+                  placeholder="e.g. We provide comprehensive cardiology consultations, non-invasive cardiac testing, and preventative heart care in Durgapur."
                   error={touched.description ? errors.description : undefined}
                   onChange={(v) => setField('description', v)}
                   onBlur={() => handleBlur('description')}
@@ -605,7 +834,7 @@ export const ClientIntake: React.FC = () => {
 
                 <ChoiceField
                   name="geography"
-                  label="Target Geography"
+                  label="Primary Customer Market"
                   required
                   value={values.geography}
                   options={GEO_OPTIONS}
@@ -627,13 +856,13 @@ export const ClientIntake: React.FC = () => {
 
                 <TextField
                   name="competitors"
-                  label="Top Competitor URLs"
+                  label="Competitor or Reference Websites"
                   tag="Optional"
                   multiline
                   rows={2}
-                  hint="Competitor websites for search benchmarking and keyword gap analysis (separated by spaces or lines)."
+                  hint="Websites you like or competitors for search benchmarking (separated by spaces or lines)."
                   value={values.competitors}
-                  placeholder="e.g. competitor-brand.in, competitorstudio.com"
+                  placeholder="e.g. competitorclinic.com, inspirationbrand.in"
                   error={errors.competitors}
                   onChange={(v) => setField('competitors', v)}
                   onBlur={() => handleBlur('competitors')}
@@ -646,6 +875,8 @@ export const ClientIntake: React.FC = () => {
                     cityState={values.cityState}
                     description={values.description}
                     primaryDomain={values.primaryDomain}
+                    existingWebsite={values.existingWebsite}
+                    branch={values.worktreeBranch}
                     tld={values.tld}
                     keywords={values.keywords}
                   />
@@ -662,7 +893,7 @@ export const ClientIntake: React.FC = () => {
                     className="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800"
                   />
                   <span className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                    I confirm that the provided contact and domain details are accurate, and I authorize registration strictly under these business owner credentials.
+                    I confirm that the provided contact and project details are accurate, and I authorize registration strictly under these business owner credentials. No upfront payment required until preview approval.
                   </span>
                 </label>
                 {errors.confirm && (
@@ -683,11 +914,11 @@ export const ClientIntake: React.FC = () => {
                       : 'shadow-blue-500/20 hover:shadow-blue-500/30'
                   }`}
                 >
-                  <Send className="w-5 h-5" />
-                  <span>Submit Client Intake & Launch Mail Client</span>
+                  <Rocket className="w-5 h-5" />
+                  <span>Generate Launchpad Spec & Open Email</span>
                 </button>
                 <p className="mt-2.5 text-center text-xs text-slate-500 dark:text-slate-400">
-                  Submitting formats a structured record and triggers your verified email client directly. Zero third-party spam.
+                  Submitting generates a structured spec and launches your verified email client directly. Zero third-party spam.
                 </p>
               </div>
             </form>

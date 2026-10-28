@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-// Lazy load the dedicated client intake page to preserve fast bundle size
+// Lazy load the dedicated client intake / launchpad page to preserve fast bundle size
 const ClientIntake = React.lazy(() => import('./pages/ClientIntake'));
-const INTAKE_ROUTES = ['/client-intake', '/domain-onboarding'];
+const INTAKE_ROUTES = ['/launchpad', '/domain-onboarding', '/client-intake'];
 
 const RootRouter: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(() => 
@@ -27,7 +27,7 @@ const RootRouter: React.FC = () => {
     return (
       <Suspense fallback={
         <div className="min-h-screen bg-[#0b0d13] flex items-center justify-center text-slate-400 font-mono text-xs">
-          Loading onboarding portal...
+          Loading Launchpad portal...
         </div>
       }>
         <ClientIntake />

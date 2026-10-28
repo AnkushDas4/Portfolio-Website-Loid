@@ -34,10 +34,10 @@ export const Footer: React.FC = () => {
           </a>
 
           <a
-            href="/domain-onboarding"
+            href="/launchpad"
             className="p-2 rounded-lg text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors min-h-[40px] flex items-center"
           >
-            Domain Onboarding
+            Launchpad
           </a>
 
           <button
