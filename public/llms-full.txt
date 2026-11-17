@@ -84,6 +84,31 @@ Ankush builds responsive web applications, robust backends, and developer toolin
   - Optimized memory footprint for constrained mobile hardware performance.
 - Technologies: Kotlin, Jetpack Compose, Mobile IDE, Terminal, Android
 - URL: https://kryptonide.sednium.com
+- GitHub: https://github.com/Sednium-Technologies/kryptonide-native
+
+### Xenon Browser
+- Tagline: High-performance Android browser with React 19 UI & Rust core.
+- Description: A fast, memory-efficient mobile web browser for Android engineered with a fluid React 19 glassmorphic interface, compiled Rust core scraper/engine, and a zero-RAM recycler Kotlin host.
+- Highlights:
+  - Glassmorphic 120 FPS start page with responsive quick-dial cards and tab management.
+  - Native Rust core backend for lightning-fast scraping, stream ingestion, and content parsing.
+  - Zero-RAM recycler architecture that minimizes background heap consumption on Android.
+  - Local-first privacy engine stripping intrusive tracking tags and device fingerprinting.
+- Technologies: Rust, Kotlin, React 19, Android, Vite, Tailwind CSS
+- URL: https://github.com/AnkushDas4/xenon-browser
+- GitHub: https://github.com/AnkushDas4/xenon-browser
+
+### Sednium CoWork
+- Tagline: Multi-agent pair programming relay and live mobile coordination dashboard.
+- Description: A real-time pair programming environment connecting 1 human, 1 phone, and multiple autonomous AI agents (Antigravity, Claude, Cursor, Windsurf) with advisory file locks, git handoffs, and a mobile-first live dashboard.
+- Highlights:
+  - Advisory file locking protocol preventing merge conflicts and race conditions across multiple AI agents.
+  - Real-time mobile-first dashboard hosted at cowork.sednium.com with instant room code invites.
+  - Single-file, zero-dependency local MCP server (cowork.cjs) integrating with Antigravity, Claude, and Cursor.
+  - Zero-Turn-Drop protocol ensuring zero lost agent context and seamless git-driven peer handoffs.
+- Technologies: TypeScript, Node.js, MCP Protocol, Multi-Agent Swarm, Edge Relay, Tailwind CSS
+- URL: https://cowork.sednium.com
+- GitHub: https://github.com/AnkushDas4/sednium-cowork
 
 ### Sednicon
 - Tagline: Automated SVG optimization and cross-platform iconography API.

@@ -23,23 +23,8 @@
   }
 }
 
-/* Strictly Hide Default OS Cursor ONLY on Desktop/Fine-pointer Devices (min-width: 768px) */
+/* Strictly Hide Default OS Cursor ONLY on Desktop/Fine-pointer Devices when Custom Cursor is Active */
 @media (min-width: 768px) and (pointer: fine) {
-  html,
-  html *,
-  html *::before,
-  html *::after,
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  [role="button"],
-  [class*="cursor-"] {
-    cursor: none !important;
-  }
-
   html.custom-cursor-active,
   html.custom-cursor-active *,
   html.custom-cursor-active *::before,

@@ -19,7 +19,9 @@ For a single-file plain-text snapshot intended for deep context ingestion, fetch
 - [OnyxChat](https://onyxchat.sednium.com): Local-first Android encrypted messaging client built on the S.H.I.E.L.D. protocol, with stateless routing and hardware-backed storage.
 - [Blade Launcher](https://blade-launcher.sednium.com/): Next-generation mobile launcher for Minecraft: Java Edition on Android with isolated Java 8–26 runtimes and multi-renderer graphics.
 - [S.H.I.E.L.D. Protocol](https://sednium.com/shield): Six-layer zero-knowledge messaging architecture with hybrid post-quantum cryptography, forward secrecy, and routing anonymity.
-- [KryptonIDE](https://kryptonide.sednium.com): Native Android integrated development environment with incremental parsing and an integrated PTY terminal bridge.
+- [KryptonIDE](https://kryptonide.sednium.com): Native Android integrated development environment with incremental parsing and an integrated PTY terminal bridge. GitHub: https://github.com/Sednium-Technologies/kryptonide-native
+- [Xenon Browser](https://github.com/AnkushDas4/xenon-browser): High-performance Android mobile browser with React 19 glassmorphic UI, Rust scraper core, and zero-RAM recycler architecture.
+- [Sednium CoWork](https://cowork.sednium.com): Multi-agent pair programming relay and live mobile coordination dashboard connecting humans and AI agents with advisory file locks and git handoffs.
 - [Sednicon](https://sednicon.sednium.com): Automated SVG optimization and cross-platform iconography delivery API.
 
 ## Experience

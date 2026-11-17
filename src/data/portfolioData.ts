@@ -219,7 +219,7 @@ export const PORTFOLIO_DATA = {
       ],
       tech: ["Kotlin", "Jetpack Compose", "Mobile IDE", "Terminal", "Android"],
       url: "https://kryptonide.sednium.com",
-      githubUrl: "https://github.com/Sednium-Technologies",
+      githubUrl: "https://github.com/Sednium-Technologies/kryptonide-native",
       featured: true,
       architecture: {
         layers: [
@@ -243,6 +243,86 @@ export const PORTFOLIO_DATA = {
           { step: 2, title: "Tree-sitter Incremental Parse", desc: "C-native AST grammar updates edited node subtree in < 3.2ms." },
           { step: 3, title: "Viewport Syntax Tokenization", desc: "Virtual scroll engine applies semantic colors only to active screen lines." },
           { step: 4, title: "PTY Output Streaming", desc: "Compiler output streams through POSIX pipe into hardware-accelerated terminal view." }
+        ]
+      }
+    },
+    {
+      id: "xenon-browser",
+      name: "Xenon Browser",
+      tagline: "High-performance Android browser with React 19 UI & Rust core.",
+      description: "A fast, memory-efficient mobile web browser for Android engineered with a fluid React 19 glassmorphic interface, compiled Rust core scraper/engine, and a zero-RAM recycler Kotlin host.",
+      highlights: [
+        "Glassmorphic 120 FPS start page with responsive quick-dial cards and tab management.",
+        "Native Rust core backend for lightning-fast scraping, stream ingestion, and content parsing.",
+        "Zero-RAM recycler architecture that minimizes background heap consumption on Android.",
+        "Local-first privacy engine stripping intrusive tracking tags and device fingerprinting."
+      ],
+      tech: ["Rust", "Kotlin", "React 19", "Android", "Vite", "Tailwind CSS"],
+      url: "https://github.com/AnkushDas4/xenon-browser",
+      githubUrl: "https://github.com/AnkushDas4/xenon-browser",
+      featured: true,
+      architecture: {
+        layers: [
+          { name: "Glassmorphic UI Viewport", role: "120 FPS Touch Interface", tech: "React 19 / Vite / Tailwind", detail: "Hardware-accelerated mobile viewport with dynamic blur backdrops and fluid tab gestures." },
+          { name: "Rust Scraper & Stream Engine", role: "High-Throughput Content Parser", tech: "Rust / FFI / Tokio", detail: "Zero-copy HTTP parsing, HTML stream normalization, and parallel DOM tree extraction." },
+          { name: "Kotlin Native Host Bridge", role: "Android WebView & Process Manager", tech: "Kotlin / Android SDK", detail: "Bridges WebView interfaces with isolated Android process sandboxes and download managers." },
+          { name: "Privacy Shielding Core", role: "Tracker Neutralizer", tech: "Rust AdBlock Filter / Regex Rules", detail: "Blocks intrusive third-party telemetry, URL trackers, and unauthorized device fingerprinting." }
+        ],
+        securitySpec: [
+          { title: "Zero Tracking & Telemetry", desc: "No user browsing habits, search terms, or device metadata are ever recorded or transmitted." },
+          { title: "Sandboxed Tab Isolation", desc: "Each active tab executes in isolated contexts to prevent cross-origin state leakage." },
+          { title: "Zero-RAM Background Recycler", desc: "Aggressively evicts inactive tab heaps to prevent background battery drain." }
+        ],
+        benchmarks: [
+          { label: "Cold Boot", value: "< 180ms", detail: "Instant startup to active search bar" },
+          { label: "Rust Core Parse", value: "< 2.1ms", detail: "Average DOM stream processing time" },
+          { label: "Base RAM Heap", value: "~38 MB", detail: "Ultra-lean memory profile on Android" }
+        ],
+        dataFlow: [
+          { step: 1, title: "Query / URL Navigation", desc: "User types query or address in glassmorphic React 19 search bar." },
+          { step: 2, title: "Rust Stream Ingestion", desc: "Native Rust core fetches payload, filters trackers, and parses DOM in zero-copy memory." },
+          { step: 3, title: "Host WebView Render", desc: "Kotlin bridge blits sanitized content into hardware-accelerated viewport at 120 FPS." },
+          { step: 4, title: "Heap State Reclaim", desc: "Background watchdog suspends idle page threads when switching tabs." }
+        ]
+      }
+    },
+    {
+      id: "sednium-cowork",
+      name: "Sednium CoWork",
+      tagline: "Multi-agent pair programming relay and live mobile coordination dashboard.",
+      description: "A real-time pair programming environment connecting 1 human, 1 phone, and multiple autonomous AI agents (Antigravity, Claude, Cursor, Windsurf) with advisory file locks, git handoffs, and a mobile-first live dashboard.",
+      highlights: [
+        "Advisory file locking protocol preventing merge conflicts and race conditions across multiple AI agents.",
+        "Real-time mobile-first dashboard hosted at cowork.sednium.com with instant room code invites.",
+        "Single-file, zero-dependency local MCP server (cowork.cjs) integrating with Antigravity, Claude, and Cursor.",
+        "Zero-Turn-Drop protocol ensuring zero lost agent context and seamless git-driven peer handoffs."
+      ],
+      tech: ["TypeScript", "Node.js", "MCP Protocol", "Multi-Agent Swarm", "Edge Relay", "Tailwind CSS"],
+      url: "https://cowork.sednium.com",
+      githubUrl: "https://github.com/AnkushDas4/sednium-cowork",
+      featured: true,
+      architecture: {
+        layers: [
+          { name: "Live Coordination Dashboard", role: "Mobile-First Room Viewport", tech: "React / Vite / Tailwind / SSE", detail: "Real-time room status, active agent logs, file claim matrices, and live chat broadcast." },
+          { name: "Universal MCP Adapter", role: "Model Context Protocol Server", tech: "Node.js / Zero-Dependency CJS", detail: "Provides cowork_claim_files, cowork_sync, and cowork_message_peer tools to any agent runtime." },
+          { name: "Advisory Concurrency Engine", role: "Distributed Lock Manager", tech: "TypeScript / In-Memory State", detail: "Tracks file claims and leases with automatic heartbeat expiration to prevent deadlocks." },
+          { name: "Stateless Edge Relay", role: "Secure Event Broker", tech: "Edge Functions / HTTPS + SSE", detail: "Dispatches agent notifications and peer messages without persistent database overhead." }
+        ],
+        securitySpec: [
+          { title: "Cryptographic Invite Keys", desc: "Room access is guarded by 128-bit ephemeral keys passed via URL fragments (#k=), never sent in HTTP headers." },
+          { title: "Advisory Lease Expiry", desc: "Agent file locks automatically expire after 10 minutes if an agent process dies or stalls." },
+          { title: "Zero Source Code Upload", desc: "Only file paths, lock metadata, and peer messages pass through the relay; actual code stays local." }
+        ],
+        benchmarks: [
+          { label: "Relay Latency", value: "< 14ms", detail: "Peer-to-peer event dispatch time via edge relay" },
+          { label: "MCP Tool Latency", value: "< 5ms", detail: "Local file claim check and lock acquisition" },
+          { label: "Client Footprint", value: "< 15 KB", detail: "Single-file install.mjs with zero external npm dependencies" }
+        ],
+        dataFlow: [
+          { step: 1, title: "Room Minting & Invite", desc: "Human creates room at cowork.sednium.com and shares invite key with AI agents." },
+          { step: 2, title: "MCP Connection Handshake", desc: "Agents run install.mjs or load cowork.cjs, connecting their local workspaces to the room." },
+          { step: 3, title: "File Claim & Locking", desc: "Before editing, agents invoke cowork_claim_files to acquire exclusive leases on target files." },
+          { step: 4, title: "Git Handoff & Peer Sync", desc: "Agent commits work, releases lock, and notifies peer agents or human on mobile to review." }
         ]
       }
     },

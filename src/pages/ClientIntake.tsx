@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { SpotlightGrid } from '../components/SpotlightGrid';
+import { CustomCursor } from '../components/CustomCursor';
 import { IntakeSuccess } from '../components/intake/IntakeSuccess';
 import { DomainPreviewCard } from '../components/intake/DomainPreviewCard';
 import { GoogleSerpPreviewCard } from '../components/intake/GoogleSerpPreviewCard';
@@ -286,6 +287,9 @@ export const ClientIntake: React.FC = () => {
 
   return (
     <SpotlightGrid className="min-h-screen bg-[#fafafa] dark:bg-[#0b0d13] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200 selection:bg-blue-500/20 selection:text-blue-900 dark:selection:text-blue-200">
+      {/* Desktop-only sleek circular custom cursor */}
+      <CustomCursor />
+
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#0b0d13]/80 backdrop-blur-md">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
